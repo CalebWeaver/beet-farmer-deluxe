@@ -17,21 +17,47 @@ var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, d
 			}
 		);
 
-		createEvent(BEETS_BEGIN, BEETS_BEGIN_DESC,
-			function() {
-			},
-			function() {
-				return units[BEETS].amount() >= 5;
-			}
-		);
+        createEvent(BEETS_BEGIN, BEETS_BEGIN_DESC,
+            function() {
+            },
+            function() {
+                return units[BEETS].amount() >= 5;
+            }
+        );
 
-		createEvent(OFF_TO_MARKET, OFF_TO_MARKET_DESC,
-			function() {
-			},
-			function() {
-				return skills[BEET_MARKET].isAvailable();
-			}
-		);
+        createEvent(GAINING_KNOWLEDGE, GAINING_KNOWLEDGE_DESC,
+            function() {
+            },
+            function() {
+                return skills[K_FARMING].level() >= 6;
+            }
+        );
+        addPath(GAINING_KNOWLEDGE, GAIN_KNOWLEDGE_PATH_YES);
+        addPath(GAINING_KNOWLEDGE, GAIN_KNOWLEDGE_PATH_NO);
+
+        createEvent(BEET_PURIST, BEET_PURIST_DESC,
+            function() {
+            },
+            function() {
+                return events[GAINING_KNOWLEDGE].chosenPath() == GAIN_KNOWLEDGE_PATH_NO;
+            }
+        );
+
+        createEvent(VEGETAL_EXPLORATION, VEGETAL_EXPLORATION_DESC,
+            function() {
+            },
+            function() {
+                return events[GAINING_KNOWLEDGE].chosenPath() == GAIN_KNOWLEDGE_PATH_YES;
+            }
+        );
+
+        createEvent(OFF_TO_MARKET, OFF_TO_MARKET_DESC,
+            function() {
+            },
+            function() {
+                return skills[BEET_MARKET].isAvailable();
+            }
+        );
 
 		createEvent(SELF_AWARENESS, SELF_AWARENESS_DESC,
 			function() {
@@ -41,7 +67,7 @@ var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, d
 			}
 		);
 
-		createEvent(CENTEPEDES, CENTEPEDES_DESC,
+		createEvent(CENTIPEDES, CENTIPEDES_DESC,
 			function() {
 			},
 			function() {
@@ -76,5 +102,9 @@ var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, d
 	function createEvent(name, description, effect, discovery) {
 		eventsM.events[name] = eventsM.Event(name, description, effect);
 		discoverer[name] = discovery;
+	}
+
+	function addPath(name, path) {
+		eventsM.events[name].paths.push(path);
 	}
 }(UnitDescription, SkillDescription, UpgradeDescription, EventDescription, Generator, Discoverer, StatisticTracker, SaveManager));

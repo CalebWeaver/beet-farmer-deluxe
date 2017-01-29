@@ -22,7 +22,7 @@ CRAFTING = "Crafting";
 HUNTING = "Hunting";
 GOVERN = "Governance";
 
-CRAFTING_G = "Guild: Crafting"
+CRAFTING_G = "Guild: Crafting";
 
 GUILD = "Guild";
 
@@ -43,25 +43,37 @@ PRESTIGE = "Prestige";
 
 //Events
 LEARN_TO_FARM = "Learn to Farm";
-LEARN_TO_FARM_DESC = "Observing the dirt, you notice potential."
+LEARN_TO_FARM_DESC = "Observing the dirt, you notice potential.";
 
 BEETS_BEGIN = "Beets Begin";
-BEETS_BEGIN_DESC = "The richest of men begin with beets."
+BEETS_BEGIN_DESC = "The richest of men begin with beets.";
+
+GAINING_KNOWLEDGE = "Gaining Knowledge";
+GAINING_KNOWLEDGE_DESC = "You've come to understand more of what the ground can accomodate. But should you proceed?";
+
+GAIN_KNOWLEDGE_PATH_YES = "Explore alternative plants";
+GAIN_KNOWLEDGE_PATH_NO = "Remain pure to the red way";
+
+BEET_PURIST = "Beet Purist";
+BEET_PURIST_DESC = "A wise decision. Your produce will beet all other.";
+
+VEGETAL_EXPLORATION = "Vegetal Exploration";
+VEGETAL_EXPLORATION_DESC = "A bold decision. But will it yield any fruit?";
 
 OFF_TO_MARKET = "Off To Market";
-OFF_TO_MARKET_DESC = "It seems you've found something to do with these rubies."
+OFF_TO_MARKET_DESC = "It seems you've found something to do with these rubies.";
 
 SELF_AWARENESS = "Self Awareness";
 SELF_AWARENESS_DESC = "You have become more aware of your own self and that of which you are capable.";
 
-CENTEPEDES = "Centepedes";
-CENTEPEDES_DESC = "Centepedes have overrun your farm and are now eating your beets. (Pest Control: 5)"
+CENTIPEDES = "Centipedes";
+CENTIPEDES_DESC = "Centipedes have overrun your farm and are now eating your beets. (Pest Control: 5)";
 
 CROWS = "Crows";
-CROWS_DESC = "A flock of crows has decided to roost in your fields. Seems they're trying to rook you of your beets."
+CROWS_DESC = "A flock of crows has decided to roost in your fields. Seems they're trying to rook you of your beets.";
 
 POSSESSED_SCARECROW = "Scarecrow";
-POSSESSED_SCARECROW_DESC = "...did that scarecrow just move?"
+POSSESSED_SCARECROW_DESC = "...did that scarecrow just move?";
 
 METEOR = "Meteor";
 METEOR_DESC = "A large meteor just fell from the sky.";

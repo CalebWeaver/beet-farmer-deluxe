@@ -11,12 +11,12 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		createUnit(BEETS,
 			function() {
-				if (events[CENTEPEDES].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
-					var centepedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
+				if (events[CENTIPEDES].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
+					var centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
 				} else {
-					var centepedes = 0;
+					var centipedes = 0;
 				}
-				return farmingBase() + centepedes;
+				return farmingBase() + centipedes;
 			},
 			function() {
 				return true;

@@ -17,7 +17,8 @@ var EventDescription = (function() {
 			occurs: occurs,
 			hasOccurred: ko.observable(false),
 			paths: [],
-			chosenPath: ''
+			chosenPath: ko.observable(),
+			setPath: setPath
 		};
 
 		return event;
@@ -27,6 +28,10 @@ var EventDescription = (function() {
 				effect();
 				event.hasOccurred(true);
 			}
+		}
+
+		function setPath(path) {
+			event.chosenPath(path);
 		}
 	}
 }());

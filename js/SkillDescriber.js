@@ -38,7 +38,7 @@ var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, 
 
 		createSkill(PEST_CONTROL,
 			function() {
-				return events[CENTEPEDES].hasOccurred();
+				return events[CENTIPEDES].hasOccurred();
 			}
 		);
 
@@ -127,10 +127,10 @@ var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, 
 	}
 
 	function setToggleable(name) {
-		if (!skillsM.skills[name].toggleable()) {
-			skillsM.skills[name].toggleable(true);
+		if (!skillsM.skills[name].toggleable) {
+			skillsM.skills[name].toggleable = true;
 		} else {
-			skillsM.skills[name].toggleable(false);
+			skillsM.skills[name].toggleable = false;
 		}
 	}
 }(UnitDescription, SkillDescription, UpgradeDescription, EventDescription, Discoverer, SaveManager));

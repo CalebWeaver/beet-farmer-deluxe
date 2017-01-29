@@ -17,14 +17,11 @@ var SkillDescription = (function(player) {
 			setLevel: setLevel,
 			incrementLevel: incrementLevel,
 			isAvailable: ko.observable(false),
-			toggleable: ko.observable(toggleable), //TODO: Does this need to be obsv?
+			toggleable: toggleable,
 			isActive: ko.observable(true)
 		};
 
 		skill.getLevel = ko.computed(getLevel);
-		skill.toggleDisplay = ko.computed(function() {
-			return ''
-		});
 		skill.toggle = toggle;
 
 		if (subtype === GUILD) {

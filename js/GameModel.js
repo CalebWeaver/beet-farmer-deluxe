@@ -51,8 +51,8 @@ var GameModel = (function(skills, units, events, upgrades, discoverer, generator
 		// units.units[CORN].isDiscovered(true);
 		// units.units[CORN].amount(10);
 		// upgradesM[PLANT_CORN].isObtained(true);
-		// skills.skills[K_FARMING].isAvailable(true);
-		// skills.skills[K_FARMING].setLevel(1);
+		skills.skills[K_FARMING].isAvailable(true);
+		skills.skills[K_FARMING].setLevel(6);
 		skillsM[FARMING].setLevel(15);
 		// unitsM[FARM_CURSE].amount(20);
 		// upgradesM[PICK].isDiscovered(true);

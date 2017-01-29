@@ -1,0 +1,112 @@
+body {
+  background-color: #222;
+  color: white;
+  padding: 28px 6px;
+  font-family: sans-serif; }
+
+span {
+  font-size: 14px; }
+
+button {
+  background-color: #479030;
+  border-radius: 2px;
+  border: 1px solid white;
+  padding: 4px 20px;
+  margin: 6px 6px 0 6px; }
+
+h2 {
+  margin-top: 0px; }
+
+.top-stuff {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 10%; }
+
+.units {
+  flex-basis: 200px; }
+
+.unit-name {
+  display: inline; }
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 200px; }
+
+.upgrades {
+  flex-basis: 150px; }
+  .upgrades button {
+    position: relative; }
+  .upgrades .bar {
+    position: absolute;
+    width: 1%;
+    height: 100%;
+    background-color: green; }
+
+.obtained-upgrade {
+  background-color: #7C296A; }
+
+/* The colorful bar that grows depending on the progress */
+.tz-bar {
+  background-color: #7C296A;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  position: absolute;
+  z-index: 1;
+  border-radius: 2px;
+  -webkit-transition: width 0.5s, height 0.5s;
+  -moz-transition: width 0.5s, height 0.5s;
+  transition: width 0.5s, height 0.5s;
+  transition-timing-function: linear; }
+
+/* The bar can be either horizontal, or vertical */
+.background-horizontal {
+  height: 100%; }
+
+.upgrade-title {
+  position: relative;
+  z-index: 2; }
+
+@-webkit-keyframes fadeout {
+  0% {
+    opacity: 1;
+    visibility: visible; }
+  99% {
+    opacity: 0; }
+  100% {
+    opacity: 0;
+    visibility: hidden; } }
+
+.fadeout {
+  -webkit-animation: fadeout 1s linear;
+  visibility: hidden; }
+
+@-webkit-keyframes fadein {
+  0% {
+    opacity: 0;
+    visibility: visible; }
+  100% {
+    opacity: 1; } }
+
+.fadein {
+  -webkit-animation: fadein 1s linear; }
+
+.toggle-button {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: -5px;
+  border-radius: 0 2px 2px 0; }
+
+.toggle-off {
+  background-color: #A33643; }
+
+.toggleable-skill-button {
+  margin-right: 0;
+  border-radius: 2px 0 0 2px; }
+
+.toggle-icon {
+  opacity: .6;
+  max-width: 70%;
+  max-height: 70%; }

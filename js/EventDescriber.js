@@ -1,6 +1,6 @@
 var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, discoverer, stats, save) {
 	'use strict';
-	self = this;
+	var self = this;
 
 	(function() {
 

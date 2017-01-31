@@ -1,4 +1,4 @@
-var GameModel = (function(skills, units, events, upgrades, discoverer, generator, stats, player, save) {
+var GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, stats, player, save) {
 	'use strict';
 	var self = {};
 
@@ -9,6 +9,7 @@ var GameModel = (function(skills, units, events, upgrades, discoverer, generator
 	self.skills = ko.observableArray();
 	self.events = ko.observableArray();
 	self.upgrades = ko.observableArray();
+	self.settings = ko.observableArray();
 	self.player = player;
 	self.timePlayed = ko.computed(function() {
 		return stats.hours() + " hrs " + stats.min() + " min " + stats.sec() + " sec";
@@ -20,7 +21,8 @@ var GameModel = (function(skills, units, events, upgrades, discoverer, generator
 		self.skills(Object.values(skills.skills));
 		self.units(Object.values(units.units));
 		self.upgrades(Object.values(upgrades.upgrades));
-		self.events(Object.values(events.events));
+        self.events(Object.values(events.events));
+        self.settings(Object.values(settings.settings));
 
 		setInterval(updateAll, stats.UPDATE_TICK/GAME_SPEED);
 
@@ -45,15 +47,15 @@ var GameModel = (function(skills, units, events, upgrades, discoverer, generator
 		var upgradesM = upgrades.upgrades;
 		var eventsM = events.events;
 
-		player.gainXp(10000);
-
-		units.units[BEETS].amount(100);
+		// player.gainXp(10000);
+        //
+		// units.units[BEETS].amount(100);
 		// units.units[CORN].isDiscovered(true);
 		// units.units[CORN].amount(10);
 		// upgradesM[PLANT_CORN].isObtained(true);
-		skills.skills[K_FARMING].isAvailable(true);
-		skills.skills[K_FARMING].setLevel(6);
-		skillsM[FARMING].setLevel(15);
+		// skills.skills[K_FARMING].isAvailable(true);
+		// skills.skills[K_FARMING].setLevel(6);
+		// skillsM[FARMING].setLevel(15);
 		// unitsM[FARM_CURSE].amount(20);
 		// upgradesM[PICK].isDiscovered(true);
 	}
@@ -62,7 +64,7 @@ var GameModel = (function(skills, units, events, upgrades, discoverer, generator
 		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .6;
 		player.gainXp(xpToGain);
 
-		stats.updateTimePlayed();3
+		stats.updateTimePlayed();
 		stats.changeRandomEvent();
 
 		ko.utils.arrayForEach(self.units(), function(unit) {
@@ -96,12 +98,19 @@ var GameModel = (function(skills, units, events, upgrades, discoverer, generator
 			}
 		});
 
-		ko.utils.arrayForEach(self.events(), function(event) {
-			if (discoverer[event.name] && discoverer[event.name]()) {
-				self.displayedEvents.unshift(event);
-				delete discoverer[event.name];
-				event.occurs();
-			}
-		});
+        ko.utils.arrayForEach(self.events(), function(event) {
+            if (discoverer[event.name] && discoverer[event.name]()) {
+                self.displayedEvents.unshift(event);
+                delete discoverer[event.name];
+                event.occurs();
+            }
+        });
+
+        ko.utils.arrayForEach(self.settings(), function(setting) {
+            if (discoverer[setting.name] && discoverer[setting.name]()) {
+                delete discoverer[setting.name];
+                setting.isAvailable(true);
+            }
+        });
 	}
-})(SkillDescription, UnitDescription, EventDescription, UpgradeDescription, Discoverer, Generator, StatisticTracker, Player, SaveManager);
+})(SkillDescription, UnitDescription, EventDescription, UpgradeDescription, SettingDescription, Discoverer, Generator, StatisticTracker, Player, SaveManager);

@@ -1,6 +1,6 @@
 body {
   background-color: #222;
-  color: white;
+  color: #F6EDF4;
   padding: 28px 6px;
   font-family: sans-serif; }
 
@@ -10,7 +10,7 @@ span {
 button {
   background-color: #479030;
   border-radius: 2px;
-  border: 1px solid white;
+  border: 1px solid #F6EDF4;
   padding: 4px 20px;
   margin: 6px 6px 0 6px; }
 
@@ -110,3 +110,40 @@ h2 {
   opacity: .6;
   max-width: 70%;
   max-height: 70%; }
+
+.slider.slider-horizontal {
+  width: 145px; }
+
+.slider-track {
+  background-image: none;
+  background-color: #F6EDF4;
+  border-radius: 2px; }
+
+.slider-selection {
+  background: transparent;
+  border-radius: 2px; }
+
+.slider-handle {
+  border: 1px solid #F6EDF4;
+  background-color: #479030;
+  background-image: none;
+  width: 30px;
+  margin-left: -15px !important;
+  text-align: center;
+  cursor: default;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+.slider-handle.round {
+  border-radius: 8%; }
+
+.slider-label {
+  vertical-align: middle; }
+
+.slider-label-left {
+  margin-right: 5px; }
+
+.slider-label-right {
+  margin-left: 5px; }

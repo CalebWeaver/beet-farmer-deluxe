@@ -52,7 +52,7 @@ GAINING_KNOWLEDGE = "Gaining Knowledge";
 GAINING_KNOWLEDGE_DESC = "You've come to understand more of what the ground can accomodate. But should you proceed?";
 
 GAIN_KNOWLEDGE_PATH_YES = "Explore alternative plants";
-GAIN_KNOWLEDGE_PATH_NO = "Remain pure to the red way";
+GAIN_KNOWLEDGE_PATH_NO = "Remain pure";
 
 BEET_PURIST = "Beet Purist";
 BEET_PURIST_DESC = "A wise decision. Your produce will beet all other.";
@@ -114,3 +114,7 @@ PICK_COST = 1000;
 FISHING_POLE = "Fishing Pole";
 FISHING_POLE_TIME = 1000;
 FISHING_POLE_COST = 1000;
+
+//Settings
+SETTING_TYPE_NUM = "Number";
+GREENHOUSE_TEMPERATURE = "Greenhouse Temperature";

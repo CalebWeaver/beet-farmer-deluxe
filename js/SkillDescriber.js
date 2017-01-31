@@ -1,6 +1,6 @@
 var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, save) {
 	'use strict';
-	self = this;
+	var self = this;
 
 	(function() {
 

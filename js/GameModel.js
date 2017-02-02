@@ -61,7 +61,7 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	}
 
 	function updateAll() {
-		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .6;
+		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .5;
 		player.gainXp(xpToGain);
 
 		stats.updateTimePlayed();
@@ -113,4 +113,4 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
             }
         });
 	}
-})(SkillDescription, UnitDescription, EventDescription, UpgradeDescription, SettingDescription, Discoverer, Generator, StatisticTracker, Player, SaveManager);
+})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, StatisticTracker, Player, SaveManager);

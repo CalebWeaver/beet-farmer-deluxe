@@ -1,4 +1,4 @@
-var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, save) {
+var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, discoverer, save) {
 	'use strict';
 	var self = this;
 
@@ -33,8 +33,7 @@ var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, 
 			function() {
 				return units[BEETS].amount() > 100;
 			}
-		);
-		setToggleable(BEET_MARKET);
+		).setToggleable();
 
 		createSkill(PEST_CONTROL,
 			function() {
@@ -82,17 +81,15 @@ var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, 
 			function() {
 				var craftingMin = 10;
 				return skills[CRAFTING].level() >= craftingMin;
-			},
-			GUILD
-		);
+			}
+		).setGroup(GUILD);
 
 		createSkill(GOVERN,
 			function() {
 				var prestigeMin = 100;
 				return units[PRESTIGE].amount() >= prestigeMin;
-			},
-			GUILD
-		);
+			}
+        ).setGroup(GUILD);
 
 		createSkill(STRENGTH,
 			function() {
@@ -121,16 +118,10 @@ var SkillDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, 
 		}
 	}
 
-	function createSkill(name, discovery, subtype) {
-		skillsM.skills[name] = skillsM.Skill(name, subtype);
+	function createSkill(name, discovery) {
+		var skill = new Skill(name);
+		skillsM.skills[name] = skill;
 		discoverer[name] = discovery;
+		return skill;
 	}
-
-	function setToggleable(name) {
-		if (!skillsM.skills[name].toggleable) {
-			skillsM.skills[name].toggleable = true;
-		} else {
-			skillsM.skills[name].toggleable = false;
-		}
-	}
-}(UnitDescription, SkillDescription, UpgradeDescription, EventDescription, Discoverer, SaveManager));
+}(Skill, Units, Skills, Upgrades, Events, Discoverer, SaveManager));

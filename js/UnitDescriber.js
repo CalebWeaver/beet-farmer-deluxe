@@ -1,6 +1,6 @@
 var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, discoverer, stats, save) {
 	'use strict';
-	self = this;
+	var self = this;
 
 	(function() {
 
@@ -144,8 +144,8 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 				var craftingP = skills[CRAFTING].getLevel();
 				var governP = skills[GOVERN].getLevel() * 10;
 				var guildTotal = 0;
-				for (var i = 0; i < skillsM.guilds.length; i++) {
-					guildTotal += (skillsM.guilds[i].getLevel() / 50);
+				for (var i = 0; i < skillsM[GUILD].length; i++) {
+					guildTotal += (skillsM[GUILD][i].getLevel() / 50);
 				}
 				return beetMarketP + craftingP + guildTotal + governP;
 			},
@@ -169,8 +169,8 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 	}
 
 	function createUnit(name, increment, discovery) {
-		unitsM.units[name] = unitsM.Unit(name);
+		unitsM.units[name] = new Unit(name);
 		generator.setGeneration(name, increment);
 		discoverer[name] = discovery;
 	}
-})(UnitDescription, SkillDescription, UpgradeDescription, EventDescription, Generator, Discoverer, StatisticTracker, SaveManager);
+})(Units, Skills, Upgrades, Events, Generator, Discoverer, StatisticTracker, SaveManager);

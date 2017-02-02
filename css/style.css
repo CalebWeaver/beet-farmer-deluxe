@@ -19,29 +19,22 @@ h2 {
 
 .top-stuff {
   display: flex;
-  justify-content: space-around;
-  margin: 0 10%; }
+  justify-content: space-around; }
 
-.units {
-  flex-basis: 200px; }
+.top-col {
+  flex-basis: 300px; }
 
 .unit-name {
   display: inline; }
 
-.skills {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 200px; }
+.upgrades button {
+  position: relative; }
 
-.upgrades {
-  flex-basis: 150px; }
-  .upgrades button {
-    position: relative; }
-  .upgrades .bar {
-    position: absolute;
-    width: 1%;
-    height: 100%;
-    background-color: green; }
+.upgrades .bar {
+  position: absolute;
+  width: 1%;
+  height: 100%;
+  background-color: green; }
 
 .obtained-upgrade {
   background-color: #7C296A; }

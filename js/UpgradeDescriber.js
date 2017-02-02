@@ -1,6 +1,6 @@
-var UpgradeDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer, stats, save) {
+var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, discoverer, stats, save) {
 	'use strict';
-	self = this;
+	var self = this;
 
 	(function() {
 
@@ -9,14 +9,23 @@ var UpgradeDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer
 		var upgrades = upgradesM.upgrades;
 		var events = eventsM.events;
 
-		createUpgrade(TILLING, TILLING_TIME,
-			function() {
-			},
-			function() {
-				var beetsMin = 100;
-				return units[BEETS].amount() >= beetsMin;
-			}
-		);
+        createUpgrade(TILLING, TILLING_TIME,
+            function() {
+            },
+            function() {
+                var beetsMin = 100;
+                return units[BEETS].amount() >= beetsMin;
+            }
+        ).setCostDesc('100 Gold');
+
+        createUpgrade(GREENHOUSE, GREENHOUSE_TIME,
+            function() {
+            },
+            function() {
+                var beetsMin = 10;
+                return units[BEETS].amount() >= beetsMin;
+            }
+        );
 
 		createUpgrade(PLANT_CORN, PLANT_CORN_TIME,
 			function() {
@@ -88,7 +97,10 @@ var UpgradeDescriber = (function(unitsM, skillsM, upgradesM, eventsM, discoverer
 	}
 
 	function createUpgrade(name, time, effect, discovery) {
-		upgradesM.upgrades[name] = upgradesM.Upgrade(name, time, effect);
+		var upgrade = new Upgrade(name, time, effect);
+		upgradesM.upgrades[name] = upgrade;
 		discoverer[name] = discovery;
+
+		return upgrade;
 	}
-}(UnitDescription, SkillDescription, UpgradeDescription, EventDescription, Discoverer, StatisticTracker, SaveManager));
+}(Upgrade, Units, Skills, Upgrades, Events, Discoverer, StatisticTracker, SaveManager));

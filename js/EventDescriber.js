@@ -1,4 +1,4 @@
-var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, discoverer, stats, save) {
+var EventDescriber = (function(Event, unitsM, skillsM, upgradesM, eventsM, generator, discoverer, stats, save) {
 	'use strict';
 	var self = this;
 
@@ -31,9 +31,8 @@ var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, d
             function() {
                 return skills[K_FARMING].level() >= 6;
             }
-        );
-        addPath(GAINING_KNOWLEDGE, GAIN_KNOWLEDGE_PATH_YES);
-        addPath(GAINING_KNOWLEDGE, GAIN_KNOWLEDGE_PATH_NO);
+        ).addPath(GAIN_KNOWLEDGE_PATH_YES)
+			.addPath(GAIN_KNOWLEDGE_PATH_NO);
 
         createEvent(BEET_PURIST, BEET_PURIST_DESC,
             function() {
@@ -100,11 +99,10 @@ var EventDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, d
 	}
 
 	function createEvent(name, description, effect, discovery) {
-		eventsM.events[name] = eventsM.Event(name, description, effect);
+		var event =  new Event(name, description, effect);
+		eventsM.events[name] = event;
 		discoverer[name] = discovery;
+		return event;
 	}
 
-	function addPath(name, path) {
-		eventsM.events[name].paths.push(path);
-	}
-}(UnitDescription, SkillDescription, UpgradeDescription, EventDescription, Generator, Discoverer, StatisticTracker, SaveManager));
+}(Event, Units, Skills, Upgrades, Events, Generator, Discoverer, StatisticTracker, SaveManager));

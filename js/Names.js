@@ -85,6 +85,12 @@ FARM_REMAINS = "Skull";
 FARM_REMAINS_DESC = "Seems you've found a small bone-us while trowling around.";
 
 //Upgrades
+GREENHOUSE = "Greenhouse";
+GREENHOUSE_TIME = 1000;
+
+CLIMATE_CONTROL = "Climate Control";
+CLIMATE_CONTROL_TIME = 1000;
+
 TILLING = "Tilling";
 TILLING_TIME = 10000;
 

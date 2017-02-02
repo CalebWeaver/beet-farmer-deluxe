@@ -29,26 +29,17 @@ h2 {
 .top-stuff {
 	display: flex;
 	justify-content: space-around;
-	margin: 0 10%;
 }
 
-.units {
-	flex-basis: 200px;
+.top-col {
+	flex-basis: 300px;
 }
 
 .unit-name {
 	display: inline;
 }
 
-.skills {
-	display: flex;
-	flex-direction: column;
-	flex-basis: 200px;
-}
-
 .upgrades {
-	flex-basis: 150px;
-
 	button {
 		position: relative;
 	}

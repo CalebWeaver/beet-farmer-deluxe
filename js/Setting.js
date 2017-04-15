@@ -10,6 +10,6 @@ var Setting = (function() {
         setting.range = range;
         setting.type = type;
         setting.setting = ko.observable(defaultSet);
-        setting.isAvailable = ko.observable(true);
+        setting.isAvailable = ko.observable(false);
     }
 })();

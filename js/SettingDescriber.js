@@ -8,7 +8,7 @@ var SettingDescriber = (function(Setting, unitsM, skillsM, upgradesM, eventsM, s
 
         createSetting(GREENHOUSE_TEMPERATURE, [0, 120], 75, SETTING_TYPE_NUM,
             function() {
-                return upgrades['GREENHOUSE_CLIMATE_CONTROL'];
+                return upgrades[CLIMATE_CONTROL];
             }
         );
 

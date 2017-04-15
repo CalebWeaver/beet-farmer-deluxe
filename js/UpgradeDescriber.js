@@ -22,8 +22,9 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
             function() {
             },
             function() {
-                var beetsMin = 10;
-                return units[BEETS].amount() >= beetsMin;
+                // var beetsMin = 10;
+                // return units[BEETS].amount() >= beetsMin;
+				return true;
             }
         );
 

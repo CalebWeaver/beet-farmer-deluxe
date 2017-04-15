@@ -10,10 +10,11 @@
 <body>
 	<div class="container-fluid">
 		<div class="player-stats">
-			<p data-bind="text:'Level: '+player.totalLevel()+' ('+player.currentLevel()+' available)'"></p>
+			<h3 data-bind="text:'Level: '+player.totalLevel()+' ('+player.currentLevel()+' available)'"></h3>
 			<div class="level-bar">
-				<span data-bind="" class="level-progress tz-bar background-horizontal"></span>
+				<div data-bind="" class="level-progress-fill"></div>
 			</div>
+			<br/>
 			<p data-bind="text:timePlayed()"></p>
 		</div>
 		<div class="top-stuff">
@@ -82,21 +83,28 @@
 			</div>
 		</div>
 
-		<div class="events">
-			<div data-bind="foreach: displayedEvents">
-				<div data-bind="if: hasOccurred" class="fadein">
-					<hr/>
-					<h4 data-bind="text:name"></h4>
-					<span data-bind="text:description"></span>
-					<div data-bind="foreach: paths">
-						<span data-bind="if: !$parent.chosenPath()">
-						<button data-bind="text: $data, click: function() {$parent.setPath($data)}"></button>
-						</span>
+		<div class="bottom-stuff">
+			<div class="events col-xs-6">
+				<div data-bind="foreach: displayedEvents">
+					<div data-bind="if: hasOccurred" class="fadein">
+						<hr/>
+						<h4 data-bind="text:name"></h4>
+						<span data-bind="text:description"></span>
+						<div data-bind="foreach: paths">
+							<span data-bind="if: !$parent.chosenPath()">
+							<button data-bind="text: $data, click: function() {$parent.setPath($data)}"></button>
+							</span>
+						</div>
 					</div>
 				</div>
 			</div>
+			<div class="games col-xs-6">
+				<table>
+					<tbody class="beet-farm">
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<br/>
 		<button data-bind="click:setTestData">Test</button>
 	</div>
 </body>
@@ -135,6 +143,8 @@
 <script type="text/javascript" src="js/UpgradeDescriber.js"></script>
 <script type="text/javascript" src="js/EventDescriber.js"></script>
 <script type="text/javascript" src="js/SettingDescriber.js"></script>
+
+<script type="text/javascript" src="js/BeetFarmMinigame.js"></script>
 
 <script type="text/javascript" src="js/GameModel.js"></script>
 <script type="text/javascript" src="js/app.js"></script>

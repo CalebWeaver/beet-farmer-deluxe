@@ -6,6 +6,7 @@ var Player = (function(save) {
 	self.xp = 0;
 	self.currentLevel = ko.observable(1);
 	self.totalLevel = ko.observable(1);
+	self.xpForLevel = ko.computed(function() { return self.totalLevel() + 300; });
 	self.gainXp = gainXp;
 
 	(function() {
@@ -29,9 +30,8 @@ var Player = (function(save) {
 
 	function checkGainLevel() {
 		//Gaining base 100xp/sec
-		var xpForLevel = (self.totalLevel() + 1) + 300;
-		if (self.xp >= xpForLevel) {
-			self.xp -= xpForLevel;
+		if (self.xp >= self.xpForLevel()) {
+			self.xp -= self.xpForLevel();
 			self.currentLevel(self.currentLevel() + 1);
 			self.totalLevel(self.totalLevel() + 1);
 		}

@@ -1,7 +1,13 @@
-$obtained-color: #7C296A;
-$button-color: #479030;
-$toggle-off-color: #A33643;
+$beet-color: #801826;
+$secondary-color: #2C7216;
+$toggle-off-color: #A73B4A;
 $beet-white: #F6EDF4;
+$accent-color: #105648;
+$dark-purple: #3E0030;
+$seed-color: #291917;
+
+$border-radius: 2px;
+$border: 1px solid $beet-white;
 
 body {
 	background-color: #222;
@@ -15,15 +21,31 @@ span {
 }
 
 button {
-	background-color: $button-color;
-	border-radius: 2px;
-	border: 1px solid $beet-white;
+	background-color: $secondary-color;
+	border-radius: $border-radius;
+	border: $border;
 	padding: 4px 20px;
 	margin: 6px 6px 0 6px;
 }
 
 h2 {
 	margin-top: 0px;
+}
+
+.level-bar {
+	width: 200px;
+	height: 15px;
+	background-color: $beet-white;
+	border-radius: $border-radius;
+	border: $border;
+	overflow: hidden;
+}
+
+.level-progress-fill {
+	width: 0px;
+	height: 15px;
+	background-color: $beet-color;
+	border-radius: $border-radius;
 }
 
 .top-stuff {
@@ -42,6 +64,9 @@ h2 {
 .upgrades {
 	button {
 		position: relative;
+		:hover {
+			border: 1px solid $accent-color;
+		}
 	}
 
 	.bar {
@@ -53,13 +78,13 @@ h2 {
 }
 
 .obtained-upgrade {
-	background-color: $obtained-color;
+	background-color: $beet-color;
 }
 
 /* The colorful bar that grows depending on the progress */
 
 .tz-bar{
-	background-color:$obtained-color;
+	background-color:$beet-color;
 	height:3px;
 	bottom:0;
 	left:0;
@@ -67,7 +92,7 @@ h2 {
 	position:absolute;
 	z-index:1;
 
-	border-radius:2px;
+	border-radius:$border-radius;
 
 	-webkit-transition: width 0.5s, height 0.5s;
 	-moz-transition: width 0.5s, height 0.5s;
@@ -107,7 +132,7 @@ h2 {
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-left: -5px;
-	border-radius: 0 2px 2px 0;
+	border-radius: 0 $border-radius $border-radius 0;
 }
 
 .toggle-off {
@@ -116,7 +141,7 @@ h2 {
 
 .toggleable-skill-button {
 	margin-right: 0;
-	border-radius: 2px 0 0 2px;
+	border-radius: $border-radius 0 0 $border-radius;
 }
 
 .toggle-icon {
@@ -131,18 +156,18 @@ h2 {
 
 .slider-track {
 	background-image: none;
-	background-color: #F6EDF4;
-	border-radius: 2px;
+	background-color: $beet-white;
+	border-radius: $border-radius;
 }
 
 .slider-selection {
 	background: transparent;
-	border-radius: 2px;
+	border-radius: $border-radius;
 }
 
 .slider-handle {
-	border: 1px solid $beet-white;
-	background-color: $button-color;
+	border: $border;
+	background-color: $secondary-color;
 	background-image: none;
 	width: 30px;
 	margin-left: -15px !important;
@@ -168,4 +193,26 @@ h2 {
 
 .slider-label-right {
 	margin-left: 5px;
+}
+
+.bottom-stuff {
+	margin-top: 15px;
+}
+
+.beet-farm td {
+	width: 50px;
+	height: 50px;
+	border: $border;
+
+	.farm-beet {
+		position: relative;
+		width: 10px;
+		height: 10px;
+		margin: 0 auto;
+		background-color: $seed-color;
+		transition-timing-function: linear;
+		transition-property: width, height, background-color;
+		border-radius: 100%;
+		overflow: hidden;
+	}
 }

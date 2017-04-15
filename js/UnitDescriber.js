@@ -11,8 +11,8 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		createUnit(BEETS,
 			function() {
-				if (events[CENTIPEDES].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
-					var centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
+				if (events[CENTIPEDES].hasOccurred() && skills[PEST_CONTROL].getUsableLevel() <= 5) {
+					var centipedes = (skills[PEST_CONTROL].getUsableLevel() - 5) * .006;
 				} else {
 					var centipedes = 0;
 				}
@@ -45,7 +45,7 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 			var IRON_HOE_BONUS = .5;
 			var STEEL_HOE_BONUS = .5;
 
-			var farmingProduction = skills[FARMING].getLevel() * FARMING_MULT * (skills[K_FARMING].getLevel() * K_FARMING_MULT + 1);
+			var farmingProduction = skills[FARMING].getUsableLevel() * FARMING_MULT * (skills[K_FARMING].getUsableLevel() * K_FARMING_MULT + 1);
 			var tilled = 1 + (upgrades[TILLING].isObtained() ? TILLED_MULT : 0);
 			var toolBonus = 1 + ((upgrades[IRON_HOE].isObtained() ? IRON_HOE_BONUS : 0) + (upgrades[STEEL_HOE].isObtained() ? STEEL_HOE_BONUS : 0));
 			var tilling = upgrades[TILLING].inProgress() ? TILLING_PENTALTY : 1;
@@ -59,7 +59,7 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 			function() {
 				var K_FARMING_RATE = .5;
 				var WEED_BASE = .1;
-				var weeds = units[FARM_CURSE].amount() * WEED_BASE - (K_FARMING_RATE * skills[K_FARMING].getLevel());
+				var weeds = units[FARM_CURSE].amount() * WEED_BASE - (K_FARMING_RATE * skills[K_FARMING].getUsableLevel());
 				return weeds;
 			},
 			function() {
@@ -95,11 +95,11 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		function sellBeets() {
 
-			var BEETS_TO_GOLD = 50 - (Math.min(skills[BEET_MARKET].getLevel(), 200) * .1);
+			var BEETS_TO_GOLD = 50 - (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .1);
 			var MARKET_BASE = .03;
 			var MARKET_GROWTH = .01;
 
-			var sellAmount = skills[BEET_MARKET].getLevel() > 0 ? MARKET_BASE + (skills[BEET_MARKET].getLevel() * MARKET_GROWTH):0;
+			var sellAmount = skills[BEET_MARKET].getUsableLevel() > 0 ? MARKET_BASE + (skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH):0;
 
 			var beetGold = 0;
 			if (units[BEETS].amount() >= sellAmount) {
@@ -112,7 +112,7 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		createUnit(WOOD,
 			function() {
-				return skills[WOODCUTTING].getLevel() / 3;
+				return skills[WOODCUTTING].getUsableLevel() / 3;
 			},
 			function() {
 				return skills[WOODCUTTING].isAvailable();
@@ -121,7 +121,7 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		createUnit(STONE,
 			function() {
-				return skills[MINING].getLevel() / 7;
+				return skills[MINING].getUsableLevel() / 7;
 			},
 			function() {
 				return skills[MINING].isAvailable();
@@ -130,7 +130,7 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		createUnit(FISH,
 			function() {
-				return skills[FISHING].getLevel() / 10;
+				return skills[FISHING].getUsableLevel() / 10;
 			},
 			function() {
 				return skills[FISHING].isAvailable();
@@ -140,12 +140,12 @@ var UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 		createUnit(PRESTIGE,
 			function() {
 
-				var beetMarketP = skills[BEET_MARKET].getLevel();
-				var craftingP = skills[CRAFTING].getLevel();
-				var governP = skills[GOVERN].getLevel() * 10;
+				var beetMarketP = skills[BEET_MARKET].getUsableLevel();
+				var craftingP = skills[CRAFTING].getUsableLevel();
+				var governP = skills[GOVERN].getUsableLevel() * 10;
 				var guildTotal = 0;
 				for (var i = 0; i < skillsM[GUILD].length; i++) {
-					guildTotal += (skillsM[GUILD][i].getLevel() / 50);
+					guildTotal += (skillsM[GUILD][i].getUsableLevel() / 50);
 				}
 				return beetMarketP + craftingP + guildTotal + governP;
 			},

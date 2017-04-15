@@ -8,7 +8,7 @@ span {
   font-size: 14px; }
 
 button {
-  background-color: #479030;
+  background-color: #2C7216;
   border-radius: 2px;
   border: 1px solid #F6EDF4;
   padding: 4px 20px;
@@ -16,6 +16,20 @@ button {
 
 h2 {
   margin-top: 0px; }
+
+.level-bar {
+  width: 200px;
+  height: 15px;
+  background-color: #F6EDF4;
+  border-radius: 2px;
+  border: 1px solid #F6EDF4;
+  overflow: hidden; }
+
+.level-progress-fill {
+  width: 0px;
+  height: 15px;
+  background-color: #801826;
+  border-radius: 2px; }
 
 .top-stuff {
   display: flex;
@@ -29,6 +43,8 @@ h2 {
 
 .upgrades button {
   position: relative; }
+  .upgrades button :hover {
+    border: 1px solid #105648; }
 
 .upgrades .bar {
   position: absolute;
@@ -37,11 +53,11 @@ h2 {
   background-color: green; }
 
 .obtained-upgrade {
-  background-color: #7C296A; }
+  background-color: #801826; }
 
 /* The colorful bar that grows depending on the progress */
 .tz-bar {
-  background-color: #7C296A;
+  background-color: #801826;
   height: 3px;
   bottom: 0;
   left: 0;
@@ -93,7 +109,7 @@ h2 {
   border-radius: 0 2px 2px 0; }
 
 .toggle-off {
-  background-color: #A33643; }
+  background-color: #A73B4A; }
 
 .toggleable-skill-button {
   margin-right: 0;
@@ -118,7 +134,7 @@ h2 {
 
 .slider-handle {
   border: 1px solid #F6EDF4;
-  background-color: #479030;
+  background-color: #2C7216;
   background-image: none;
   width: 30px;
   margin-left: -15px !important;
@@ -140,3 +156,21 @@ h2 {
 
 .slider-label-right {
   margin-left: 5px; }
+
+.bottom-stuff {
+  margin-top: 15px; }
+
+.beet-farm td {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #F6EDF4; }
+  .beet-farm td .farm-beet {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    margin: 0 auto;
+    background-color: #291917;
+    transition-timing-function: linear;
+    transition-property: width, height, background-color;
+    border-radius: 100%;
+    overflow: hidden; }

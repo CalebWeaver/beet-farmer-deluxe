@@ -47,7 +47,9 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		var upgradesM = upgrades.upgrades;
 		var eventsM = events.events;
 
-		// player.gainXp(10000);
+		// beetFarmMinigame.addBeet();
+
+		player.gainXp(10000);
         //
 		// units.units[BEETS].amount(100);
 		// units.units[CORN].isDiscovered(true);
@@ -61,6 +63,7 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	}
 
 	function updateAll() {
+		updateLevelBar();
 		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .5;
 		player.gainXp(xpToGain);
 
@@ -74,6 +77,16 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		});
 
 		checkDiscovery();
+	}
+
+	function updateLevelBar() {
+
+        var levelFill = document.getElementsByClassName("level-progress-fill")[0];
+        var levelBar = document.getElementsByClassName("level-bar")[0];
+        var levelWidthProp = window.getComputedStyle(levelBar).getPropertyValue('width');
+        var levelWidth = parseInt(levelWidthProp.substr(0, levelWidthProp.length - 2));
+
+    	levelFill.style.width = (player.xp / player.xpForLevel()) * levelWidth +'px';
 	}
 
 	function checkDiscovery() {

@@ -64,9 +64,18 @@ h2 {
 .upgrades {
 	button {
 		position: relative;
-		:hover {
-			border: 1px solid $accent-color;
-		}
+	}
+
+	.upgrade-button:hover {
+		border: 1px solid $accent-color;
+	}
+
+	.unpurchasable-upgrade {
+		background-color: #555;
+	}
+
+	.obtained-upgrade {
+		background-color: $beet-color;
 	}
 
 	.bar {
@@ -75,10 +84,6 @@ h2 {
 	    height: 100%;
 	    background-color: green;
 	}
-}
-
-.obtained-upgrade {
-	background-color: $beet-color;
 }
 
 /* The colorful bar that grows depending on the progress */

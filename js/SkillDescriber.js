@@ -31,7 +31,7 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(BEET_MARKET,
 			function() {
-				return units[BEETS].amount() > 100;
+				return units[BEETS].amount() > 10;
 			}
 		).setToggleable();
 

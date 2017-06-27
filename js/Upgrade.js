@@ -3,7 +3,7 @@ var Upgrade = (function() {
 
     return Upgrade;
 
-    function Upgrade(name, time, effect) {
+    function Upgrade(name, time) {
         var upgrade = this;
         upgrade.name = name;
         upgrade.begin = begin;
@@ -11,13 +11,17 @@ var Upgrade = (function() {
         upgrade.inProgress = ko.observable(false);
         upgrade.isDiscovered = ko.observable(false);
         upgrade.isObtained = ko.observable(false);
-        upgrade.effect = effect;
+        upgrade.effect = function(){};
         upgrade.costDesc = '';
+        upgrade.cost = '';
+        upgrade.costUnit = '';
         upgrade.isAvailable = ko.computed(isAvailable);
         upgrade.setName = setName;
         upgrade.setTime = setTime;
         upgrade.setEffect = setEffect;
         upgrade.setCostDesc = setCostDesc;
+        upgrade.setCost = setCost;
+        upgrade.setCostUnit = setCostUnit;
 
         function begin() {
 
@@ -43,7 +47,7 @@ var Upgrade = (function() {
             return upgrade;
         }
 
-        function setEffect(value) {
+        function setEffect(effect) {
             upgrade.effect = effect;
             return upgrade;
         }
@@ -61,6 +65,16 @@ var Upgrade = (function() {
 
         function isAvailable() {
             return upgrade.isDiscovered() && !upgrade.isObtained();
+        }
+
+        function setCost(value) {
+            upgrade.cost = value;
+            return upgrade;
+        }
+
+        function setCostUnit(value) {
+            upgrade.costUnit = value;
+            return upgrade;
         }
     }
 })();

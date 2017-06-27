@@ -23,7 +23,7 @@
 				<div data-bind="foreach: units">
 					<div data-bind="if: isAvailable">
 						<h4 class="unit-name" data-bind="text:name + ' : '"></h4>
-						<span data-bind="text:amount().toFixed(0)"></span>
+						<span data-bind="text:Math.floor(amount())"></span>
 						<span data-bind="text:'('+amountPerSecond() + '/sec)'"></span>
 						<br/>
 					</div>
@@ -50,10 +50,20 @@
 			<div class="upgrades top-col">
 				<h2>Upgrades</h2>
 				<div data-bind="foreach: upgrades">
-					<div data-bind="if: isAvailable">
-						<button data-bind="click:begin">
+					<div data-bind="if: (isAvailable() && !$root.isUpgradePurchasable($data) && !inProgress())">
+						<button class="unpurchasable-upgrade" disabled>
 							<span data-bind="" class="tz-bar background-horizontal"></span>
-							<span class="upgrade-title" data-bind="text:name" />
+							<span class="upgrade-title" data-bind="text:name"></span>
+						</button>
+						<span data-bind="text:costDesc"></span>
+						<br/>
+					</div>
+				</div>
+				<div data-bind="foreach: upgrades">
+					<div data-bind="if: $root.isUpgradePurchasable($data) || inProgress()">
+						<button class="upgrade-button" data-bind="click: function() {var upgrade = $data; $root.buyUpgrade(upgrade)}">
+							<span data-bind="" class="tz-bar background-horizontal"></span>
+							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
 						<span data-bind="text:costDesc"></span>
 						<br/>

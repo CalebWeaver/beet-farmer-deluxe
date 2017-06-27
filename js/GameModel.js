@@ -15,6 +15,8 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		return stats.hours() + " hrs " + stats.min() + " min " + stats.sec() + " sec";
 	});
 	self.displayedEvents = ko.observableArray();
+	self.isUpgradePurchasable = isUpgradePurchasable;
+	self.buyUpgrade = buyUpgrade;
 
 	(function() {
 
@@ -50,6 +52,7 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		// beetFarmMinigame.addBeet();
 
 		player.gainXp(10000);
+		unitsM[GOLD].amount(10);
         //
 		// units.units[BEETS].amount(100);
 		// units.units[CORN].isDiscovered(true);
@@ -126,4 +129,21 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
             }
         });
 	}
+
+	function isUpgradePurchasable(upgrade) {
+    	var isPurchasable = upgrade.isAvailable();
+
+    	if (upgrade.costUnit && upgrade.cost && isPurchasable) {
+    	     isPurchasable = units.units[upgrade.costUnit].amount() >= upgrade.cost;
+		}
+
+		return isPurchasable;
+    }
+
+    function buyUpgrade(upgrade) {
+		upgrade.begin();
+        if (upgrade.costUnit && upgrade.cost) {
+            units.units[upgrade.costUnit].remove(upgrade.cost);
+        }
+    }
 })(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, StatisticTracker, Player, SaveManager);

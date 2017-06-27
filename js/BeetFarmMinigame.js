@@ -16,17 +16,19 @@ var beetFarmMinigame = (function(skills, units, settings, stats) {
     var STAGE_RIPE = 3;
     var STAGE_ROT = 4;
 
-    var GRID_WIDTH = 2;
-    var GRID_HEIGHT = 2;
+    var GRID_WIDTH = 1;
+    var GRID_HEIGHT = 1;
 
     var BEET_GROWTH_CONST = 100;
 
     var beetFarmMinigame = {};
     beetFarmMinigame.harvest = harvest;
     beetFarmMinigame.addBeet = addBeet;
+    beetFarmMinigame.GRID_WIDTH = GRID_WIDTH;
+    beetFarmMinigame.GRID_HEIGHT = GRID_HEIGHT;
 
     var farmTracker = {};
-    var skills = skills.skills;
+    skills = skills.skills;
 
     (function() {
         farmTracker.length = 0;

@@ -11,8 +11,6 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 
         createUpgrade(TILLING, TILLING_TIME,
             function() {
-            },
-            function() {
                 var beetsMin = 100;
                 return units[BEETS].amount() >= beetsMin;
             }
@@ -20,17 +18,15 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 
         createUpgrade(GREENHOUSE, GREENHOUSE_TIME,
             function() {
-            },
-            function() {
                 // var beetsMin = 10;
                 // return units[BEETS].amount() >= beetsMin;
 				return true;
             }
-        );
+        ).setCost(10)
+			.setCostUnit(GOLD)
+			.setCostDesc('10 Gold');
 
 		createUpgrade(PLANT_CORN, PLANT_CORN_TIME,
-			function() {
-			},
 			function() {
 				var kFarmMin = 6;
 				return skills[K_FARMING].level() >= kFarmMin;
@@ -39,15 +35,11 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 
 		createUpgrade(IRON_HOE, IRON_HOE_TIME,
 			function() {
-			},
-			function() {
 				return skills[CRAFTING].isAvailable();
 			}
 		);
 
 		createUpgrade(STEEL_HOE, STEEL_HOE_TIME,
-			function() {
-			},
 			function() {
 				return upgrades[IRON_HOE].isObtained();
 			}
@@ -55,26 +47,17 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 
 		createUpgrade(AXE, AXE_TIME,
 			function() {
-				units[GOLD].remove(AXE_COST);
-			},
-			function() {
 				return skills[BEET_MARKET].isAvailable() && stats.findChance(stats.SECOND_CHANCE / math.randomInt(10));
 			}
 		);
 
 		createUpgrade(PICK, PICK_TIME,
 			function() {
-				units[GOLD].remove(PICK_COST);
-			},
-			function() {
 				return skills[BEET_MARKET].isAvailable() && stats.findChance(stats.SECOND_CHANCE / math.randomInt(30));
 			}
 		);
 
 		createUpgrade(FISHING_POLE, FISHING_POLE_TIME,
-			function() {
-				units[GOLD].remove(FISHING_POLE_COST);
-			},
 			function() {
 				return skills[BEET_MARKET].isAvailable() && stats.findChance(stats.SECOND_CHANCE / math.randomInt(50));
 			}
@@ -97,8 +80,8 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 		}
 	}
 
-	function createUpgrade(name, time, effect, discovery) {
-		var upgrade = new Upgrade(name, time, effect);
+	function createUpgrade(name, time, discovery) {
+		var upgrade = new Upgrade(name, time);
 		upgradesM.upgrades[name] = upgrade;
 		discoverer[name] = discovery;
 

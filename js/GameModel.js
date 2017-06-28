@@ -1,9 +1,9 @@
-var GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, stats, player, save) {
+let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, stats, player, save) {
 	'use strict';
-	var self = {};
+	let self = {};
 
-	var GAME_SPEED = 1; //Only seems to work to 2
-	var GENERATE_SPEED = .01;
+	let GAME_SPEED = 1; //Only seems to work to 2
+	let GENERATE_SPEED = .01;
 
 	self.units = ko.observableArray();
 	self.skills = ko.observableArray();
@@ -15,8 +15,11 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		return stats.hours() + " hrs " + stats.min() + " min " + stats.sec() + " sec";
 	});
 	self.displayedEvents = ko.observableArray();
+	self.barUnlocked = ko.computed(isBarUnlocked);
 	self.isUpgradePurchasable = isUpgradePurchasable;
 	self.buyUpgrade = buyUpgrade;
+    self.getDiscoveredUpgrades = getDiscoveredUpgrades;
+    self.getAvailableSettings = getAvailableSettings;
 
 	(function() {
 
@@ -44,15 +47,15 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	return self;
 
 	function setTestData() {
-		var unitsM = units.units;
-		var skillsM = skills.skills;
-		var upgradesM = upgrades.upgrades;
-		var eventsM = events.events;
+		let unitsM = units.units;
+		let skillsM = skills.skills;
+		let upgradesM = upgrades.upgrades;
+		let eventsM = events.events;
 
 		// beetFarmMinigame.addBeet();
 
-		player.gainXp(10000);
-		unitsM[GOLD].amount(10);
+		// player.gainXp(10000);
+		// unitsM[GOLD].amount(10);
         //
 		// units.units[BEETS].amount(100);
 		// units.units[CORN].isDiscovered(true);
@@ -67,7 +70,7 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function updateAll() {
 		updateLevelBar();
-		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .5;
+		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .1;
 		player.gainXp(xpToGain);
 
 		stats.updateTimePlayed();
@@ -84,12 +87,14 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function updateLevelBar() {
 
-        var levelFill = document.getElementsByClassName("level-progress-fill")[0];
-        var levelBar = document.getElementsByClassName("level-bar")[0];
-        var levelWidthProp = window.getComputedStyle(levelBar).getPropertyValue('width');
-        var levelWidth = parseInt(levelWidthProp.substr(0, levelWidthProp.length - 2));
+        if(isBarUnlocked()) {
+			let levelFill = document.getElementsByClassName("level-progress-fill")[0];
+			let levelBar = document.getElementsByClassName("level-bar")[0];
+			let levelWidthProp = window.getComputedStyle(levelBar).getPropertyValue('width');
+			let levelWidth = parseInt(levelWidthProp.substr(0, levelWidthProp.length - 2));
 
-    	levelFill.style.width = (player.xp / player.xpForLevel()) * levelWidth +'px';
+            levelFill.style.width = (player.xp / player.xpForLevel()) * levelWidth + 'px';
+        }
 	}
 
 	function checkDiscovery() {
@@ -131,7 +136,7 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	}
 
 	function isUpgradePurchasable(upgrade) {
-    	var isPurchasable = upgrade.isAvailable();
+    	let isPurchasable = upgrade.isAvailable();
 
     	if (upgrade.costUnit && upgrade.cost && isPurchasable) {
     	     isPurchasable = units.units[upgrade.costUnit].amount() >= upgrade.cost;
@@ -145,5 +150,17 @@ var GameModel = (function(skills, units, events, upgrades, settings, discoverer,
         if (upgrade.costUnit && upgrade.cost) {
             units.units[upgrade.costUnit].remove(upgrade.cost);
         }
+    }
+
+    function isBarUnlocked() {
+		return skills.skills[INTELLIGENCE].level() > 3;
+	}
+
+    function getDiscoveredUpgrades() {
+        return upgrades.getDiscoveredUpgrades();
+    }
+
+    function getAvailableSettings() {
+        return settings.getAvailableSettings();
     }
 })(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, StatisticTracker, Player, SaveManager);

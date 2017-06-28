@@ -68,6 +68,7 @@ var StatisticTracker = (function(save) {
 		self.randomEvent = math.randomInt(BASE_CHANCE);
 	}
 
+	// chance = SECOND_CHANCE / 10 will hit every ~10 sec
 	function findChance(chance) {
 		return self.randomEvent <= chance;
 	}

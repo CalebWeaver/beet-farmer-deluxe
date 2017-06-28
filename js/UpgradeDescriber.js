@@ -18,13 +18,11 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 
         createUpgrade(GREENHOUSE, GREENHOUSE_TIME,
             function() {
-                // var beetsMin = 10;
-                // return units[BEETS].amount() >= beetsMin;
-				return true;
-            }
+                var beetsMin = 10;
+                return units[BEETS].amount() >= beetsMin;
+			}
         ).setCost(10)
-			.setCostUnit(GOLD)
-			.setCostDesc('10 Gold');
+			.setCostUnit(GOLD);
 
 		createUpgrade(PLANT_CORN, PLANT_CORN_TIME,
 			function() {
@@ -47,19 +45,19 @@ var UpgradeDescriber = (function(Upgrade, unitsM, skillsM, upgradesM, eventsM, d
 
 		createUpgrade(AXE, AXE_TIME,
 			function() {
-				return skills[BEET_MARKET].isAvailable() && stats.findChance(stats.SECOND_CHANCE / math.randomInt(10));
+				return false;
 			}
 		);
 
 		createUpgrade(PICK, PICK_TIME,
 			function() {
-				return skills[BEET_MARKET].isAvailable() && stats.findChance(stats.SECOND_CHANCE / math.randomInt(30));
+				return false;
 			}
 		);
 
 		createUpgrade(FISHING_POLE, FISHING_POLE_TIME,
 			function() {
-				return skills[BEET_MARKET].isAvailable() && stats.findChance(stats.SECOND_CHANCE / math.randomInt(50));
+				return false;
 			}
 		);
 

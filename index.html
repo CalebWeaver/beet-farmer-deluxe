@@ -11,8 +11,10 @@
 	<div class="container-fluid">
 		<div class="player-stats">
 			<h3 data-bind="text:'Level: '+player.totalLevel()+' ('+player.currentLevel()+' available)'"></h3>
+			<div data-bind="if: barUnlocked">
 			<div class="level-bar">
 				<div data-bind="" class="level-progress-fill"></div>
+			</div>
 			</div>
 			<br/>
 			<p data-bind="text:timePlayed()"></p>
@@ -47,6 +49,7 @@
 				</div>
 			</div>
 
+			<div data-bind="if: getDiscoveredUpgrades().length > 0">
 			<div class="upgrades top-col">
 				<h2>Upgrades</h2>
 				<div data-bind="foreach: upgrades">
@@ -65,7 +68,7 @@
 							<span data-bind="" class="tz-bar background-horizontal"></span>
 							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
-						<span data-bind="text:costDesc"></span>
+						<span data-bind="text:cost + ' ' + costUnit"></span>
 						<br/>
 					</div>
 				</div>
@@ -76,7 +79,9 @@
 					</div>
 				</div>
 			</div>
+			</div>
 
+			<div data-bind="if: getAvailableSettings().length > 0">
 			<div class="settings top-col">
 				<h2>Settings</h2>
 				<div data-bind="foreach: settings">
@@ -91,6 +96,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		</div>
 
 		<div class="bottom-stuff">
@@ -124,6 +130,7 @@
 <script type="text/javascript" src="node_modules/knockout/build/output/knockout-latest.debug.js"></script>
 <script type="text/javascript" src="node_modules/mathjs/dist/math.js"></script>
 <script type="text/javascript" src="node_modules/bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="node_modules/lodash/lodash.min.js"></script>
 
 <!-- App -->
 <script type="text/javascript" src="js/CustomHandlers.js"></script>

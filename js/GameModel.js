@@ -1,9 +1,6 @@
-let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, stats, player, save) {
+let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player, save) {
 	'use strict';
 	let self = {};
-
-	let GAME_SPEED = 1; //Only seems to work to 2
-	let GENERATE_SPEED = .01;
 
 	self.units = ko.observableArray();
 	self.skills = ko.observableArray();
@@ -29,7 +26,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
         self.events(Object.values(events.events));
         self.settings(Object.values(settings.settings));
 
-		setInterval(updateAll, stats.UPDATE_TICK/GAME_SPEED);
+		setInterval(updateAll, stats.UPDATE_TICK);
 
 		// skills.skills[FARMING].incrementLevel();
 
@@ -54,10 +51,10 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 		// beetFarmMinigame.addBeet();
 
-		// player.gainXp(10000);
+		player.gainXp(1000);
 		// unitsM[GOLD].amount(10);
         //
-		// units.units[BEETS].amount(100);
+		units.units[BEETS].amount(10);
 		// units.units[CORN].isDiscovered(true);
 		// units.units[CORN].amount(10);
 		// upgradesM[PLANT_CORN].isObtained(true);
@@ -70,19 +67,25 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function updateAll() {
 		updateLevelBar();
-		var xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .1;
+		let xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .1;
 		player.gainXp(xpToGain);
 
 		stats.updateTimePlayed();
 		stats.changeRandomEvent();
 
-		ko.utils.arrayForEach(self.units(), function(unit) {
-			var amount = generator[unit.name]() * GENERATE_SPEED;
-			unit.add(amount);
-			unit.amountPerSecond((amount * GAME_SPEED * (1000 / stats.UPDATE_TICK)).toFixed(2));
-		});
+		generate();
 
 		checkDiscovery();
+	}
+
+	function generate() {
+        ko.utils.arrayForEach(self.units(), function(unit) {
+            let amount = generator[unit.name]();
+            unit.amountPerSecond((amount * stats.TICK_PER_SECOND).toFixed(2));
+            if (spender[unit.name]) {
+                unit.spentPerSecond((spender[unit.name]() * stats.TICK_PER_SECOND).toFixed(2));
+            }
+        });
 	}
 
 	function updateLevelBar() {
@@ -163,4 +166,4 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     function getAvailableSettings() {
         return settings.getAvailableSettings();
     }
-})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, StatisticTracker, Player, SaveManager);
+})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager);

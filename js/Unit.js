@@ -1,9 +1,9 @@
-var Unit = (function(){
+let Unit = (function(){
     'use strict';
 
     function Unit(name) {
 
-        var unit = this;
+        let unit = this;
 
         unit.name = name;
         unit.amount = ko.observable(0);
@@ -11,7 +11,8 @@ var Unit = (function(){
         unit.remove = remove;
         unit.add = add;
         unit.isHidden = false;
-        unit.amountPerSecond = ko.observable();
+        unit.amountPerSecond = ko.observable(0);
+        unit.spentPerSecond = ko.observable(0);
         unit.isAvailable = ko.computed(
             function() {
                 return unit.isDiscovered() && !unit.isHidden;
@@ -21,7 +22,9 @@ var Unit = (function(){
         function remove(i) {
             if (unit.amount() >= i) {
                 unit.amount(unit.amount() - i);
+                return true;
             }
+            return false;
         }
 
         function add(i) {

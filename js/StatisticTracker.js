@@ -1,30 +1,33 @@
-var StatisticTracker = (function(save) {
+let StatisticTracker = (function(save) {
 	'use strict';
 
-	var UPDATE_TICK = 10;
+    let GENERATE_SPEED = .1; //GENERATE_SPEED * Ticks per second = generates / second (.01 * 100 = 1)
+	let UPDATE_TICK = 10; //10 = 100 Ticks per second
 
-	var TICK_PER_SECOND = (1000 / UPDATE_TICK);
-	var TICK_PER_MINUTE = TICK_PER_SECOND * 60;
-	var TICK_PER_HOUR = TICK_PER_MINUTE * 60;
-	var TICK_PER_DAY = TICK_PER_HOUR * 24;
-	var TICK_PER_WEEK = TICK_PER_DAY * 7;
-	var TICK_PER_TWO_WEEK = TICK_PER_WEEK * 2;
+	let TICK_PER_SECOND = (1000 / UPDATE_TICK);
+	let TICK_PER_MINUTE = TICK_PER_SECOND * 60;
+	let TICK_PER_HOUR = TICK_PER_MINUTE * 60;
+	let TICK_PER_DAY = TICK_PER_HOUR * 24;
+	let TICK_PER_WEEK = TICK_PER_DAY * 7;
+	let TICK_PER_TWO_WEEK = TICK_PER_WEEK * 2;
 
-	var BASE_CHANCE = TICK_PER_TWO_WEEK;
+	let BASE_CHANCE = TICK_PER_TWO_WEEK;
 
-	var SECOND_CHANCE = (1 / TICK_PER_SECOND) * BASE_CHANCE;
-	var MINUTE_CHANCE = (1 / TICK_PER_MINUTE) * BASE_CHANCE;
-	var HOUR_CHANCE = (1 / TICK_PER_HOUR) * BASE_CHANCE;
-	var DAY_CHANCE = (1 / TICK_PER_DAY) * BASE_CHANCE;
-	var WEEK_CHANCE = (1 / TICK_PER_WEEK) * BASE_CHANCE;
-	var TWO_WEEK_CHANCE = (1 / TICK_PER_TWO_WEEK) * BASE_CHANCE;
+	let SECOND_CHANCE = (1 / TICK_PER_SECOND) * BASE_CHANCE;
+	let MINUTE_CHANCE = (1 / TICK_PER_MINUTE) * BASE_CHANCE;
+	let HOUR_CHANCE = (1 / TICK_PER_HOUR) * BASE_CHANCE;
+	let DAY_CHANCE = (1 / TICK_PER_DAY) * BASE_CHANCE;
+	let WEEK_CHANCE = (1 / TICK_PER_WEEK) * BASE_CHANCE;
+	let TWO_WEEK_CHANCE = (1 / TICK_PER_TWO_WEEK) * BASE_CHANCE;
 
-	var startObservedTime = new Date();
-	var loadedTimePlayed = 0;
+	let startObservedTime = new Date();
+	let loadedTimePlayed = 0;
 
-	var self = {};
+	let self = {};
 
-	self.UPDATE_TICK = UPDATE_TICK;
+    self.GENERATE_SPEED = GENERATE_SPEED;
+    self.UPDATE_TICK = UPDATE_TICK;
+	self.TICK_PER_SECOND = TICK_PER_SECOND;
 	self.SECOND_CHANCE = SECOND_CHANCE;
 	self.MINUTE_CHANCE = MINUTE_CHANCE;
 	self.HOUR_CHANCE = HOUR_CHANCE;

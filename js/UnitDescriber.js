@@ -1,4 +1,4 @@
-let UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, discoverer, stats, save) {
+let UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, spender, discoverer, stats, save) {
 	'use strict';
 	let self = this;
 
@@ -11,16 +11,31 @@ let UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		createUnit(BEETS,
 			function() {
-                let centipedes = 0;
-                if (events[CENTIPEDES].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
-                    centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
-                }
-                return farmingBase() + centipedes;
+                units[BEETS].isSpent = false;
+				let beets = createBeets();
+                return beets;
 			},
 			function() {
 				return true;
+			},
+			function() {
+                let MARKET_BASE = .08;
+                let MARKET_GROWTH = .02;
+                let sellAmount = 0;
+                if (skills[BEET_MARKET].getUsableLevel() > 0) {
+                    sellAmount = MARKET_BASE + (skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH);
+                }
+                return sellAmount;
 			}
 		);
+
+		function createBeets() {
+            let centipedes = 0;
+            if (events[CENTIPEDES].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
+                centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
+            }
+            return farmingBase() + centipedes;
+		}
 
 		createUnit(CORN,
 			function() {
@@ -94,16 +109,19 @@ let UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 
 		function sellBeets() {
 
-			let BEETS_TO_GOLD = 50 - (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .1);
-			let MARKET_BASE = .03;
-			let MARKET_GROWTH = .01;
+			let BEETS_TO_GOLD = 10 - (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .1);
 
-			let sellAmount = skills[BEET_MARKET].getUsableLevel() > 0 ? MARKET_BASE + (skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH):0;
+			let MARKET_BASE = .08;
+			let MARKET_GROWTH = .02;
+
+			let sellAmount = 0;
+			if (skills[BEET_MARKET].getUsableLevel() > 0) {
+				sellAmount = MARKET_BASE + (skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH);
+			}
 
 			let beetGold = 0;
-			if (units[BEETS].amount() >= sellAmount) {
-				units[BEETS].remove(sellAmount);
-				beetGold = sellAmount / BEETS_TO_GOLD;
+			if (spender.hasSpent[BEETS]) {
+                beetGold = sellAmount / BEETS_TO_GOLD;
 			}
 
 			return beetGold;
@@ -167,9 +185,12 @@ let UnitDescriber = (function(unitsM, skillsM, upgradesM, eventsM, generator, di
 		}
 	}
 
-	function createUnit(name, increment, discovery) {
+	function createUnit(name, increment, discovery, decrement) {
 		unitsM.units[name] = new Unit(name);
 		generator.setGeneration(name, increment);
+		if (decrement) {
+            spender.setSpending(name, decrement);
+        }
 		discoverer[name] = discovery;
 	}
-})(Units, Skills, Upgrades, Events, Generator, Discoverer, StatisticTracker, SaveManager);
+})(Units, Skills, Upgrades, Events, Generator, Spender, Discoverer, StatisticTracker, SaveManager);

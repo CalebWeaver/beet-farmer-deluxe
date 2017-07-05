@@ -1,13 +1,13 @@
-var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, discoverer, save) {
+let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, discoverer, save) {
 	'use strict';
-	var self = this;
+	let self = this;
 
 	(function() {
 
-		var units = unitsM.units;
-		var skills = skillsM.skills;
-		var upgrades = upgradesM.upgrades;
-		var events = eventsM.events;
+		let units = unitsM.units;
+		let skills = skillsM.skills;
+		let upgrades = upgradesM.upgrades;
+		let events = eventsM.events;
 
 		createSkill(FARMING,
 			function() {
@@ -17,14 +17,14 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(K_FARMING,
 			function() {
-				var intMin = 3;
+				let intMin = 3;
 				return skills[INTELLIGENCE].level() >= intMin;
 			}
 		);
 
 		createSkill(TERRAMANCY,
 			function() {
-				var intMin = 20;
+				let intMin = 20;
 				return skills[INTELLIGENCE].level() >= intMin;
 			}
 		);
@@ -43,7 +43,7 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(HUNTING,
 			function() {
-				// var farmMin = 10;
+				// let farmMin = 10;
 				// return skills[FARMING].level() >= farmMin;
 			}
 		);
@@ -68,9 +68,9 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(CRAFTING,
 			function() {
-				var stoneMin = 100;
-				var woodMin = 100;
-				var intMin = 10;
+				let stoneMin = 100;
+				let woodMin = 100;
+				let intMin = 10;
 				return units[STONE].amount() >= stoneMin
 					&& units[WOOD].amount() >= woodMin
 					&& skills[INTELLIGENCE].level() >= intMin;
@@ -79,14 +79,14 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(CRAFTING_G,
 			function() {
-				var craftingMin = 10;
+				let craftingMin = 10;
 				return skills[CRAFTING].level() >= craftingMin;
 			}
 		).setGroup(GUILD);
 
 		createSkill(GOVERN,
 			function() {
-				var prestigeMin = 100;
+				let prestigeMin = 100;
 				return units[PRESTIGE].amount() >= prestigeMin;
 			}
         ).setGroup(GUILD);
@@ -109,7 +109,7 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 	return self;
 
 	function loadSkills() {
-		var skills = skillsM.skills;
+		let skills = skillsM.skills;
 		if (save.load) {
 			save.load.skills.forEach(function(skill) {
 				skills[skill.name].setLevel(skill.level);
@@ -119,7 +119,7 @@ var SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 	}
 
 	function createSkill(name, discovery) {
-		var skill = new Skill(name);
+		let skill = new Skill(name);
 		skillsM.skills[name] = skill;
 		discoverer[name] = discovery;
 		return skill;

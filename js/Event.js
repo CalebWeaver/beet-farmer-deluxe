@@ -3,7 +3,7 @@ var Event = (function() {
 
     return Event;
 
-    function Event(name, description, effect) {
+    function Event(name, description) {
 
         var event = this;
         event.name = name;
@@ -13,11 +13,12 @@ var Event = (function() {
         event.paths = [];
         event.addPath = addPath;
         event.chosenPath = ko.observable();
-        event.setPath = setPath;
+        event.choosePath = choosePath;
+        event.setEffect = setEffect;
 
         function occurs() {
             if (!event.hasOccurred()) {
-                effect();
+                if (event.effect) event.effect();
                 event.hasOccurred(true);
             }
         }
@@ -27,8 +28,13 @@ var Event = (function() {
             return event;
         }
 
-        function setPath(path) {
+        function choosePath(path) {
             event.chosenPath(path);
+        }
+
+        function setEffect(effect) {
+            event.effect = effect;
+            return event;
         }
     }
 })();

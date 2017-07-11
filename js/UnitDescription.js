@@ -1,9 +1,4 @@
-var Units = (function(){
+let Units = (function(){
 	'use strict';
-
-	var self = {};
-
-	self.units = {};
-
-	return self;
+	return {};
 }());

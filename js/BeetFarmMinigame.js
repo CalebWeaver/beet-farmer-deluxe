@@ -1,4 +1,4 @@
-let beetFarmMinigame = (function(skills, units, settings, stats) {
+let BeetFarmMinigame = (function(skills, units, upgrades, player, settings, stats) {
     'use strict';
 
     let SEED_COLOR = '#291917';
@@ -23,38 +23,43 @@ let beetFarmMinigame = (function(skills, units, settings, stats) {
 
     let beetFarmMinigame = {};
     beetFarmMinigame.harvest = harvest;
-    beetFarmMinigame.addBeet = addBeet;
+    beetFarmMinigame.fillBeets = fillBeets;
     beetFarmMinigame.GRID_WIDTH = GRID_WIDTH;
     beetFarmMinigame.GRID_HEIGHT = GRID_HEIGHT;
 
     let farmTracker = {};
-    skills = skills.skills;
 
     (function() {
         farmTracker.length = 0;
     
-        let beetFarmTable = document.getElementsByClassName("beet-farm")[0];
-    
-        let farmRow = '<tr>';
-        let farmRowEnd = '</tr>';
-    
-        let farm = '';
-    
-        for (let i = 0; i < GRID_HEIGHT; i++) {
-            farm += farmRow;
-            for (let j = 0; j < GRID_WIDTH; j++) {
-                let beetId = 'beet-'+j+'-'+i;
-                farm += createEmptyBeetPlot(beetId);
-            }
-            farm += farmRowEnd;
-        }
-    
-        beetFarmTable.insertAdjacentHTML('afterbegin', farm);
+        createBeetFarm();
 
         setInterval(gameLoop, stats.UPDATE_TICK);
     })();
 
     return beetFarmMinigame;
+
+    function createBeetFarm() {
+
+        let beetFarmTable = document.getElementsByClassName("beet-farm")[0];
+        beetFarmTable.innerHTML = '';
+
+        let farmRow = '<tr>';
+        let farmRowEnd = '</tr>';
+
+        let farm = '';
+
+        for (let i = 0; i < beetFarmMinigame.GRID_HEIGHT; i++) {
+            farm += farmRow;
+            for (let j = 0; j < beetFarmMinigame.GRID_WIDTH; j++) {
+                let beetId = 'beet-'+j+'-'+i;
+                farm += createEmptyBeetPlot(beetId);
+            }
+            farm += farmRowEnd;
+        }
+
+        beetFarmTable.insertAdjacentHTML('afterbegin', farm);
+    }
 
     function createEmptyBeetPlot(beetId) {
         return '<td><div id="'+beetId+'" ></div></td>';
@@ -63,16 +68,18 @@ let beetFarmMinigame = (function(skills, units, settings, stats) {
     function harvest(beetElem) {
         let beet = getBeet(beetElem);
         if (beet.stage == STAGE_RIPE) {
-            units.units[BEETS].add(skills[FARMING].level());
+            units[BEETS].add(skills[FARMING].level());
+            player.gainXp(5);
         }
         if (beet.stage == STAGE_PERFECT) {
-            units.units[BEETS].add(skills[FARMING].level() * 2);
+            units[BEETS].add(skills[FARMING].level() * 3);
+            player.gainXp(15);
         }
 
         plantBeet(beetElem);
     }
 
-    function addBeet() {
+    function fillBeets() {
 
         let beetCells = document.querySelectorAll(".beet-farm td");
         for (let cell in beetCells) {
@@ -84,7 +91,6 @@ let beetFarmMinigame = (function(skills, units, settings, stats) {
 
                     innerBeet.classList.add('farm-beet');
                     innerBeet.addEventListener('click', function() {beetFarmMinigame.harvest(innerBeet)});
-                    break;
                 }
             }
         }
@@ -116,7 +122,7 @@ let beetFarmMinigame = (function(skills, units, settings, stats) {
         let seedTime = 6;
         let sproutTime = 3;
         let perfectTime = 1 + (skills[K_FARMING].level() / 3);
-        let ripeTime = 6 * (1 + (skills[K_FARMING].level() / 3));
+        let ripeTime = 5 * (1 + (skills[K_FARMING].level() / 3));
 
         return [seedTime, sproutTime, perfectTime, ripeTime];
     }
@@ -128,8 +134,9 @@ let beetFarmMinigame = (function(skills, units, settings, stats) {
     }
 
     function checkAddBeet() {
-        if (farmTracker.length < getGridSize() && farmTracker.length < skills[FARMING].level() / 3) {
-            addBeet();
+        if (farmTracker.length < getGridSize()) {
+            createBeetFarm();
+            fillBeets();
         }
     }
 
@@ -198,6 +205,6 @@ let beetFarmMinigame = (function(skills, units, settings, stats) {
     }
 
     function getGridSize() {
-        return GRID_HEIGHT * GRID_WIDTH;
+        return beetFarmMinigame.GRID_HEIGHT * beetFarmMinigame.GRID_WIDTH;
     }
-})(Skills, Units, Settings, StatisticTracker);
+})(Skills, Units, Upgrades, Player, Settings, StatisticTracker);

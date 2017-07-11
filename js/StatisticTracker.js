@@ -1,7 +1,7 @@
 let StatisticTracker = (function(save) {
 	'use strict';
 
-    let GENERATE_SPEED = .1; //GENERATE_SPEED * Ticks per second = generates / second (.01 * 100 = 1)
+    let GENERATE_SPEED = .01; //GENERATE_SPEED * Ticks per second = generates / second (.01 * 100 = 1)
 	let UPDATE_TICK = 10; //10 = 100 Ticks per second
 
 	let TICK_PER_SECOND = (1000 / UPDATE_TICK);

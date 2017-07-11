@@ -1,15 +1,15 @@
-var Skill = (function(player, skills) {
+let Skill = (function(player, skills) {
     'use strict';
 
     return Skill;
 
     function Skill(name) {
 
-        var skill = this;
+        let skill = this;
         skill.name = name;
         skill.level = ko.observable(0);
         skill.setLevel = setLevel;
-        skill.incrementLevel = incrementLevel;
+        skill.levelUp = levelUp;
         skill.isAvailable = ko.observable(false);
         skill.toggleable = false;
         skill.isActive = ko.observable(true);
@@ -33,10 +33,6 @@ var Skill = (function(player, skills) {
 
         function setGroup(value) {
             skill.group = value;
-            if (!skills[value]) {
-                skills[value] = [];
-            }
-            skills[value].push(skill);
             return skill;
         }
 
@@ -45,7 +41,7 @@ var Skill = (function(player, skills) {
             return skill;
         }
 
-        function incrementLevel() {
+        function levelUp() {
             if (player.currentLevel() >= 1) {
                 skill.level(skill.level() + 1);
                 player.currentLevel(player.currentLevel() - 1);

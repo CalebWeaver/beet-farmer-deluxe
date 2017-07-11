@@ -1,10 +1,10 @@
-var Upgrade = (function() {
+let Upgrade = (function() {
     'use strict';
 
     return Upgrade;
 
     function Upgrade(name, time) {
-        var upgrade = this;
+        let upgrade = this;
         upgrade.name = name;
         upgrade.begin = begin;
         upgrade.time = time;
@@ -58,7 +58,7 @@ var Upgrade = (function() {
         }
 
         function animateButton() {
-            var buttonTarget = $(event.currentTarget);
+            let buttonTarget = $(event.currentTarget);
             buttonTarget.addClass("in-progress");
             buttonTarget.children().first().css({"transition-duration": (time/1000)+"s", "width": "100%"});
         }

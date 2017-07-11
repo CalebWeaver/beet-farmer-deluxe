@@ -1,9 +1,14 @@
-var Settings = (function() {
+let Settings = (function() {
+    'use strict';
+    return {};
+}());
+
+let SettingUtil = (function() {
+
     'use strict';
 
-    var self = {};
+    let self = {};
 
-    self.settings = {};
     self.getAvailableSettings = getAvailableSettings;
 
     return self;
@@ -11,4 +16,4 @@ var Settings = (function() {
     function getAvailableSettings() {
         return _.filter(self.settings, setting => setting.isAvailable());
     }
-}());
+})();

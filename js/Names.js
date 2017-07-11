@@ -48,8 +48,20 @@ LEARN_TO_FARM_DESC = "Observing the dirt, you notice potential.";
 BEETS_BEGIN = "Beets Begin";
 BEETS_BEGIN_DESC = "The richest of men begin with beets.";
 
+CROWN_OF_ROOTS = "Crown of Roots";
+CROWN_OF_ROOTS_DESC = "You find a cluster of small beetroots which seem to have shaped themselves into a ring." +
+    " It seems to be roughly the size of your head.";
+CROWN_OF_ROOTS_YES = "Don the wreath.";
+CROWN_OF_ROOTS_NO = "These beets belong in the ground.";
+
+BEET_KING = "King of Beets";
+BEET_KING_DESC = "You've become more understanding of your subjects.";
+
+FARM_SAVANT = "Farm Savant";
+FARM_SAVANT_DESC = "Those roots will blossom nicely.";
+
 GAINING_KNOWLEDGE = "Gaining Knowledge";
-GAINING_KNOWLEDGE_DESC = "You've come to understand more of what the ground can accomodate. But should you proceed?";
+GAINING_KNOWLEDGE_DESC = "You've come to understand more of what the ground can accommodate. But should you proceed?";
 
 GAIN_KNOWLEDGE_PATH_YES = "Explore alternative plants";
 GAIN_KNOWLEDGE_PATH_NO = "Remain pure";
@@ -120,6 +132,13 @@ PICK_COST = 1000;
 FISHING_POLE = "Fishing Pole";
 FISHING_POLE_TIME = 1000;
 FISHING_POLE_COST = 1000;
+
+FARM_2_1 = "Expand Farm - 2x1";
+FARM_2_2 = "Expand Farm - 2x2";
+FARM_3_2 = "Expand Farm - 3x2";
+FARM_3_3 = "Expand Farm - 3x3";
+FARM_4_3 = "Expand Farm - 4x3";
+FARM_4_4 = "Expand Farm - 4x4";
 
 //Settings
 SETTING_TYPE_NUM = "Number";

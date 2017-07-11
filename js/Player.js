@@ -1,12 +1,12 @@
-var Player = (function(save) {
+let Player = (function(save) {
 	'use strict';
 
-	var self = {};
+	let self = {};
 
 	self.xp = 0;
 	self.currentLevel = ko.observable(1);
 	self.totalLevel = ko.observable(1);
-	self.xpForLevel = ko.computed(function() { return self.totalLevel() + 300; });
+	self.xpForLevel = ko.computed(function() { return self.totalLevel() + 200; });
 	self.gainXp = gainXp;
 
 	(function() {

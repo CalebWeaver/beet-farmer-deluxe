@@ -1,9 +1,5 @@
-var Events = (function() {
+let Events = (function() {
 	'use strict';
 
-	var self = {};
-
-	self.events = {};
-
-	return self;
+	return {};
 }());

@@ -1,14 +1,18 @@
 let Upgrades = (function() {
 	'use strict';
-
-	let self = {};
-
-	self.upgrades = {};
-	self.getDiscoveredUpgrades = getDiscoveredUpgrades;
-
-	return self;
-
-	function getDiscoveredUpgrades() {
-		return _.filter(self.upgrades,upgrade => upgrade.isDiscovered());
-	}
+	return {};
 }());
+
+let UpgradeUtil = (function() {
+    'use strict';
+
+    let self = {};
+
+    self.getDiscoveredUpgrades = getDiscoveredUpgrades;
+
+    return self;
+
+    function getDiscoveredUpgrades() {
+        return _.filter(Upgrades,upgrade => upgrade.isDiscovered());
+    }
+})();

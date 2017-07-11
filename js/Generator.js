@@ -10,7 +10,7 @@ let Generator = (function(units, stats){
 	function setGeneration(name, increment) {
 		self[name] = function() {
 			let amount = increment() * stats.GENERATE_SPEED;
-            units.units[name].add(amount);
+            units[name].add(amount);
             return amount;
         }
 	}

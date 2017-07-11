@@ -1,4 +1,4 @@
-let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player, save) {
+let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player, save, upgradeUtil, settingUtil, beetFarmMinigame) {
 	'use strict';
 	let self = {};
 
@@ -20,15 +20,15 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	(function() {
 
-		self.skills(Object.values(skills.skills));
-		self.units(Object.values(units.units));
-		self.upgrades(Object.values(upgrades.upgrades));
-        self.events(Object.values(events.events));
-        self.settings(Object.values(settings.settings));
+		self.skills(Object.values(skills));
+		self.units(Object.values(units));
+		self.upgrades(Object.values(upgrades));
+        self.events(Object.values(events));
+        self.settings(Object.values(settings));
 
 		setInterval(updateAll, stats.UPDATE_TICK);
 
-		// skills.skills[FARMING].incrementLevel();
+		// skills.skills[FARMING].levelUp();
 
 		document.onkeypress = function(e) {
 			if (e.keyCode === 13) {
@@ -44,30 +44,16 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	return self;
 
 	function setTestData() {
-		let unitsM = units.units;
-		let skillsM = skills.skills;
-		let upgradesM = upgrades.upgrades;
-		let eventsM = events.events;
-
-		// beetFarmMinigame.addBeet();
 
 		player.gainXp(1000);
 		// unitsM[GOLD].amount(10);
-        //
-		units.units[BEETS].amount(10);
-		// units.units[CORN].isDiscovered(true);
-		// units.units[CORN].amount(10);
-		// upgradesM[PLANT_CORN].isObtained(true);
-		// skills.skills[K_FARMING].isAvailable(true);
-		// skills.skills[K_FARMING].setLevel(6);
-		// skillsM[FARMING].setLevel(15);
-		// unitsM[FARM_CURSE].amount(20);
-		// upgradesM[PICK].isDiscovered(true);
+
+        units[BEETS].amount(10);
 	}
 
 	function updateAll() {
 		updateLevelBar();
-		let xpToGain = (1 + (skills.skills[INTELLIGENCE].level() / 10)) * .1;
+		let xpToGain = (1 + (skills[INTELLIGENCE].level() * .2)) * .1;
 		player.gainXp(xpToGain);
 
 		stats.updateTimePlayed();
@@ -142,7 +128,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     	let isPurchasable = upgrade.isAvailable();
 
     	if (upgrade.costUnit && upgrade.cost && isPurchasable) {
-    	     isPurchasable = units.units[upgrade.costUnit].amount() >= upgrade.cost;
+    	     isPurchasable = units[upgrade.costUnit].amount() >= upgrade.cost;
 		}
 
 		return isPurchasable;
@@ -151,19 +137,20 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     function buyUpgrade(upgrade) {
 		upgrade.begin();
         if (upgrade.costUnit && upgrade.cost) {
-            units.units[upgrade.costUnit].remove(upgrade.cost);
+            units[upgrade.costUnit].remove(upgrade.cost);
         }
     }
 
     function isBarUnlocked() {
-		return skills.skills[INTELLIGENCE].level() > 3;
+		return skills[INTELLIGENCE].level() > 3;
 	}
 
     function getDiscoveredUpgrades() {
-        return upgrades.getDiscoveredUpgrades();
+        return upgradeUtil.getDiscoveredUpgrades();
     }
 
     function getAvailableSettings() {
-        return settings.getAvailableSettings();
+        return settingUtil.getAvailableSettings();
     }
-})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager);
+})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager, UpgradeUtil,
+SettingUtil, BeetFarmMinigame);

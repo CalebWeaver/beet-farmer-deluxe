@@ -1,13 +1,8 @@
-let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, discoverer, save) {
+let SkillDescriber = (function(Skill, units, skills, upgrades, events, discoverer, save) {
 	'use strict';
 	let self = this;
 
 	(function() {
-
-		let units = unitsM.units;
-		let skills = skillsM.skills;
-		let upgrades = upgradesM.upgrades;
-		let events = eventsM.events;
 
 		createSkill(FARMING,
 			function() {
@@ -17,8 +12,7 @@ let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(K_FARMING,
 			function() {
-				let intMin = 3;
-				return skills[INTELLIGENCE].level() >= intMin;
+				return skills[FARMING].level() >= 5;
 			}
 		);
 
@@ -43,20 +37,19 @@ let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 		createSkill(HUNTING,
 			function() {
-				// let farmMin = 10;
-				// return skills[FARMING].level() >= farmMin;
+				return false;
 			}
 		);
 
 		createSkill(WOODCUTTING,
 			function() {
-				return upgrades[AXE].isObtained();
+				return false;
 			}
 		);
 
 		createSkill(MINING,
 			function() {
-				return upgrades[PICK].isObtained();
+				return false;
 			}
 		);
 
@@ -84,22 +77,21 @@ let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 			}
 		).setGroup(GUILD);
 
-		createSkill(GOVERN,
+        createSkill(GOVERN,
 			function() {
-				let prestigeMin = 100;
-				return units[PRESTIGE].amount() >= prestigeMin;
+				return false;
 			}
         ).setGroup(GUILD);
 
 		createSkill(STRENGTH,
 			function() {
-				return events[SELF_AWARENESS].hasOccurred();
+				return false;
 			}
 		);
 
 		createSkill(INTELLIGENCE,
 			function() {
-				return events[SELF_AWARENESS].hasOccurred();
+				return false;
 			}
 		);
 
@@ -109,7 +101,6 @@ let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 	return self;
 
 	function loadSkills() {
-		let skills = skillsM.skills;
 		if (save.load) {
 			save.load.skills.forEach(function(skill) {
 				skills[skill.name].setLevel(skill.level);
@@ -120,7 +111,7 @@ let SkillDescriber = (function(Skill, unitsM, skillsM, upgradesM, eventsM, disco
 
 	function createSkill(name, discovery) {
 		let skill = new Skill(name);
-		skillsM.skills[name] = skill;
+		skills[name] = skill;
 		discoverer[name] = discovery;
 		return skill;
 	}

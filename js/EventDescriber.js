@@ -25,18 +25,18 @@ let EventDescriber = (function(Event, units, skills, upgrades, events, generator
 
         createEvent(BEET_KING, BEET_KING_DESC,
             function() {
-                return events[CROWN_OF_ROOTS].choosePath(CROWN_OF_ROOTS_YES);
+                return events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_YES;
             })
             .setEffect(() => skills[INTELLIGENCE].levelUp());
 
         createEvent(FARM_SAVANT, FARM_SAVANT_DESC,
             function() {
-                return events[CROWN_OF_ROOTS].choosePath(CROWN_OF_ROOTS_NO);
+                return events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_NO;
             });
 
         createEvent(GAINING_KNOWLEDGE, GAINING_KNOWLEDGE_DESC,
             function() {
-                return skills[K_FARMING].level() >= 6;
+                return skills[K_FARMING].level() >= 3;
             }
         ).addPath(GAIN_KNOWLEDGE_PATH_YES)
 			.addPath(GAIN_KNOWLEDGE_PATH_NO);
@@ -52,6 +52,12 @@ let EventDescriber = (function(Event, units, skills, upgrades, events, generator
                 return events[GAINING_KNOWLEDGE].chosenPath() == GAIN_KNOWLEDGE_PATH_YES;
             }
         );
+
+        createEvent(BEETS_BEYOND, BEETS_BEYOND_DESC,
+			function() {
+        		return upgrades[WHITE_BEET_SEEDS].isDiscovered();
+			}
+		);
 
         createEvent(OFF_TO_MARKET, OFF_TO_MARKET_DESC,
             function() {

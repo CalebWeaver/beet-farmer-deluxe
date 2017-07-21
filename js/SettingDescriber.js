@@ -7,6 +7,18 @@ let SettingDescriber = (function(Setting, units, skills, upgrades, events, setti
             }
         );
 
+        createSetting(SOIL_PH, [0, 14], 7, SETTING_TYPE_NUM,
+            function() {
+                return skills[EDAPHOLOGY].level() >= 10;
+            }
+        );
+
+        createSetting(HARVEST_TECHNIQUE, HARVEST_TECHNIQUE_SELECTION, HARVEST_TECHNIQUE_SELECTION[0], SETTING_TYPE_SEL,
+            function() {
+                return skills[EDAPHOLOGY].level() >= 10;
+            }
+        );
+
         loadSettings();
     })();
 

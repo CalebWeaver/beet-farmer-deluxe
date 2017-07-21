@@ -46,9 +46,13 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function setTestData() {
 
 		player.gainXp(1000);
+		settings[HARVEST_TECHNIQUE].isAvailable(true);
 		// unitsM[GOLD].amount(10);
 
         units[BEETS].amount(10);
+        skills[K_FARMING].setLevel(3);
+        skills[BEET_MARKET].setLevel(5);
+        upgrades[WHITE_BEET_SEEDS].isObtained(true);
 	}
 
 	function updateAll() {
@@ -142,7 +146,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     }
 
     function isBarUnlocked() {
-		return skills[INTELLIGENCE].level() > 3;
+		return skills[INTELLIGENCE].level() >= 0;
 	}
 
     function getDiscoveredUpgrades() {

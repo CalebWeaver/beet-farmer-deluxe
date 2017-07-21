@@ -1,10 +1,10 @@
-var Setting = (function() {
+let Setting = (function() {
     'use strict';
 
     return Setting;
 
     function Setting(name, range, defaultSet, type) {
-        var setting = this;
+        let setting = this;
 
         setting.name = name;
         setting.range = range;

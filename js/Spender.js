@@ -4,6 +4,7 @@ let Spender = (function(units, stats){
     let self = {};
 
     self.setSpending = setSpending;
+    self.spendingPerSec = {};
     self.hasSpent = {};
 
     return self;
@@ -16,6 +17,8 @@ let Spender = (function(units, stats){
                 self.hasSpent[name] = true;
             }
             return spendAmount;
-        }
+        };
+
+        self.spendingPerSec[name] = decrement;
     }
 }(Units, StatisticTracker));

@@ -1,11 +1,11 @@
-var Event = (function() {
+let Event = (function() {
     'use strict';
 
     return Event;
 
     function Event(name, description) {
 
-        var event = this;
+        let event = this;
         event.name = name;
         event.description = description;
         event.occurs = occurs;

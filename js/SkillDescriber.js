@@ -10,30 +10,41 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 			}
 		);
 
-		createSkill(K_FARMING,
-			function() {
-				return skills[FARMING].level() >= 5;
-			}
-		);
+        createSkill(BEET_MARKET,
+            function() {
+                return units[BEETS].amount() > 10;
+            }
+        ).setToggleable();
 
-		createSkill(TERRAMANCY,
-			function() {
-				let intMin = 20;
-				return skills[INTELLIGENCE].level() >= intMin;
-			}
-		);
+        createSkill(K_FARMING,
+            function() {
+                return skills[FARMING].level() >= 5;
+            }
+        );
 
-		createSkill(BEET_MARKET,
-			function() {
-				return units[BEETS].amount() > 10;
-			}
-		).setToggleable();
+        createSkill(TOOLCRAFT,
+            function() {
+                return upgrades[IRON_PLOW].isObtained();
+            }
+        );
 
-		createSkill(PEST_CONTROL,
-			function() {
-				return events[CENTIPEDES].hasOccurred();
-			}
-		);
+        createSkill(EDAPHOLOGY,
+            function() {
+                return skills[K_FARMING].level() >= 5;
+            }
+        );
+
+        createSkill(PEST_CONTROL,
+            function() {
+                return skills[FARMING].level() >= 10;
+            }
+        );
+
+        createSkill(HARVESTRY,
+            function() {
+                return skills[FARMING].level() >= 20;
+            }
+        );
 
 		createSkill(HUNTING,
 			function() {

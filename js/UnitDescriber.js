@@ -1,27 +1,103 @@
-let UnitDescriber = (function(units, skills, upgrades, events, generator, spender, discoverer, stats, save) {
+let UnitDescriber = (function(units, skills, upgrades, events, settings, generator, spender, discoverer, stats, save) {
 	'use strict';
 	let self = this;
 
 	(function() {
 
-		createUnit(BEETS,
-			function() {
-                units[BEETS].isSpent = false;
-				let beets = createBeets();
-                return beets;
-			},
-			function() {
-				return true;
-			},
-			function() {
+        createUnit(BEETS,
+            function() {
+                let beets = createBeets();
+                let temperatureCoeff = .3 / distanceFromTemperature(75);
+                return beets * (1 + temperatureCoeff);
+            },
+            function() {
+                return true;
+            },
+            function() {
                 let MARKET_GROWTH = .1;
                 let sellAmount = 0;
                 if (skills[BEET_MARKET].getUsableLevel() > 0) {
                     sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
                 }
                 return sellAmount;
-			}
-		);
+            }
+        );
+
+        createUnit(WHITE_BEETS,
+            function() {
+                let beets = createBeets();
+                let temperatureCoeff = .3 / distanceFromTemperature(55);
+                return beets * (1 + temperatureCoeff);
+            },
+            function() {
+                return upgrades[WHITE_BEET_SEEDS].isObtained();
+            },
+            function() {
+                let MARKET_GROWTH = .1;
+                let sellAmount = 0;
+                if (skills[BEET_MARKET].getUsableLevel() > 0) {
+                    sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
+                }
+                return sellAmount;
+            }
+        );
+
+        createUnit(DIRE_BEETS,
+            function() {
+                let beets = createBeets();
+                let temperatureCoeff = .3 / distanceFromTemperature(95);
+                return beets * (1 + temperatureCoeff);
+            },
+            function() {
+                return upgrades[DIRE_BEET_SEEDS].isObtained();
+            },
+            function() {
+                let MARKET_GROWTH = .1;
+                let sellAmount = 0;
+                if (skills[BEET_MARKET].getUsableLevel() > 0) {
+                    sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
+                }
+                return sellAmount;
+            }
+        );
+
+        createUnit(SENTIENT_BEETS,
+            function() {
+                let beets = createBeets();
+                let temperatureCoeff = .3 / distanceFromTemperature(99);
+                return beets * (1 + temperatureCoeff);
+            },
+            function() {
+                return upgrades[SENTIENT_BEET_SEEDS].isObtained();
+            },
+            function() {
+                let MARKET_GROWTH = .1;
+                let sellAmount = 0;
+                if (skills[BEET_MARKET].getUsableLevel() > 0) {
+                    sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
+                }
+                return sellAmount;
+            }
+        );
+
+        createUnit(SAZE_RUNIC_BEETS,
+            function() {
+                let beets = createBeets();
+                let temperatureCoeff = .3 / distanceFromTemperature(30);
+                return beets * (1 + temperatureCoeff);
+            },
+            function() {
+                return upgrades[SAZE_RUNIC_BEET_SEEDS].isObtained();
+            },
+            function() {
+                let MARKET_GROWTH = .1;
+                let sellAmount = 0;
+                if (skills[BEET_MARKET].getUsableLevel() > 0) {
+                    sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
+                }
+                return sellAmount;
+            }
+        );
 
 		function createBeets() {
             let centipedes = 0;
@@ -29,6 +105,10 @@ let UnitDescriber = (function(units, skills, upgrades, events, generator, spende
                 centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
             }
             return farmingBase() + centipedes;
+		}
+
+		function distanceFromTemperature(temp) {
+			return (Math.abs(temp - settings[GREENHOUSE_TEMPERATURE].setting()) + 1);
 		}
 
 		createUnit(CORN,
@@ -58,7 +138,7 @@ let UnitDescriber = (function(units, skills, upgrades, events, generator, spende
 			let tilled = 1 + (upgrades[TILLING].isObtained() ? TILLED_MULT : 0);
 			let toolBonus = 1 + ((upgrades[IRON_HOE].isObtained() ? IRON_HOE_BONUS : 0) + (upgrades[STEEL_HOE].isObtained() ? STEEL_HOE_BONUS : 0));
 			let tilling = upgrades[TILLING].inProgress() ? TILLING_PENTALTY : 1;
-			let plantedCrown = 1 + ((events[CROWN_OF_ROOTS].choosePath(CROWN_OF_ROOTS_NO) ? PLANTED_CROWN_BONUS : 0));
+			let plantedCrown = 1 + ((events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_NO ? PLANTED_CROWN_BONUS : 0));
 
 			let farmingTotal = (BASE_FARM * farmingProduction * tilled * toolBonus * plantedCrown) / tilling;
 
@@ -105,19 +185,28 @@ let UnitDescriber = (function(units, skills, upgrades, events, generator, spende
 
 		function sellBeets() {
 
-			let BEETS_TO_GOLD = 10 - (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .1);
-
-			let MARKET_GROWTH = .5;
-
-			let sellAmount = 0;
-			if (skills[BEET_MARKET].getUsableLevel() > 0) {
-				sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
-			}
+            let GOLD_PER_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .02);
+            let GOLD_PER_WHITE_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .05);
+            let GOLD_PER_DIRE_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .1);
+            let GOLD_PER_SENTIENT_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .4);
+            let GOLD_PER_SAZE_RUNIC_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200));
 
 			let beetGold = 0;
-			if (spender.hasSpent[BEETS]) {
-                beetGold = sellAmount / BEETS_TO_GOLD;
-			}
+            if (spender.hasSpent[BEETS]) {
+                beetGold += spender.spendingPerSec[BEETS]() * GOLD_PER_BEET;
+            }
+            if (spender.hasSpent[WHITE_BEETS]) {
+                beetGold += spender.spendingPerSec[WHITE_BEETS]() * GOLD_PER_WHITE_BEET;
+            }
+            if (spender.hasSpent[DIRE_BEETS]) {
+                beetGold += spender.spendingPerSec[DIRE_BEETS]() * GOLD_PER_DIRE_BEET;
+            }
+            if (spender.hasSpent[SENTIENT_BEETS]) {
+                beetGold += spender.spendingPerSec[SENTIENT_BEETS]() * GOLD_PER_SENTIENT_BEET;
+            }
+            if (spender.hasSpent[SAZE_RUNIC_BEETS]) {
+                beetGold += spender.spendingPerSec[SAZE_RUNIC_BEETS]() * GOLD_PER_SAZE_RUNIC_BEET;
+            }
 
 			return beetGold;
 		}
@@ -180,4 +269,4 @@ let UnitDescriber = (function(units, skills, upgrades, events, generator, spende
         }
 		discoverer[name] = discovery;
 	}
-})(Units, Skills, Upgrades, Events, Generator, Spender, Discoverer, StatisticTracker, SaveManager);
+})(Units, Skills, Upgrades, Events, Settings, Generator, Spender, Discoverer, StatisticTracker, SaveManager);

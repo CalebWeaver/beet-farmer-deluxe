@@ -14,6 +14,6 @@ let SettingUtil = (function() {
     return self;
 
     function getAvailableSettings() {
-        return _.filter(self.settings, setting => setting.isAvailable());
+        return _.filter(Settings, setting => setting.isAvailable());
     }
 })();

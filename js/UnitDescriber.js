@@ -11,7 +11,7 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
                 return beets * (1 + temperatureCoeff);
             },
             function() {
-                return true;
+                return skills[FARMING].level() > 0;
             },
             function() {
                 let MARKET_GROWTH = .1;
@@ -125,22 +125,32 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
 		);
 
 		function farmingBase() {
-			let BASE_FARM = 1;
-			let FARMING_MULT = .1;
-			let K_FARMING_MULT = .1;
-			let TILLED_MULT = .3;
-			let TILLING_PENTALTY = 5;
-			let IRON_HOE_BONUS = .1;
-			let STEEL_HOE_BONUS = .1;
-			let PLANTED_CROWN_BONUS = .2;
+			let farmingBase = skills[FARMING].getUsableLevel() * .1;
+            let kFarmBonus = skills[K_FARMING].getUsableLevel() * .1;
+            let edaphologyBonus = skills[EDAPHOLOGY].getUsableLevel() * .1;
+			let tilledBonus = upgrades[TILLING].isObtained() ? .3 : 0;
 
-			let farmingProduction = skills[FARMING].getUsableLevel() * FARMING_MULT * (skills[K_FARMING].getUsableLevel() * K_FARMING_MULT + 1);
-			let tilled = 1 + (upgrades[TILLING].isObtained() ? TILLED_MULT : 0);
-			let toolBonus = 1 + ((upgrades[IRON_HOE].isObtained() ? IRON_HOE_BONUS : 0) + (upgrades[STEEL_HOE].isObtained() ? STEEL_HOE_BONUS : 0));
-			let tilling = upgrades[TILLING].inProgress() ? TILLING_PENTALTY : 1;
-			let plantedCrown = 1 + ((events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_NO ? PLANTED_CROWN_BONUS : 0));
+            let ironHoeBonus = upgrades[IRON_HOE].isObtained() ? .1 : 0;
+            let steelHoeBonus = upgrades[STEEL_HOE].isObtained() ? .1 : 0;
+            let ironSpadeBonus = upgrades[IRON_SPADE].isObtained() ? .1 : 0;
+            let steelSpadeBonus = upgrades[STEEL_SPADE].isObtained() ? .1 : 0;
+            let ironRakeBonus = upgrades[IRON_RAKE].isObtained() ? .1 : 0;
+            let steelRakeBonus = upgrades[STEEL_RAKE].isObtained() ? .1 : 0;
+            let ironPlowBonus = upgrades[IRON_PLOW].isObtained() ? .1 : 0;
+            let steelPlowBonus = upgrades[STEEL_PLOW].isObtained() ? .1 : 0;
 
-			let farmingTotal = (BASE_FARM * farmingProduction * tilled * toolBonus * plantedCrown) / tilling;
+			let plantedCrownBonus = events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_NO ? .2 : 0;
+
+			let toolBonus = ironHoeBonus + steelHoeBonus + ironSpadeBonus + steelSpadeBonus
+				+ ironRakeBonus + steelRakeBonus + ironPlowBonus + steelPlowBonus;
+
+			let totalBonusMult = 1 + toolBonus + tilledBonus + plantedCrownBonus + kFarmBonus + edaphologyBonus;
+
+            let tillingPenalty = upgrades[TILLING].inProgress() ? 5 : 1;
+
+			let totalPenaltyMult = tillingPenalty;
+
+			let farmingTotal = farmingBase * totalBonusMult / totalPenaltyMult;
 
 			return farmingTotal;
 		}
@@ -167,9 +177,9 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
 				return 0;
 			},
 			function() {
-				return true;
+				return units[BEETS].isDiscovered();
 			}
-		);
+		).setIsHidden(true);
 		//#PROD units[FARM_CURSE].isHidden = true;
 
 		createUnit(GOLD,
@@ -185,11 +195,17 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
 
 		function sellBeets() {
 
-            let GOLD_PER_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .02);
-            let GOLD_PER_WHITE_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .05);
-            let GOLD_PER_DIRE_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .1);
-            let GOLD_PER_SENTIENT_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200) * .4);
-            let GOLD_PER_SAZE_RUNIC_BEET = (Math.min(skills[BEET_MARKET].getUsableLevel(), 200));
+            let paintBonus = upgrades[PAINT_STAND].isObtained() ? .1 : 0;
+            let postersBonus = upgrades[POSTERS].isObtained() ? .1 : 0;
+            let criersBonus = upgrades[BEET_CRIERS].isObtained() ? .1 : 0;
+
+            let totalBonusMult = 1 + paintBonus * postersBonus * criersBonus;
+
+            let GOLD_PER_BEET = .02;
+            let GOLD_PER_WHITE_BEET = .05;
+            let GOLD_PER_DIRE_BEET = .1;
+            let GOLD_PER_SENTIENT_BEET = .4;
+            let GOLD_PER_SAZE_RUNIC_BEET = 1;
 
 			let beetGold = 0;
             if (spender.hasSpent[BEETS]) {
@@ -208,7 +224,7 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
                 beetGold += spender.spendingPerSec[SAZE_RUNIC_BEETS]() * GOLD_PER_SAZE_RUNIC_BEET;
             }
 
-			return beetGold;
+			return beetGold * totalBonusMult;
 		}
 
 		createUnit(WOOD,
@@ -268,5 +284,6 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
             spender.setSpending(name, decrement);
         }
 		discoverer[name] = discovery;
+		return units[name];
 	}
 })(Units, Skills, Upgrades, Events, Settings, Generator, Spender, Discoverer, StatisticTracker, SaveManager);

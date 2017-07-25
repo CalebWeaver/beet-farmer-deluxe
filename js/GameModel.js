@@ -1,4 +1,5 @@
-let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player, save, upgradeUtil, settingUtil, beetFarmMinigame) {
+let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player,
+						  save, unitUtil, upgradeUtil, settingUtil, beetFarmMinigame, constitutionTracker) {
 	'use strict';
 	let self = {};
 
@@ -17,6 +18,8 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	self.buyUpgrade = buyUpgrade;
     self.getDiscoveredUpgrades = getDiscoveredUpgrades;
     self.getAvailableSettings = getAvailableSettings;
+    self.getDiscoveredUnits = getDiscoveredUnits;
+    self.isLevelUnlocked = isLevelUnlocked;
 
 	(function() {
 
@@ -46,19 +49,23 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function setTestData() {
 
 		player.gainXp(1000);
-		settings[HARVEST_TECHNIQUE].isAvailable(true);
+		// settings[HARVEST_TECHNIQUE].isAvailable(true);
 		// unitsM[GOLD].amount(10);
 
         units[BEETS].amount(10);
-        skills[K_FARMING].setLevel(3);
-        skills[BEET_MARKET].setLevel(5);
-        upgrades[WHITE_BEET_SEEDS].isObtained(true);
+        // skills[FARMING].setLevel(10);
+        // skills[K_FARMING].setLevel(10);
+        // skills[EDAPHOLOGY].setLevel(10);
+        // skills[K_FARMING].setLevel(3);
+        // skills[BEET_MARKET].setLevel(5);
+        // upgrades[WHITE_BEET_SEEDS].isObtained(true);
 	}
 
 	function updateAll() {
 		updateLevelBar();
 		let xpToGain = (1 + (skills[INTELLIGENCE].level() * .2)) * .1;
 		player.gainXp(xpToGain);
+		constitutionTracker.gainConstitution();
 
 		stats.updateTimePlayed();
 		stats.changeRandomEvent();
@@ -139,14 +146,34 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     }
 
     function buyUpgrade(upgrade) {
-		upgrade.begin();
+		animateButton(upgrade);
+        let button = $(event.currentTarget);
+		upgrade.begin().then(() => {
+			if (upgrade.canBuyAgain) {
+				removeProgress(button);
+            }
+        });
         if (upgrade.costUnit && upgrade.cost) {
             units[upgrade.costUnit].remove(upgrade.cost);
         }
     }
 
+    function animateButton(upgrade) {
+        let button = $(event.currentTarget);
+        button.addClass("in-progress");
+        button.children().first().css({"transition-duration": (upgrade.time/1000)+"s", "width": "100%"});
+    }
+
+    function removeProgress(button) {
+        button.children().first().css({"transition-duration":"0s", "width": "0"});
+    }
+
     function isBarUnlocked() {
-		return skills[INTELLIGENCE].level() >= 0;
+		return skills[INTELLIGENCE].level() >= 3;
+	}
+
+	function isLevelUnlocked() {
+		return player.totalLevel() > 1;
 	}
 
     function getDiscoveredUpgrades() {
@@ -156,5 +183,9 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     function getAvailableSettings() {
         return settingUtil.getAvailableSettings();
     }
-})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager, UpgradeUtil,
-SettingUtil, BeetFarmMinigame);
+
+    function getDiscoveredUnits() {
+		return unitUtil.getDiscoveredUnits();
+	}
+})(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager, UnitUtil,
+	UpgradeUtil, SettingUtil, BeetFarmMinigame, ConstitutionTracker);

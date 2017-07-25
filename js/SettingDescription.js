@@ -3,7 +3,7 @@ let Settings = (function() {
     return {};
 }());
 
-let SettingUtil = (function() {
+let SettingUtil = (function(settings) {
 
     'use strict';
 
@@ -14,6 +14,6 @@ let SettingUtil = (function() {
     return self;
 
     function getAvailableSettings() {
-        return _.filter(Settings, setting => setting.isAvailable());
+        return _.filter(settings, setting => setting.isAvailable());
     }
-})();
+})(Settings);

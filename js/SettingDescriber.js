@@ -15,7 +15,7 @@ let SettingDescriber = (function(Setting, units, skills, upgrades, events, setti
 
         createSetting(HARVEST_TECHNIQUE, HARVEST_TECHNIQUE_SELECTION, HARVEST_TECHNIQUE_SELECTION[0], SETTING_TYPE_SEL,
             function() {
-                return skills[EDAPHOLOGY].level() >= 10;
+                return skills[HARVESTRY].level() >= 10;
             }
         );
 

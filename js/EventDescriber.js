@@ -1,4 +1,4 @@
-let EventDescriber = (function(Event, units, skills, upgrades, events, generator, discoverer, stats, save) {
+let EventDescriber = (function(Event, units, skills, upgrades, events, generator, discoverer, stats, save, beetMinigame) {
 	'use strict';
 	let self = this;
 
@@ -8,7 +8,10 @@ let EventDescriber = (function(Event, units, skills, upgrades, events, generator
 			function() {
 				return skills[FARMING].level() >= 1;
 			}
-		);
+		).setEffect(() => {
+            beetMinigame.GRID_HEIGHT = 1;
+            beetMinigame.GRID_WIDTH = 1;
+        });
 
         createEvent(BEETS_BEGIN, BEETS_BEGIN_DESC,
             function() {
@@ -105,4 +108,4 @@ let EventDescriber = (function(Event, units, skills, upgrades, events, generator
 		return event;
 	}
 
-}(Event, Units, Skills, Upgrades, Events, Generator, Discoverer, StatisticTracker, SaveManager));
+}(Event, Units, Skills, Upgrades, Events, Generator, Discoverer, StatisticTracker, SaveManager, BeetFarmMinigame));

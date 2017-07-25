@@ -1,4 +1,5 @@
-let UpgradeDescriber = (function(Upgrade, units, skills, upgrades, events, discoverer, stats, save, farmGame) {
+let UpgradeDescriber = (function(Upgrade, units, skills, upgrades, events, discoverer, stats, save, farmGame,
+                                 constitutionTracker) {
 	'use strict';
 	let self = this;
 
@@ -10,6 +11,16 @@ let UpgradeDescriber = (function(Upgrade, units, skills, upgrades, events, disco
             }
         );
 
+        createUpgrade(EAT_BEETS, 1000,
+            function() {
+            return true;
+                // return ConstitutionTracker.notEnough;
+            }
+        ).setCost(3)
+            .setCostUnit(BEETS)
+            .setEffect(() => ConstitutionTracker.constitution += 1)
+            .toggleCanBuyAgain();
+
         createUpgrade(PLANT_CORN, PLANT_CORN_TIME,
             function() {
                 let kFarmMin = 6;
@@ -19,7 +30,7 @@ let UpgradeDescriber = (function(Upgrade, units, skills, upgrades, events, disco
 
         createUpgrade(FARM_2_1, 1000,
             function() {
-                return units[BEETS].amount() >= 8;
+                return units[BEETS].amount() >= 20;
             }
         ).setCost(10)
             .setCostUnit(BEETS)
@@ -227,7 +238,7 @@ let UpgradeDescriber = (function(Upgrade, units, skills, upgrades, events, disco
         createUpgrade(GREENHOUSE, GREENHOUSE_TIME,
             function() {
                 return skills[FARMING].level() >= 10
-                    && skills[K_FARMING.level() >= 5]
+                    && skills[K_FARMING].level() >= 5
                     && upgrades[WHITE_BEET_SEEDS].isObtained();
             }
         ).setCost(10)
@@ -273,4 +284,5 @@ let UpgradeDescriber = (function(Upgrade, units, skills, upgrades, events, disco
 
 		return upgrade;
 	}
-}(Upgrade, Units, Skills, Upgrades, Events, Discoverer, StatisticTracker, SaveManager, BeetFarmMinigame));
+}(Upgrade, Units, Skills, Upgrades, Events, Discoverer, StatisticTracker, SaveManager, BeetFarmMinigame,
+    ConstitutionTracker));

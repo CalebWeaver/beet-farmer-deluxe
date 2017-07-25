@@ -10,16 +10,20 @@
 <body>
 	<div class="container-fluid">
 		<div class="player-stats">
-			<h3 data-bind="text:'Level: '+player.totalLevel()+' ('+player.currentLevel()+' available)'"></h3>
+			<div data-bind="if: isLevelUnlocked()" class="fadein">
+				<h3 data-bind="text:'Level: '+player.totalLevel()+' ('+player.currentLevel()+' available)'"></h3>
+			</div>
 			<div data-bind="if: barUnlocked">
-			<div class="level-bar">
-				<div data-bind="" class="level-progress-fill"></div>
+				<div class="level-bar">
+					<div data-bind="" class="level-progress-fill"></div>
+				</div>
+				<br/>
 			</div>
-			</div>
-			<br/>
 			<p data-bind="text:timePlayed()"></p>
 		</div>
 		<div class="top-stuff">
+
+			<div data-bind="if: getDiscoveredUnits().length > 0">
 			<div class="units top-col">
 				<h2>Units</h2>
 				<div data-bind="foreach: units">
@@ -31,6 +35,7 @@
 						<br/>
 					</div>
 				</div>
+			</div>
 			</div>
 
 			<div class="skills top-col">
@@ -125,7 +130,6 @@
 				</table>
 			</div>
 		</div>
-		<button data-bind="click:setTestData">Test</button>
 	</div>
 </body>
 
@@ -151,6 +155,8 @@
 <script type="text/javascript" src="js/SkillDescription.js"></script>
 <script type="text/javascript" src="js/UpgradeDescription.js"></script>
 <script type="text/javascript" src="js/SettingDescription.js"></script>
+
+<script type="text/javascript" src="js/ConstitutionTracker.js"></script>
 
 <script type="text/javascript" src="js/Unit.js"></script>
 <script type="text/javascript" src="js/Skill.js"></script>

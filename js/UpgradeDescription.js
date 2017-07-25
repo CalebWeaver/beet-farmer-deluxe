@@ -3,7 +3,7 @@ let Upgrades = (function() {
 	return {};
 }());
 
-let UpgradeUtil = (function() {
+let UpgradeUtil = (function(upgrades) {
     'use strict';
 
     let self = {};
@@ -13,6 +13,6 @@ let UpgradeUtil = (function() {
     return self;
 
     function getDiscoveredUpgrades() {
-        return _.filter(Upgrades,upgrade => upgrade.isDiscovered());
+        return _.filter(upgrades,upgrade => upgrade.isDiscovered());
     }
-})();
+})(Upgrades);

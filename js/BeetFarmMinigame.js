@@ -1,4 +1,4 @@
-let BeetFarmMinigame = (function(skills, units, upgrades, player, settings, stats) {
+let BeetFarmMinigame = (function(skills, units, upgrades, generator, player, settings, stats) {
     'use strict';
 
     let SEED_COLOR = '#291917';
@@ -16,8 +16,8 @@ let BeetFarmMinigame = (function(skills, units, upgrades, player, settings, stat
     let STAGE_RIPE = 3;
     let STAGE_ROT = 4;
 
-    let GRID_WIDTH = 1;
-    let GRID_HEIGHT = 1;
+    let GRID_WIDTH = 0;
+    let GRID_HEIGHT = 0;
 
     let BEET_GROWTH_CONST = 70;
 
@@ -68,11 +68,11 @@ let BeetFarmMinigame = (function(skills, units, upgrades, player, settings, stat
     function harvest(beetElem) {
         let beet = getBeet(beetElem);
         if (beet.stage == STAGE_RIPE) {
-            units[BEETS].add(skills[FARMING].level());
+            units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 3);
             player.gainXp(5);
         }
         if (beet.stage == STAGE_PERFECT) {
-            units[BEETS].add(skills[FARMING].level() * 3);
+            units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 6);
             player.gainXp(15);
         }
 
@@ -207,4 +207,4 @@ let BeetFarmMinigame = (function(skills, units, upgrades, player, settings, stat
     function getGridSize() {
         return beetFarmMinigame.GRID_HEIGHT * beetFarmMinigame.GRID_WIDTH;
     }
-})(Skills, Units, Upgrades, Player, Settings, StatisticTracker);
+})(Skills, Units, Upgrades, Generator, Player, Settings, StatisticTracker);

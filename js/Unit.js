@@ -11,6 +11,7 @@ let Unit = (function(){
         unit.remove = remove;
         unit.add = add;
         unit.isHidden = false;
+        unit.setIsHidden = setIsHidden;
         unit.amountPerSecond = ko.observable(0);
         unit.spentPerSecond = ko.observable(0);
         unit.isAvailable = ko.computed(
@@ -33,6 +34,11 @@ let Unit = (function(){
             } else {
                 unit.amount(unit.amount() + i);
             }
+        }
+
+        function setIsHidden(isHidden) {
+            unit.isHidden = isHidden;
+            return unit;
         }
     }
 

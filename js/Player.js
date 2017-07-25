@@ -7,6 +7,7 @@ let Player = (function(save) {
 	self.currentLevel = ko.observable(1);
 	self.totalLevel = ko.observable(1);
 	self.xpForLevel = ko.computed(function() { return self.totalLevel() + 200; });
+	self.constitution = 1;
 	self.gainXp = gainXp;
 
 	(function() {

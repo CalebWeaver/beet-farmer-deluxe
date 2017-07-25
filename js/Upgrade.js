@@ -16,24 +16,27 @@ let Upgrade = (function() {
         upgrade.cost = '';
         upgrade.costUnit = '';
         upgrade.isAvailable = ko.computed(isAvailable);
+        upgrade.canBuyAgain = false;
+        upgrade.removeProgress = removeProgress;
         upgrade.setName = setName;
         upgrade.setTime = setTime;
         upgrade.setEffect = setEffect;
         upgrade.setCostDesc = setCostDesc;
         upgrade.setCost = setCost;
         upgrade.setCostUnit = setCostUnit;
+        upgrade.toggleCanBuyAgain = toggleCanBuyAgain;
 
         function begin() {
-
-            animateButton();
-
             upgrade.inProgress(true);
-            return new Promise(function() {
+            return new Promise((resolve, reject) => {
                 setTimeout(function() {
-                    upgrade.isObtained(true);
+                    if (!upgrade.canBuyAgain) {
+                        upgrade.isObtained(true);
+                    }
                     upgrade.inProgress(false);
                     upgrade.effect();
-                }, time);
+                    resolve();
+                }, upgrade.time);
             });
         }
 
@@ -57,12 +60,6 @@ let Upgrade = (function() {
             return upgrade;
         }
 
-        function animateButton() {
-            let buttonTarget = $(event.currentTarget);
-            buttonTarget.addClass("in-progress");
-            buttonTarget.children().first().css({"transition-duration": (time/1000)+"s", "width": "100%"});
-        }
-
         function isAvailable() {
             return upgrade.isDiscovered() && !upgrade.isObtained();
         }
@@ -74,6 +71,11 @@ let Upgrade = (function() {
 
         function setCostUnit(value) {
             upgrade.costUnit = value;
+            return upgrade;
+        }
+
+        function toggleCanBuyAgain() {
+            upgrade.canBuyAgain = !upgrade.canBuyAgain;
             return upgrade;
         }
     }

@@ -1,4 +1,4 @@
-let Skill = (function(player, skills) {
+let Skill = (function(player, skills, constitution) {
     'use strict';
 
     return Skill;
@@ -42,12 +42,15 @@ let Skill = (function(player, skills) {
         }
 
         function levelUp() {
-            if (player.currentLevel() >= 1) {
+            if (player.currentLevel() >= 1 && constitution.checkUseConstitution()) {
                 skill.level(skill.level() + 1);
                 player.currentLevel(player.currentLevel() - 1);
-            } else {
+            } else if (player.currentLevel() <= 0) {
                 console.log("Not enough levels.");
+            } else {
+                ConstitutionTracker.notEnough = true;
+                console.log("Not enough constitution. Try eating some beets");
             }
         }
     }
-}(Player, Skills));
+}(Player, Skills, ConstitutionTracker));

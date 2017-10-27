@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "ws": "^3.1.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

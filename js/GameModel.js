@@ -48,11 +48,11 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function setTestData() {
 
-		player.gainXp(1000);
+		// player.gainXp(5000);
 		// settings[HARVEST_TECHNIQUE].isAvailable(true);
-		// unitsM[GOLD].amount(10);
+		// units[GOLD].amount(10);
 
-        units[BEETS].amount(10);
+        units[BEETS].amount(100);
         // skills[FARMING].setLevel(10);
         // skills[K_FARMING].setLevel(10);
         // skills[EDAPHOLOGY].setLevel(10);
@@ -63,8 +63,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function updateAll() {
 		updateLevelBar();
-		let xpToGain = (1 + (skills[INTELLIGENCE].level() * .2)) * .1;
-		player.gainXp(xpToGain);
+		player.gainXp();
 		constitutionTracker.gainConstitution();
 
 		stats.updateTimePlayed();
@@ -77,11 +76,13 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function generate() {
         ko.utils.arrayForEach(self.units(), function(unit) {
-            let amount = generator[unit.name]();
-            unit.amountPerSecond((amount * stats.TICK_PER_SECOND).toFixed(2));
-            if (spender[unit.name]) {
-                unit.spentPerSecond((spender[unit.name]() * stats.TICK_PER_SECOND).toFixed(2));
-            }
+        	if (unit.isDiscovered()) {
+                let amount = generator[unit.name]();
+                unit.amountPerSecond((amount * stats.TICK_PER_SECOND).toFixed(2));
+                if (spender[unit.name]) {
+                    unit.spentPerSecond((spender[unit.name]() * stats.TICK_PER_SECOND).toFixed(2));
+                }
+			}
         });
 	}
 
@@ -138,8 +139,8 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function isUpgradePurchasable(upgrade) {
     	let isPurchasable = upgrade.isAvailable();
 
-    	if (upgrade.costUnit && upgrade.cost && isPurchasable) {
-    	     isPurchasable = units[upgrade.costUnit].amount() >= upgrade.cost;
+    	if (upgrade.costUnit && upgrade.cost() && isPurchasable) {
+    	     isPurchasable = units[upgrade.costUnit].amount() >= upgrade.cost();
 		}
 
 		return isPurchasable;
@@ -154,7 +155,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
             }
         });
         if (upgrade.costUnit && upgrade.cost) {
-            units[upgrade.costUnit].remove(upgrade.cost);
+            units[upgrade.costUnit].remove(upgrade.cost());
         }
     }
 

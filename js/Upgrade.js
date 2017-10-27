@@ -1,82 +1,75 @@
 let Upgrade = (function() {
     'use strict';
 
-    return Upgrade;
+    Upgrade.prototype.isAvailable = function() {
+        return this.isDiscovered() && !this.isObtained();
+    };
 
     function Upgrade(name, time) {
         let upgrade = this;
         upgrade.name = name;
-        upgrade.begin = begin;
         upgrade.time = time;
         upgrade.inProgress = ko.observable(false);
         upgrade.isDiscovered = ko.observable(false);
         upgrade.isObtained = ko.observable(false);
-        upgrade.effect = function(){};
-        upgrade.costDesc = '';
-        upgrade.cost = '';
+        upgrade.cost = ko.observable(0);
         upgrade.costUnit = '';
-        upgrade.isAvailable = ko.computed(isAvailable);
+        upgrade.isAvailable = ko.computed(this.isAvailable.bind(this));
         upgrade.canBuyAgain = false;
-        upgrade.removeProgress = removeProgress;
-        upgrade.setName = setName;
-        upgrade.setTime = setTime;
-        upgrade.setEffect = setEffect;
-        upgrade.setCostDesc = setCostDesc;
-        upgrade.setCost = setCost;
-        upgrade.setCostUnit = setCostUnit;
-        upgrade.toggleCanBuyAgain = toggleCanBuyAgain;
-
-        function begin() {
-            upgrade.inProgress(true);
-            return new Promise((resolve, reject) => {
-                setTimeout(function() {
-                    if (!upgrade.canBuyAgain) {
-                        upgrade.isObtained(true);
-                    }
-                    upgrade.inProgress(false);
-                    upgrade.effect();
-                    resolve();
-                }, upgrade.time);
-            });
-        }
-
-        function setName(value) {
-            upgrade.name = value;
-            return upgrade;
-        }
-
-        function setTime(value) {
-            upgrade.time = value;
-            return upgrade;
-        }
-
-        function setEffect(effect) {
-            upgrade.effect = effect;
-            return upgrade;
-        }
-
-        function setCostDesc(value) {
-            upgrade.costDesc = value;
-            return upgrade;
-        }
-
-        function isAvailable() {
-            return upgrade.isDiscovered() && !upgrade.isObtained();
-        }
-
-        function setCost(value) {
-            upgrade.cost = value;
-            return upgrade;
-        }
-
-        function setCostUnit(value) {
-            upgrade.costUnit = value;
-            return upgrade;
-        }
-
-        function toggleCanBuyAgain() {
-            upgrade.canBuyAgain = !upgrade.canBuyAgain;
-            return upgrade;
-        }
+        upgrade.timesBought = ko.observable(0);
     }
+
+    Upgrade.prototype.begin = function() {
+        this.inProgress(true);
+        return new Promise((resolve, reject) => {
+            let upgrade = this;
+            setTimeout(function() {
+                if (!upgrade.canBuyAgain) {
+                    upgrade.isObtained(true);
+                }
+                upgrade.timesBought(upgrade.timesBought() + 1);
+                upgrade.inProgress(false);
+                upgrade.effect();
+                resolve();
+            }, this.time);
+        });
+    };
+
+    Upgrade.prototype.setName = function(value) {
+        this.name = value;
+        return this;
+    };
+
+    Upgrade.prototype.setTime = function(value) {
+        this.time = value;
+        return this;
+    };
+
+    Upgrade.prototype.setEffect = function(effect) {
+        this.effect = effect;
+        return this;
+    };
+
+    Upgrade.prototype.setCostDesc = function(value) {
+        this.costDesc = value;
+        return this;
+    };
+
+    Upgrade.prototype.setCost = function(value) {
+        this.cost(value);
+        return this;
+    };
+
+    Upgrade.prototype.setCostUnit = function(value) {
+        this.costUnit = value;
+        return this;
+    };
+
+    Upgrade.prototype.toggleCanBuyAgain = function() {
+        this.canBuyAgain = !this.canBuyAgain;
+        return this;
+    };
+
+    return Upgrade;
+
 })();

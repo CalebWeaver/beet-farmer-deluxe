@@ -13,19 +13,13 @@ PLANT_CORN_TIME = 0;
 SCARECROW = "Scarecrow";
 SCARECROW_TIME = 1000;
 
-IRON_HOE = "Iron Hoe";
-STEEL_HOE = "Steel Hoe";
-IRON_RAKE = "Iron Rake";
-STEEL_RAKE = "Steel Rake";
-IRON_SPADE = "Iron Spade";
-STEEL_SPADE = "Steel Spade";
-IRON_PLOW = "Iron Plow";
-STEEL_PLOW = "Steel Plow";
-BEET_ORE_TOOLS = "Beet-Ore Tools";
-BEET_ORE_HOE = "Beet-Ore Hoe";
-BEET_ORE_RAKE = "Beet-Ore Rake";
-BEET_ORE_SPADE = "Beet-Ore Spade";
-BEET_ORE_PLOW = "Beet-Ore Plow";
+IMPROVE_SOIL = "Improve Soil";
+
+TOOL_MATERIALS = ["Wood","Stone","Bronze","Iron","Steel",
+"Titanium","Diamond","Adamantium","Mithril","Beet-Ore","Beet-Essence"];
+
+TOOL_TYPES = ["Trowel","Hoe","Spade","Rake","Pruner","Pitchfork",
+    "Scarifier","Plow","Wheelbarrow","Scythe"];
 
 PAINT_STAND = "Paint Stand";
 POSTERS = "Posters";

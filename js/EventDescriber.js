@@ -1,4 +1,4 @@
-let EventDescriber = (function(Event, units, skills, upgrades, events, generator, discoverer, stats, save, beetMinigame) {
+let EventDescriber = (function(Event, units, skills, upgrades, upgradeUtil, events, generator, discoverer, stats, save, beetMinigame) {
 	'use strict';
 	let self = this;
 
@@ -21,7 +21,7 @@ let EventDescriber = (function(Event, units, skills, upgrades, events, generator
 
         createEvent(CROWN_OF_ROOTS, CROWN_OF_ROOTS_DESC,
 			function() {
-        		return upgrades[IRON_HOE].isObtained() && stats.findChance(stats.SECOND_CHANCE / 10);
+        		return upgradeUtil.getTool(3,2).isObtained() && stats.findChance(stats.SECOND_CHANCE / 10);
 			}
 		).addPath(CROWN_OF_ROOTS_YES)
 			.addPath(CROWN_OF_ROOTS_NO);
@@ -108,4 +108,4 @@ let EventDescriber = (function(Event, units, skills, upgrades, events, generator
 		return event;
 	}
 
-}(Event, Units, Skills, Upgrades, Events, Generator, Discoverer, StatisticTracker, SaveManager, BeetFarmMinigame));
+}(Event, Units, Skills, Upgrades, UpgradeUtil, Events, Generator, Discoverer, StatisticTracker, SaveManager, BeetFarmMinigame));

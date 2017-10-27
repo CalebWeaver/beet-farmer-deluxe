@@ -130,19 +130,13 @@ let UnitDescriber = (function(units, skills, upgrades, events, settings, generat
             let edaphologyBonus = skills[EDAPHOLOGY].getUsableLevel() * .1;
 			let tilledBonus = upgrades[TILLING].isObtained() ? .3 : 0;
 
-            let ironHoeBonus = upgrades[IRON_HOE].isObtained() ? .1 : 0;
-            let steelHoeBonus = upgrades[STEEL_HOE].isObtained() ? .1 : 0;
-            let ironSpadeBonus = upgrades[IRON_SPADE].isObtained() ? .1 : 0;
-            let steelSpadeBonus = upgrades[STEEL_SPADE].isObtained() ? .1 : 0;
-            let ironRakeBonus = upgrades[IRON_RAKE].isObtained() ? .1 : 0;
-            let steelRakeBonus = upgrades[STEEL_RAKE].isObtained() ? .1 : 0;
-            let ironPlowBonus = upgrades[IRON_PLOW].isObtained() ? .1 : 0;
-            let steelPlowBonus = upgrades[STEEL_PLOW].isObtained() ? .1 : 0;
+			let toolBonus = _.reduce(TOOL_TYPES, (sum, type) => {
+				return sum + _.reduce(TOOL_MATERIALS, (sum, material) => {
+					return sum + (UpgradeUtil.getToolByString(material, type).isObtained() ? .05 : 0);
+				}, 0);
+			}, 0);
 
 			let plantedCrownBonus = events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_NO ? .2 : 0;
-
-			let toolBonus = ironHoeBonus + steelHoeBonus + ironSpadeBonus + steelSpadeBonus
-				+ ironRakeBonus + steelRakeBonus + ironPlowBonus + steelPlowBonus;
 
 			let totalBonusMult = 1 + toolBonus + tilledBonus + plantedCrownBonus + kFarmBonus + edaphologyBonus;
 

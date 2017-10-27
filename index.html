@@ -64,17 +64,15 @@
 							<span data-bind="" class="tz-bar background-horizontal"></span>
 							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
-						<span data-bind="text:cost + ' ' + costUnit"></span>
+						<span data-bind="text:cost() + ' ' + costUnit"></span>
 						<br/>
 					</div>
-				</div>
-				<div data-bind="foreach: upgrades">
 					<div data-bind="if: $root.isUpgradePurchasable($data) || inProgress()">
 						<button class="upgrade-button" data-bind="click: function() {var upgrade = $data; $root.buyUpgrade(upgrade)}">
 							<span data-bind="" class="tz-bar background-horizontal"></span>
 							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
-						<span data-bind="text:cost + ' ' + costUnit"></span>
+						<span data-bind="text:cost() + ' ' + costUnit"></span>
 						<br/>
 					</div>
 				</div>
@@ -170,9 +168,12 @@
 
 <script type="text/javascript" src="js/BeetFarmMinigame.js"></script>
 
+<script type="text/javascript" src="js/UpgradeUtil.js"></script>
+
 <script type="text/javascript" src="js/UnitDescriber.js"></script>
 <script type="text/javascript" src="js/SkillDescriber.js"></script>
 <script type="text/javascript" src="js/UpgradeDescriber.js"></script>
+<script type="text/javascript" src="js/FarmUpgrades.js"></script>
 <script type="text/javascript" src="js/EventDescriber.js"></script>
 <script type="text/javascript" src="js/SettingDescriber.js"></script>
 

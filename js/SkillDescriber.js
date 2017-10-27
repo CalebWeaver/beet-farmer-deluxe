@@ -24,7 +24,7 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 
         createSkill(TOOLCRAFT,
             function() {
-                return upgrades[IRON_PLOW].isObtained();
+                return UpgradeUtil.getTool(0,0).isObtained();
             }
         );
 

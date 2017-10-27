@@ -8,10 +8,7 @@ let Unit = (function(){
         unit.name = name;
         unit.amount = ko.observable(0);
         unit.isDiscovered = ko.observable(false);
-        unit.remove = remove;
-        unit.add = add;
         unit.isHidden = false;
-        unit.setIsHidden = setIsHidden;
         unit.amountPerSecond = ko.observable(0);
         unit.spentPerSecond = ko.observable(0);
         unit.isAvailable = ko.computed(
@@ -19,28 +16,29 @@ let Unit = (function(){
                 return unit.isDiscovered() && !unit.isHidden;
             }
         );
-
-        function remove(i) {
-            if (unit.amount() >= i) {
-                unit.amount(unit.amount() - i);
-                return true;
-            }
-            return false;
-        }
-
-        function add(i) {
-            if (i < 0) {
-                remove(i * -1);
-            } else {
-                unit.amount(unit.amount() + i);
-            }
-        }
-
-        function setIsHidden(isHidden) {
-            unit.isHidden = isHidden;
-            return unit;
-        }
     }
+
+
+    Unit.prototype.remove = function(i) {
+        if (this.amount() >= i) {
+            this.amount(this.amount() - i);
+            return true;
+        }
+        return false;
+    };
+
+    Unit.prototype.add = function(i) {
+        if (i < 0) {
+            this.remove(i * -1);
+        } else {
+            this.amount(this.amount() + i);
+        }
+    };
+
+    Unit.prototype.setIsHidden = function(isHidden) {
+        this.isHidden = isHidden;
+        return this;
+    };
 
     return Unit;
 })();

@@ -5,7 +5,7 @@
         function() {
             return units[BEETS].amount() >= 20;
         }
-    ).setCost(10)
+    ).setCost(50)
         .setCostUnit(BEETS)
         .setEffect(function() {
             farmGame.GRID_WIDTH = 2;
@@ -16,7 +16,7 @@
         function() {
             return units[BEETS].amount() >= 80 && upgrades[FARM_2_1].isObtained();
         }
-    ).setCost(100)
+    ).setCost(300)
         .setCostUnit(BEETS)
         .setEffect(function() {
             farmGame.GRID_WIDTH = 2;

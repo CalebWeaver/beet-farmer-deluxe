@@ -11,11 +11,12 @@
 			return skills[FARMING].level() > 0;
 		},
 		function() {
-			let MARKET_GROWTH = .1;
+			let MARKET_GROWTH = .2;
 			let sellAmount = 0;
 			if (skills[BEET_MARKET].getUsableLevel() > 0) {
 				sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
 			}
+			sellAmount += settings[BREED_BEETS].setting();
 			return sellAmount;
 		}
 	);
@@ -30,7 +31,7 @@
 			return upgrades[WHITE_BEET_SEEDS].isObtained();
 		},
 		function() {
-			let MARKET_GROWTH = .1;
+			let MARKET_GROWTH = .2;
 			let sellAmount = 0;
 			if (skills[BEET_MARKET].getUsableLevel() > 0) {
 				sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
@@ -49,7 +50,7 @@
 			return upgrades[DIRE_BEET_SEEDS].isObtained();
 		},
 		function() {
-			let MARKET_GROWTH = .1;
+			let MARKET_GROWTH = .2;
 			let sellAmount = 0;
 			if (skills[BEET_MARKET].getUsableLevel() > 0) {
 				sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
@@ -68,7 +69,7 @@
 			return upgrades[SENTIENT_BEET_SEEDS].isObtained();
 		},
 		function() {
-			let MARKET_GROWTH = .1;
+			let MARKET_GROWTH = .2;
 			let sellAmount = 0;
 			if (skills[BEET_MARKET].getUsableLevel() > 0) {
 				sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
@@ -87,7 +88,7 @@
 			return upgrades[SAZE_RUNIC_BEET_SEEDS].isObtained();
 		},
 		function() {
-			let MARKET_GROWTH = .1;
+			let MARKET_GROWTH = .2;
 			let sellAmount = 0;
 			if (skills[BEET_MARKET].getUsableLevel() > 0) {
 				sellAmount = skills[BEET_MARKET].getUsableLevel() * MARKET_GROWTH;
@@ -98,7 +99,7 @@
 
 	function createBeets() {
 		let centipedes = 0;
-		if (events[CENTIPEDES].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
+		if (events[CENTIPEDES.title].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
 			centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
 		}
 		return farmingBase() + centipedes;
@@ -133,7 +134,7 @@
 			}, 0);
 		}, 0);
 
-		let plantedCrownBonus = events[CROWN_OF_ROOTS].chosenPath() === CROWN_OF_ROOTS_NO ? .2 : 0;
+		let plantedCrownBonus = events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.title ? .2 : 0;
 
 		let totalBonusMult = 1 + toolBonus + tilledBonus + plantedCrownBonus + kFarmBonus + edaphologyBonus;
 
@@ -192,10 +193,10 @@
 
 		let totalBonusMult = 1 + paintBonus * postersBonus * criersBonus;
 
-		let GOLD_PER_BEET = .02;
-		let GOLD_PER_WHITE_BEET = .05;
-		let GOLD_PER_DIRE_BEET = .1;
-		let GOLD_PER_SENTIENT_BEET = .4;
+		let GOLD_PER_BEET = .2;
+		let GOLD_PER_WHITE_BEET = .4;
+		let GOLD_PER_DIRE_BEET = .6;
+		let GOLD_PER_SENTIENT_BEET = .8;
 		let GOLD_PER_SAZE_RUNIC_BEET = 1;
 
 		let beetGold = 0;

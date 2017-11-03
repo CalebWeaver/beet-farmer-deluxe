@@ -12,19 +12,19 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 
         createSkill(BEET_MARKET,
             function() {
-                return units[BEETS].amount() > 10;
+                return units[BEETS].amount() > 20;
             }
         ).setToggleable();
 
         createSkill(K_FARMING,
             function() {
-                return skills[FARMING].level() >= 5;
+                return skills[FARMING].level() >= 10;
             }
         );
 
         createSkill(TOOLCRAFT,
             function() {
-                return UpgradeUtil.getTool(0,0).isObtained();
+                return UpgradeUtil.getTool(2,0).isObtained();
             }
         );
 
@@ -36,7 +36,7 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 
         createSkill(PEST_CONTROL,
             function() {
-                return skills[FARMING].level() >= 10;
+                // return skills[FARMING].level() >= 10;
             }
         );
 

@@ -13,6 +13,24 @@ let SettingDescriber = (function(Setting, units, skills, upgrades, events, setti
             }
         );
 
+        createSetting(BREED_BEETS, [0, 100], 0, SETTING_TYPE_NUM,
+            function() {
+                return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.pathB;
+            }
+        );
+
+        createSetting(SPLICE_BEETS, [0, 100], 0, SETTING_TYPE_NUM,
+            function() {
+                return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.pathA;
+            }
+        );
+
+        createSetting(HARVEST_TECHNIQUE, HARVEST_TECHNIQUE_SELECTION, HARVEST_TECHNIQUE_SELECTION[0], SETTING_TYPE_SEL,
+            function() {
+                return skills[HARVESTRY].level() >= 10;
+            }
+        );
+
         createSetting(HARVEST_TECHNIQUE, HARVEST_TECHNIQUE_SELECTION, HARVEST_TECHNIQUE_SELECTION[0], SETTING_TYPE_SEL,
             function() {
                 return skills[HARVESTRY].level() >= 10;

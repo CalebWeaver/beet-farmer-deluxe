@@ -22,8 +22,7 @@
 
     UpgradeUtil.createUpgrade(PLANT_CORN, PLANT_CORN_TIME,
         function() {
-            let kFarmMin = 6;
-            return skills[K_FARMING].level() >= kFarmMin;
+            return false;
         }
     );
 
@@ -37,16 +36,19 @@
                     } else if (typeIndex > 0) {
                         previousTool = UpgradeUtil.getTool(materialIndex, typeIndex - 1);
                     }
-                    return skills[BEET_MARKET].level() >= (materialIndex * 10) + typeIndex + 1
+                    return skills[BEET_MARKET].level() >= (materialIndex * 10) + typeIndex + 5
                         && (!previousTool || previousTool.isObtained());
                 })
                 .setCost(10 * (materialIndex + 1))
-                .setCostUnit(BEETS);
+                .setCostUnit(GOLD);
         }
     }
 
+    UpgradeUtil.createUpgrade()
+
     UpgradeUtil.createUpgrade(IMPROVE_SOIL, 1000,
-        () => skills[FARMING].level() >= 3)
+        // () => skills[FARMING].level() >= 3
+    )
         .setCost(10)
         .setCostUnit(BEETS)
         .setEffect(() => Upgrades[IMPROVE_SOIL].setCost(Upgrades[IMPROVE_SOIL].timesBought()));
@@ -75,7 +77,7 @@
     UpgradeUtil.createUpgrade(WHITE_BEET_SEEDS, 0,
         () => {
             return skills[BEET_MARKET].level() >= 5
-                && events[VEGETAL_EXPLORATION].hasOccurred()
+                && events[VEGETAL_EXPLORATION.title].hasOccurred()
                 && stats.findChance(stats.SECOND_CHANCE / 5)})
         .setCost(10)
         .setCostUnit(GOLD);
@@ -83,7 +85,7 @@
     UpgradeUtil.createUpgrade(DIRE_BEET_SEEDS, 0,
         () => {
             return skills[BEET_MARKET].level() >= 10
-                && events[VEGETAL_EXPLORATION].hasOccurred()
+                && events[VEGETAL_EXPLORATION.title].hasOccurred()
                 && stats.findChance(stats.SECOND_CHANCE / 5)})
         .setCost(10)
         .setCostUnit(GOLD);
@@ -91,7 +93,7 @@
     UpgradeUtil.createUpgrade(SENTIENT_BEET_SEEDS, 0,
         () => {
             return skills[BEET_MARKET].level() >= 20
-                && events[VEGETAL_EXPLORATION].hasOccurred()
+                && events[VEGETAL_EXPLORATION.title].hasOccurred()
                 && stats.findChance(stats.SECOND_CHANCE / 5)})
         .setCost(10)
         .setCostUnit(GOLD);
@@ -99,7 +101,7 @@
     UpgradeUtil.createUpgrade(SAZE_RUNIC_BEET_SEEDS, 0,
         () => {
             return skills[BEET_MARKET].level() >= 20
-                && events[VEGETAL_EXPLORATION].hasOccurred()
+                && events[VEGETAL_EXPLORATION.title].hasOccurred()
                 && stats.findChance((stats.WEEK_CHANCE / 6) * skills[BEET_MARKET].level())})
         .setCost(10)
         .setCostUnit(GOLD);

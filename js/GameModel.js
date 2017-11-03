@@ -48,17 +48,30 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function setTestData() {
 
+		loadMarketUnlocked();
+		// loadGainingKnowledge();
 		// player.gainXp(5000);
 		// settings[HARVEST_TECHNIQUE].isAvailable(true);
 		// units[GOLD].amount(10);
 
-        units[BEETS].amount(100);
-        // skills[FARMING].setLevel(10);
+        // units[BEETS].amount(100);
+        // skills[FARMING].setLevel(1);
         // skills[K_FARMING].setLevel(10);
         // skills[EDAPHOLOGY].setLevel(10);
         // skills[K_FARMING].setLevel(3);
         // skills[BEET_MARKET].setLevel(5);
         // upgrades[WHITE_BEET_SEEDS].isObtained(true);
+	}
+
+	function loadMarketUnlocked() {
+        skills[FARMING].setLevel(5);
+        skills[BEET_MARKET].setLevel(1);
+        units[BEETS].amount(30);
+	}
+
+	function loadGainingKnowledge() {
+		loadMarketUnlocked();
+        skills[K_FARMING].level(10);
 	}
 
 	function updateAll() {
@@ -147,16 +160,18 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     }
 
     function buyUpgrade(upgrade) {
-		animateButton(upgrade);
-        let button = $(event.currentTarget);
-		upgrade.begin().then(() => {
-			if (upgrade.canBuyAgain) {
-				removeProgress(button);
+		if (!upgrade.inProgress()) {
+            animateButton(upgrade);
+            let button = $(event.currentTarget);
+            upgrade.begin().then(() => {
+                if (upgrade.canBuyAgain) {
+                    removeProgress(button);
+                }
+            });
+            if (upgrade.costUnit && upgrade.cost) {
+                units[upgrade.costUnit].remove(upgrade.cost());
             }
-        });
-        if (upgrade.costUnit && upgrade.cost) {
-            units[upgrade.costUnit].remove(upgrade.cost());
-        }
+		}
     }
 
     function animateButton(upgrade) {
@@ -170,7 +185,8 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     }
 
     function isBarUnlocked() {
-		return skills[INTELLIGENCE].level() >= 3;
+		return skills[INTELLIGENCE].level() >= 1
+			|| skills[K_FARMING].level() >= 3;
 	}
 
 	function isLevelUnlocked() {

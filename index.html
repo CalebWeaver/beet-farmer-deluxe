@@ -60,7 +60,7 @@
 				<h2>Upgrades</h2>
 				<div data-bind="foreach: upgrades">
 					<div data-bind="if: (isAvailable() && !$root.isUpgradePurchasable($data) && !inProgress())">
-						<button class="unpurchasable-upgrade" disabled>
+						<button class="unavailable" disabled>
 							<span data-bind="" class="tz-bar background-horizontal"></span>
 							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
@@ -115,7 +115,12 @@
 						<span data-bind="text:description"></span>
 						<div data-bind="foreach: paths">
 							<span data-bind="if: !$parent.chosenPath()">
-							<button data-bind="text: $data, click: function() {$parent.choosePath($data)}"></button>
+								<span data-bind="if: typeof $data.requirement == 'function'? $data.requirement() : true">
+								<button data-bind="text: $data.title, click: function() {$parent.choosePath($data.title)}"></button>
+								</span>
+								<span data-bind="if: typeof $data.requirement == 'function'? !$data.requirement() : false">
+								<button data-bind="text: $data.title, click: function() {$parent.choosePath($data.title)}" class="unavailable" disabled></button>
+								</span>
 							</span>
 						</div>
 					</div>

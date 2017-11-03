@@ -1,19 +1,6 @@
 LEARN_TO_FARM = wrapEventText("Learn to Farm",
-    "Observing the dirt," +
-    "you notice potential.");
+    "Observing the dirt, you notice potential.");
 
-function wrapEventText(title,
-                       description,
-                       pathA,
-                       pathB) {
-    "use strict";
-    return {
-        title: title,
-        description: description,
-        pathA: pathA,
-        pathB: pathB
-    };
-}
 BEETS_BEGIN = wrapEventText("Beets Begin",
     "The richest of men begin with beets.");
 
@@ -26,8 +13,8 @@ KNOWLEDGE_FARMING_DISCOVERY = wrapEventText("Knowledge of Farming",
 CROWN_OF_ROOTS = wrapEventText("Crown of Roots",
     "You find a cluster of small beetroots which seem to have shaped themselves into a ring." +
     " It seems to be roughly the size of your head.",
-    "Don the wreath.",
-    "These beets belong in the ground.");
+    ["Don the wreath.",
+    "These beets belong in the ground."]);
 
 BEET_KING = wrapEventText("King of Beets",
     "You've become more understanding of your subjects.");
@@ -37,8 +24,8 @@ FARM_SAVANT = wrapEventText("Farm Savant",
 
 GAINING_KNOWLEDGE = wrapEventText("Gaining Knowledge",
     "You've come to understand more of what the ground can accommodate. But should you proceed?",
-    "Explore alternative plants",
-    "Remain pure");
+    ["Explore alternative plants",
+    "Remain pure"]);
 
 BEET_PURIST = wrapEventText("Beet Purist",
     "A wise decision. Your produce will beet all other.");
@@ -49,7 +36,8 @@ VEGETAL_EXPLORATION = wrapEventText("Vegetal Exploration",
 OFF_TO_MARKET = wrapEventText("Off To Market",
     "It seems you've found something to do with these rubies.");
 
-SELF_AWARENESS = wrapEventText("Self Awareness","You have become more aware of your own self and that of which you are capable.");
+SELF_AWARENESS = wrapEventText("Self Awareness",
+    "You have become more aware of your own self and that of which you are capable.");
 
 CENTIPEDES = wrapEventText("Centipedes",
     "Centipedes have overrun your farm and are now eating your beets. (Pest Control: 5)");
@@ -67,7 +55,18 @@ FARM_CHEST = wrapEventText("Chest",
     "You've found a chest while digging in your beet patch");
 
 FARM_REMAINS = wrapEventText("Skull",
-    "Seems you've found a small bone-us while trowling around.");
+    "Seems you've found a small bone-us while trowling around.",
+    ["Leave the remains at peace.",
+    "This ground is meant for your reds."]);
 
 BEETS_BEYOND = wrapEventText("Beets Beyond",
     "You've found some curious new seeds at the market.");
+
+function wrapEventText(title, description, paths) {
+    "use strict";
+    return {
+        title: title,
+        description: description,
+        paths: paths
+    };
+}

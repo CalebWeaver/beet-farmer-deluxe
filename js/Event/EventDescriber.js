@@ -22,40 +22,48 @@
         }
     );
 
+    createEvent(FARM_REMAINS.title, FARM_REMAINS.description,
+		function() {
+    		// return units[BEETS].generated() >= 40;
+			return true;
+		}
+	).addPath(FARM_REMAINS.paths[0])
+		.addPath(FARM_REMAINS.paths[1]);
+
 	createEvent(CROWN_OF_ROOTS.title, CROWN_OF_ROOTS.description,
 		function() {
 			return upgradeUtil.getTool(3,2).isObtained() && stats.findChance(stats.SECOND_CHANCE / 10);
 		}
-	).addPath(CROWN_OF_ROOTS.pathA)
-		.addPath(CROWN_OF_ROOTS.pathB);
+	).addPath(CROWN_OF_ROOTS.paths[0])
+		.addPath(CROWN_OF_ROOTS.paths[1]);
 
 	createEvent(BEET_KING.title, BEET_KING.description,
 		function() {
-			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.pathA;
+			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.paths[0];
 		})
 		.setEffect(() => skills[INTELLIGENCE].levelUp());
 
 	createEvent(FARM_SAVANT.title, FARM_SAVANT.description,
 		function() {
-			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.pathB;
+			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.paths[1];
 		});
 
 	createEvent(GAINING_KNOWLEDGE.title, GAINING_KNOWLEDGE.description,
 		function() {
 			return skills[K_FARMING].level() >= 10;
 		}
-	).addPath(GAINING_KNOWLEDGE.pathA)
-		.addPath(GAINING_KNOWLEDGE.pathB);
+	).addPath(GAINING_KNOWLEDGE.paths[0])
+		.addPath(GAINING_KNOWLEDGE.paths[1]);
 
 	createEvent(BEET_PURIST.title, BEET_PURIST.description,
 		function() {
-			return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.pathB;
+			return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.paths[1];
 		}
 	);
 
 	createEvent(VEGETAL_EXPLORATION.title, VEGETAL_EXPLORATION.description,
 		function() {
-			return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.pathA;
+			return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.paths[0];
 		}
 	);
 

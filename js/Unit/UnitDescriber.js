@@ -124,7 +124,7 @@
 
 	function farmingBase() {
 		let farmingBase = skills[FARMING].getUsableLevel() * .1;
-		let kFarmBonus = skills[K_FARMING].getUsableLevel() * .1;
+		let kFarmBonus = skills[K_FARMING].getUsableLevel() * .01;
 		let edaphologyBonus = skills[EDAPHOLOGY].getUsableLevel() * .1;
 		let tilledBonus = upgrades[TILLING].isObtained() ? .3 : 0;
 

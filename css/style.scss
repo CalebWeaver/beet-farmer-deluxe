@@ -61,6 +61,10 @@ h2 {
 	display: inline;
 }
 
+.unavailable {
+	background-color: #555;
+}
+
 .upgrades {
 	button {
 		position: relative;
@@ -68,10 +72,6 @@ h2 {
 
 	.upgrade-button:hover {
 		border: 1px solid $accent-color;
-	}
-
-	.unpurchasable-upgrade {
-		background-color: #555;
 	}
 
 	.obtained-upgrade {

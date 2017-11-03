@@ -15,13 +15,13 @@ let SettingDescriber = (function(Setting, units, skills, upgrades, events, setti
 
         createSetting(BREED_BEETS, [0, 100], 0, SETTING_TYPE_NUM,
             function() {
-                return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.pathB;
+                return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.paths[1];
             }
         );
 
         createSetting(SPLICE_BEETS, [0, 100], 0, SETTING_TYPE_NUM,
             function() {
-                return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.pathA;
+                return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.paths[0];
             }
         );
 

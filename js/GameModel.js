@@ -48,8 +48,8 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function setTestData() {
 
-		loadMarketUnlocked();
-		// loadGainingKnowledge();
+		// loadMarketUnlocked();
+		loadGainingKnowledge();
 		// player.gainXp(5000);
 		// settings[HARVEST_TECHNIQUE].isAvailable(true);
 		// units[GOLD].amount(10);

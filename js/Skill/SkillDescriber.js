@@ -22,6 +22,12 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
             }
         );
 
+        createSkill(K_RELIGION,
+            function() {
+                return events[FARM_MONUMENT.title].hasOccurred();
+            }
+        );
+
         createSkill(TOOLCRAFT,
             function() {
                 return UpgradeUtil.getTool(2,0).isObtained();

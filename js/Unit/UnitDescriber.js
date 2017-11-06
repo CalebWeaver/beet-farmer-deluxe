@@ -246,14 +246,21 @@
 		}
 	);
 
-	createUnit(PRESTIGE,
-		function() {
+    createUnit(PRESTIGE,
+        function() {},
+        function() {
+            return false;
+        }
+    );
 
-		},
-		function() {
-			return false;
-		}
-	);
+    createUnit(GOODNESS,
+        function() {
+
+        },
+        function() {
+            return true;
+        }
+    ).setIsHidden(true);
 
 	loadUnits();
 

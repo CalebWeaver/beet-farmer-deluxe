@@ -8,6 +8,7 @@ CONSTITUTION = "Constitution";
 
 FARMING = "Farming";
 K_FARMING = "Knowledge: Farming";
+K_RELIGION = "Knowledge: Religion";
 EDAPHOLOGY = "Edaphology";
 HARVESTRY = "Harvestry";
 CROP_PLANNING = "Crop Planning";
@@ -49,6 +50,7 @@ STONE = "Stone";
 FISH = "Fish";
 
 PRESTIGE = "Prestige";
+GOODNESS = "Goodness";
 
 //Settings
 SETTING_TYPE_NUM = "Number";

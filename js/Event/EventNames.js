@@ -36,9 +36,6 @@ VEGETAL_EXPLORATION = wrapEventText("Vegetal Exploration",
 OFF_TO_MARKET = wrapEventText("Off To Market",
     "It seems you've found something to do with these rubies.");
 
-SELF_AWARENESS = wrapEventText("Self Awareness",
-    "You have become more aware of your own self and that of which you are capable.");
-
 CENTIPEDES = wrapEventText("Centipedes",
     "Centipedes have overrun your farm and are now eating your beets. (Pest Control: 5)");
 
@@ -57,7 +54,30 @@ FARM_CHEST = wrapEventText("Chest",
 FARM_REMAINS = wrapEventText("Skull",
     "Seems you've found a small bone-us while trowling around.",
     ["Leave the remains at peace.",
-    "This ground is meant for your reds."]);
+    "This ground is meant for your reds. Dig them up.",
+    "Erect a small monument for the lost. - 10 Gold"]);
+
+LEAVE_THE_BONES = wrapEventText("A Modicum of Respect",
+"Some things are better left untouched.");
+
+DIG_UP_BONES = wrapEventText("Keep the Soil Pure",
+"Only the living matter, and these beets need to grow.");
+
+FARM_MONUMENT = wrapEventText("A Humble Testament",
+"You feel uplifted, but you're not sure why.");
+
+BAARDVARK_FARM = wrapEventText("A Curious Minstrel",
+"A fellow with a lute strapped to his back and a long snout-like nose wanders up to your farm."+
+"He asks if you have some spare food in exchange for some song.",
+["Give him some beets and hear his song. -10 Beets",
+"Offer him some work. +30 Beets"]);
+
+BAARDVARK_FARM_FEED = wrapEventText("A Happy Player",
+"The odd-looking bard thanks you for your generous hospitality and returns the favor with "+
+"a song which has a lot to do with spelling.");
+
+BAARDVARK_FARM_WORK = wrapEventText("A Willing Worker",
+"The besnouted bard accepts your offer of work and after a long day, takes his share of the profits.");
 
 BEETS_BEYOND = wrapEventText("Beets Beyond",
     "You've found some curious new seeds at the market.");

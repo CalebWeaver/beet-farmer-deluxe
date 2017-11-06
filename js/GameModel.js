@@ -49,12 +49,12 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function setTestData() {
 
 		// loadMarketUnlocked();
-		loadGainingKnowledge();
+		// loadGainingKnowledge();
 		// player.gainXp(5000);
 		// settings[HARVEST_TECHNIQUE].isAvailable(true);
 		// units[GOLD].amount(10);
 
-        // units[BEETS].amount(100);
+        // units[BEETS].add(100);
         // skills[FARMING].setLevel(1);
         // skills[K_FARMING].setLevel(10);
         // skills[EDAPHOLOGY].setLevel(10);
@@ -66,12 +66,12 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function loadMarketUnlocked() {
         skills[FARMING].setLevel(5);
         skills[BEET_MARKET].setLevel(1);
-        units[BEETS].amount(30);
+        units[BEETS].add(30);
 	}
 
-	function loadGainingKnowledge() {
+	function loadFoundSkull() {
 		loadMarketUnlocked();
-        skills[K_FARMING].level(10);
+		units[BEETS].add(70);
 	}
 
 	function updateAll() {

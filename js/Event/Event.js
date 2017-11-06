@@ -9,7 +9,6 @@ let Event = (function() {
     };
 
     Event.prototype.addPath = function(value, requirement) {
-        requirement
         this.paths.push({title:value, requirement: requirement});
         return this;
     };

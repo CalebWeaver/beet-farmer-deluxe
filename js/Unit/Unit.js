@@ -7,7 +7,7 @@ let Unit = (function(){
 
         unit.name = name;
         unit.amount = ko.observable(0);
-        unit.generated = ko.observable(0);
+        unit.generated = 0;
         unit.isDiscovered = ko.observable(false);
         unit.isHidden = false;
         unit.amountPerSecond = ko.observable(0);
@@ -33,7 +33,7 @@ let Unit = (function(){
             this.remove(i * -1);
         } else {
             this.amount(this.amount() + i);
-            this.generated(this.generated() + i);
+            this.generated += i;
         }
     };
 

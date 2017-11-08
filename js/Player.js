@@ -3,7 +3,7 @@ let Player = (function(save) {
 
 	let self = {};
 
-	self.xp = 0;
+	self.xp = 30;
 	self.currentLevel = ko.observable(1);
 	self.totalLevel = ko.observable(1);
 	self.xpForLevel = ko.computed(() => 200);

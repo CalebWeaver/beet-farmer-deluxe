@@ -16,7 +16,7 @@ let Upgrade = (function() {
         upgrade.costUnit = '';
         upgrade.isAvailable = ko.computed(this.isAvailable.bind(this));
         upgrade.canBuyAgain = false;
-        upgrade.timesBought = ko.observable(0);
+        upgrade.upgradeCount = ko.observable(0);
     }
 
     Upgrade.prototype.begin = function() {
@@ -27,7 +27,7 @@ let Upgrade = (function() {
                 if (!upgrade.canBuyAgain) {
                     upgrade.isObtained(true);
                 }
-                upgrade.timesBought(upgrade.timesBought() + 1);
+                upgrade.upgradeCount(upgrade.upgradeCount() + 1);
                 upgrade.inProgress(false);
                 upgrade.effect();
                 resolve();

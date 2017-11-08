@@ -51,7 +51,7 @@
     )
         .setCost(10)
         .setCostUnit(BEETS)
-        .setEffect(() => Upgrades[IMPROVE_SOIL].setCost(Upgrades[IMPROVE_SOIL].timesBought()));
+        .setEffect(() => Upgrades[IMPROVE_SOIL].setCost(Upgrades[IMPROVE_SOIL].upgradeCount()));
 
     UpgradeUtil.createUpgrade(PAINT_STAND, 10000,
         function() {

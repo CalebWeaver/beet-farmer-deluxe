@@ -109,7 +109,7 @@
 		<div class="bottom-stuff">
 			<div class="events col-xs-6">
 				<div data-bind="foreach: displayedEvents">
-					<div data-bind="if: hasOccurred" class="fadein">
+					<div data-bind="if: hasOccurred && !isHidden" class="fadein">
 						<hr/>
 						<h4 data-bind="text:name"></h4>
 						<span data-bind="text:description"></span>

@@ -7,6 +7,12 @@ BEETS_BEGIN = wrapEventText("Beets Begin",
 HUNGER_SETS_IN = wrapEventText("Hunger Sets In",
     "You seem to be hungry for growth.");
 
+DAY_ON_FARM = wrapEventText("A Day on the Farm",
+    "Farm life isn't the most exciting, but it is rewarding.",
+    ["Get extra beets."]);
+
+DAY_ON_FARM_REWARD = wrapEventText("A Day on the Farm0");
+
 KNOWLEDGE_FARMING_DISCOVERY = wrapEventText("Knowledge of Farming",
     "Keep your head down and eyes on the dirt.");
 
@@ -55,7 +61,7 @@ FARM_REMAINS = wrapEventText("Skull",
     "Seems you've found a small bone-us while trowling around.",
     ["Leave the remains at peace.",
     "This ground is meant for your reds. Dig them up.",
-    "Erect a small monument for the lost. - 10 Gold"]);
+    "Erect a small monument for the lost. - 20 Gold"]);
 
 LEAVE_THE_BONES = wrapEventText("A Modicum of Respect",
 "Some things are better left untouched.");
@@ -67,10 +73,10 @@ FARM_MONUMENT = wrapEventText("A Humble Testament",
 "You feel uplifted, but you're not sure why.");
 
 BAARDVARK_FARM = wrapEventText("A Curious Minstrel",
-"A fellow with a lute strapped to his back and a long snout-like nose wanders up to your farm."+
+"A fellow with a lute strapped to his back and a long snout-like nose wanders up to your farm. "+
 "He asks if you have some spare food in exchange for some song.",
-["Give him some beets and hear his song. -10 Beets",
-"Offer him some work. +30 Beets"]);
+["Give him some beets and hear his song. - 30 Beets",
+"Offer him some work."]);
 
 BAARDVARK_FARM_FEED = wrapEventText("A Happy Player",
 "The odd-looking bard thanks you for your generous hospitality and returns the favor with "+
@@ -78,6 +84,17 @@ BAARDVARK_FARM_FEED = wrapEventText("A Happy Player",
 
 BAARDVARK_FARM_WORK = wrapEventText("A Willing Worker",
 "The besnouted bard accepts your offer of work and after a long day, takes his share of the profits.");
+
+FIRST_HARVEST = wrapEventText("First Harvest",
+"Your first big harvest has come in.",
+["Replant the roots.",
+"Keep them for your stores."]);
+
+FIRST_HARVEST_PLANT = wrapEventText("Long-Term Vision",
+    "You can stand a little hunger, ready to see the harvest next season.");
+
+FIRST_HARVEST_KEEP = wrapEventText("Tomorrow is no Guarantee",
+    "These gems will be just as useful today as they ever will be.");
 
 BEETS_BEYOND = wrapEventText("Beets Beyond",
     "You've found some curious new seeds at the market.");

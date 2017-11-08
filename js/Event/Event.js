@@ -3,6 +3,7 @@ let Event = (function() {
 
     Event.prototype.occurs = function() {
         if (!this.hasOccurred()) {
+            console.log('occurring '+this.name);
             if (this.effect) this.effect();
             this.hasOccurred(true);
         }
@@ -14,11 +15,17 @@ let Event = (function() {
     };
 
     Event.prototype.choosePath = function(path) {
+        console.log(path);
         this.chosenPath(path);
     };
 
     Event.prototype.setEffect = function(effect) {
         this.effect = effect;
+        return this;
+    };
+
+    Event.prototype.setIsHidden = function(isHidden) {
+        this.isHidden = isHidden;
         return this;
     };
 
@@ -32,5 +39,6 @@ let Event = (function() {
         event.hasOccurred = ko.observable(false);
         event.paths = [];
         event.chosenPath = ko.observable();
+        event.isHidden = false;
     }
 })();

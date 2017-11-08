@@ -48,8 +48,9 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function setTestData() {
 
-		// loadMarketUnlocked();
+		loadMarketUnlocked();
 		// loadGainingKnowledge();
+        // loadMetBaardvark();
 		// player.gainXp(5000);
 		// settings[HARVEST_TECHNIQUE].isAvailable(true);
 		// units[GOLD].amount(10);
@@ -69,10 +70,15 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
         units[BEETS].add(30);
 	}
 
-	function loadFoundSkull() {
+	function loadMetBaardvark() {
 		loadMarketUnlocked();
 		units[BEETS].add(70);
 	}
+
+    function loadFoundSkull() {
+        loadMetBaardvark();
+        units[BEETS].add(70);
+    }
 
 	function updateAll() {
 		updateLevelBar();
@@ -185,8 +191,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     }
 
     function isBarUnlocked() {
-		return skills[INTELLIGENCE].level() >= 1
-			|| skills[K_FARMING].level() >= 3;
+		return upgrades[EAT_BEETS].upgradeCount() > 4;
 	}
 
 	function isLevelUnlocked() {

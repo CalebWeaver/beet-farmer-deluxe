@@ -3,18 +3,18 @@
 
 	createEvent(LEARN_TO_FARM,
 		function() {
-			return units[BEETS].amount() >= 1;
+			return skills[FARMING].level() >= 1;
 		}
-	).setEffect(() => {
-		beetMinigame.GRID_HEIGHT = 1;
-		beetMinigame.GRID_WIDTH = 1;
-	});
+	);
 
     createEvent(BEETS_BEGIN,
         function() {
-            return units[BEETS].amount() >= 5;
+            return units[BEETS].amount() >= 5 || upgrades[EAT_BEETS].upgradeCount >= 3;
         }
-    );
+    ).setEffect(() => {
+        beetMinigame.GRID_HEIGHT = 1;
+        beetMinigame.GRID_WIDTH = 1;
+    });
 
     createEvent(HUNGER_SETS_IN,
         function() {
@@ -22,15 +22,43 @@
         }
     );
 
+    createEvent(DAY_ON_FARM,
+		() => units[BEETS].amount() >= 10)
+		.addPath(DAY_ON_FARM.paths[0]);
+
+    createEvent( DAY_ON_FARM_REWARD, () => events[DAY_ON_FARM.title].chosenPath() === DAY_ON_FARM.paths[0])
+		.setEffect(() => units[BEETS].add(10))
+		.setIsHidden(true);
+
+    createEvent(FIRST_HARVEST,
+        () => units[BEETS].generated >= 50)
+        .addPath(FIRST_HARVEST.paths[0])
+        .addPath(FIRST_HARVEST.paths[1]);
+
+    createEvent(FIRST_HARVEST_PLANT,
+        () => events[FIRST_HARVEST.title].chosenPath() === FIRST_HARVEST.paths[0])
+        .setEffect(() => {
+    		skills[FARMING].add(1);
+        });
+
+    createEvent(FIRST_HARVEST_KEEP,
+        () => events[FIRST_HARVEST.title].chosenPath() === FIRST_HARVEST.paths[1])
+        .setEffect(() => {
+			units[BEETS].amount(units[BEETS].amount() + 30);
+        });
+
     createEvent(BAARDVARK_FARM,
-		() => units[BEETS].generated >= 75)
-        .addPath(BAARDVARK_FARM.paths[0], () => units[BEETS].amount() >= 10)
+        () => units[BEETS].generated >= 100)
+        .addPath(BAARDVARK_FARM.paths[0], () => units[BEETS].amount() >= 30)
         .addPath(BAARDVARK_FARM.paths[1]);
 
     createEvent(BAARDVARK_FARM_FEED,
-        () => events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[0])
+        () => {
+			return events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[0]
+        })
         .setEffect(() => {
             skills[INTELLIGENCE].add(1);
+            units[BEETS].add(-30);
         });
 
     createEvent(BAARDVARK_FARM_WORK,
@@ -41,7 +69,7 @@
 
     createEvent(FARM_REMAINS,
 		function() {
-    		return units[BEETS].generated >= 100;
+    		return units[BEETS].generated >= 150;
 		}
 	).addPath(FARM_REMAINS.paths[0])
         .addPath(FARM_REMAINS.paths[1])
@@ -62,7 +90,7 @@
     createEvent(FARM_MONUMENT,
 		() => events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[2])
 		.setEffect(() => {
-			units[GOLD].remove(10);
+			units[GOLD].remove(20);
             units[GOODNESS].add(1);
             skills[K_RELIGION].add(1);
         });

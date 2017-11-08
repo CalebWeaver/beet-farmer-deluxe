@@ -35,17 +35,17 @@ let Skill = (function(player, skills, constitution) {
         this.isActive(!this.isActive());
     };
 
+    Skill.prototype.add = function(levelsToAdd) {
+        this.level(this.level() + levelsToAdd);
+    };
+
     Skill.prototype.levelUp = function() {
-        // if (player.currentLevel() >= 1 && constitution.checkUseConstitution()) {
         if (player.currentLevel() >= 1) {
             this.level(this.level() + 1);
             player.currentLevel(player.currentLevel() - 1);
         } else if (player.currentLevel() <= 0) {
             player.notEnoughLevels = true;
             console.log("Not enough levels.");
-            // } else {
-            //     ConstitutionTracker.notEnoughLevels = true;
-            //     console.log("Not enough constitution. Try eating some beets");
         }
     };
 

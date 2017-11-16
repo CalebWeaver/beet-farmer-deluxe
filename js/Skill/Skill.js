@@ -40,10 +40,11 @@ let Skill = (function(player, skills, constitution) {
     };
 
     Skill.prototype.levelUp = function() {
-        if (player.currentLevel() >= 1) {
+        let levelCost = this.getLevel() / 10;
+        if (player.currentLevel() >= levelCost) {
             this.level(this.level() + 1);
-            player.currentLevel(player.currentLevel() - 1);
-        } else if (player.currentLevel() <= 0) {
+            player.currentLevel(player.currentLevel() - levelCost);
+        } else if (player.currentLevel() < levelCost) {
             player.notEnoughLevels = true;
             console.log("Not enough levels.");
         }

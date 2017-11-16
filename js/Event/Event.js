@@ -3,7 +3,6 @@ let Event = (function() {
 
     Event.prototype.occurs = function() {
         if (!this.hasOccurred()) {
-            console.log('occurring '+this.name);
             if (this.effect) this.effect();
             this.hasOccurred(true);
         }
@@ -15,7 +14,6 @@ let Event = (function() {
     };
 
     Event.prototype.choosePath = function(path) {
-        console.log(path);
         this.chosenPath(path);
     };
 
@@ -27,6 +25,15 @@ let Event = (function() {
     Event.prototype.setIsHidden = function(isHidden) {
         this.isHidden = isHidden;
         return this;
+    };
+
+    Event.wrapEventText = function(title, description, paths) {
+        "use strict";
+        return {
+            title: title,
+            description: description,
+            paths: paths
+        };
     };
 
     return Event;

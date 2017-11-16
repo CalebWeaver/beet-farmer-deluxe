@@ -8,15 +8,15 @@
         }
     );
 
-    UpgradeUtil.createUpgrade(EAT_BEETS, 1000,
+    UpgradeUtil.createUpgrade(EAT_BEETS, 600,
         function() {
             return player.notEnoughLevels;
         }
     ).setCost(player.totalLevel())
         .setCostUnit(BEETS)
         .setEffect(() => {
-            player.gainXp(player.totalLevel());
-            upgrades[EAT_BEETS].setCost(player.totalLevel());
+            player.gainXp(player.xpForLevel());
+            upgrades[EAT_BEETS].setCost(2*Math.pow(player.totalLevel(),1.2).toFixed(0));
         })
         .toggleCanBuyAgain();
 
@@ -43,8 +43,6 @@
                 .setCostUnit(GOLD);
         }
     }
-
-    UpgradeUtil.createUpgrade()
 
     UpgradeUtil.createUpgrade(IMPROVE_SOIL, 1000,
         // () => skills[FARMING].level() >= 3

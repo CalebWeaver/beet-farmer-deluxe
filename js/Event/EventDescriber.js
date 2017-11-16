@@ -23,7 +23,7 @@
     );
 
     createEvent(DAY_ON_FARM,
-		() => units[BEETS].amount() >= 10)
+		() => units[BEETS].amount() >= 20)
 		.addPath(DAY_ON_FARM.paths[0]);
 
     createEvent( DAY_ON_FARM_REWARD, () => events[DAY_ON_FARM.title].chosenPath() === DAY_ON_FARM.paths[0])
@@ -31,7 +31,7 @@
 		.setIsHidden(true);
 
     createEvent(FIRST_HARVEST,
-        () => units[BEETS].generated >= 50)
+        () => units[BEETS].generated >= 100)
         .addPath(FIRST_HARVEST.paths[0])
         .addPath(FIRST_HARVEST.paths[1]);
 
@@ -44,11 +44,11 @@
     createEvent(FIRST_HARVEST_KEEP,
         () => events[FIRST_HARVEST.title].chosenPath() === FIRST_HARVEST.paths[1])
         .setEffect(() => {
-			units[BEETS].amount(units[BEETS].amount() + 30);
+			units[BEETS].amount(units[BEETS].amount() + 20);
         });
 
     createEvent(BAARDVARK_FARM,
-        () => units[BEETS].generated >= 100)
+        () => units[BEETS].generated >= 200)
         .addPath(BAARDVARK_FARM.paths[0], () => units[BEETS].amount() >= 30)
         .addPath(BAARDVARK_FARM.paths[1]);
 
@@ -64,16 +64,16 @@
     createEvent(BAARDVARK_FARM_WORK,
         () => events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[1])
         .setEffect(() => {
-			units[BEETS].add(50);
+			units[BEETS].add(60);
         });
 
     createEvent(FARM_REMAINS,
 		function() {
-    		return units[BEETS].generated >= 150;
+    		return units[BEETS].generated >= 500;
 		}
 	).addPath(FARM_REMAINS.paths[0])
         .addPath(FARM_REMAINS.paths[1])
-        .addPath(FARM_REMAINS.paths[2], () => units[GOLD].amount() >= 10);
+        .addPath(FARM_REMAINS.paths[2], () => units[GOLD].amount() >= 30);
 
     createEvent(LEAVE_THE_BONES,
         () => events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[0])
@@ -90,7 +90,7 @@
     createEvent(FARM_MONUMENT,
 		() => events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[2])
 		.setEffect(() => {
-			units[GOLD].remove(20);
+			units[GOLD].remove(30);
             units[GOODNESS].add(1);
             skills[K_RELIGION].add(1);
         });
@@ -169,7 +169,7 @@
 	}
 
 	function createEvent(textDetails, discovery) {
-		let event =  new Event(textDetails.title, textDetails.description);
+		let event = new Event(textDetails.title, textDetails.description);
 		events[textDetails.title] = event;
 		discoverer[textDetails.title] = discovery;
 		return event;

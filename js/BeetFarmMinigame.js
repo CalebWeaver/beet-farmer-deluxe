@@ -73,7 +73,7 @@ let BeetFarmMinigame = (function(skills, units, upgrades, generator, player, set
         }
         if (beet.stage == STAGE_PERFECT) {
             units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 6);
-            player.gainXp(15);
+            player.gainXp(10);
         }
 
         plantBeet(beetElem);

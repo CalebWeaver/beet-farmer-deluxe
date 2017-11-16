@@ -26,6 +26,7 @@ let Upgrade = (function() {
             setTimeout(function() {
                 if (!upgrade.canBuyAgain) {
                     upgrade.isObtained(true);
+                    ObtainedUpgrades.push(upgrade.name);
                 }
                 upgrade.upgradeCount(upgrade.upgradeCount() + 1);
                 upgrade.inProgress(false);

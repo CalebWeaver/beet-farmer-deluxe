@@ -48,7 +48,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 
 	function setTestData() {
 
-		loadMarketUnlocked();
+		// loadMarketUnlocked();
 		// loadGainingKnowledge();
         // loadMetBaardvark();
 		// player.gainXp(5000);
@@ -174,7 +174,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
                     removeProgress(button);
                 }
             });
-            if (upgrade.costUnit && upgrade.cost) {
+            if (upgrade.costUnit && upgrade.cost()) {
                 units[upgrade.costUnit].remove(upgrade.cost());
             }
 		}
@@ -191,7 +191,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
     }
 
     function isBarUnlocked() {
-		return upgrades[EAT_BEETS].upgradeCount() > 4;
+		return upgrades[EAT_BEETS].upgradeCount() > 2;
 	}
 
 	function isLevelUnlocked() {

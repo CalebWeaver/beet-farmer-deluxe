@@ -14,6 +14,7 @@ let Skill = (function(player, skills, constitution) {
         skill.toggleable = false;
         skill.isActive = ko.observable(true);
         skill.getUsableLevel = ko.computed(this.getLevel.bind(this));
+        skill.levelCost = ko.computed(() => Math.floor((this.getLevel() / 10) + 1));
     }
 
     Skill.prototype.setGroup = function(value) {
@@ -40,7 +41,7 @@ let Skill = (function(player, skills, constitution) {
     };
 
     Skill.prototype.levelUp = function() {
-        let levelCost = this.getLevel() / 10;
+        let levelCost = this.levelCost();
         if (player.currentLevel() >= levelCost) {
             this.level(this.level() + 1);
             player.currentLevel(player.currentLevel() - levelCost);

@@ -26,6 +26,11 @@
         }
     );
 
+    UpgradeUtil.createUpgrade(PLOW_FIELD, 5000,
+        () => skills[FARMING].level() >= 1)
+        .setEffect(() => units[SOIL_QUALITY].add(100))
+        .toggleCanBuyAgain();
+
     for (let typeIndex = 0; typeIndex < TOOL_TYPES.length; typeIndex++) {
         for (let materialIndex = 0; materialIndex < TOOL_MATERIALS.length; materialIndex++) {
             UpgradeUtil.createUpgrade(TOOL_MATERIALS[materialIndex] + ' ' + TOOL_TYPES[typeIndex], 1000,

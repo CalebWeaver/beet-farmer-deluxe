@@ -64,7 +64,9 @@
 							<span data-bind="" class="tz-bar background-horizontal"></span>
 							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
-						<span data-bind="text:cost() + ' ' + costUnit"></span>
+						<span data-bind="if: costUnit != ''">
+							<span data-bind="text:cost() + ' ' + costUnit"></span>
+						</span>
 						<br/>
 					</div>
 					<div data-bind="if: $root.isUpgradePurchasable($data) || inProgress()">
@@ -72,7 +74,9 @@
 							<span data-bind="" class="tz-bar background-horizontal"></span>
 							<span class="upgrade-title" data-bind="text:name"></span>
 						</button>
-						<span data-bind="text:cost() + ' ' + costUnit"></span>
+						<span data-bind="if: costUnit != ''">
+							<span data-bind="text:cost() + ' ' + costUnit"></span>
+						</span>
 						<br/>
 					</div>
 				</div>
@@ -175,6 +179,7 @@
 <script type="text/javascript" src="js/Upgrade/FarmUpgrades.js"></script>
 <script type="text/javascript" src="js/Event/EventDescriber.js"></script>
 <script type="text/javascript" src="js/Setting/SettingDescriber.js"></script>
+<script type="text/javascript" src="js/Logger.js"></script>
 
 <script type="text/javascript" src="js/GameModel.js"></script>
 <script type="text/javascript" src="js/app.js"></script>

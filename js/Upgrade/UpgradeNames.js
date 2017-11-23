@@ -34,6 +34,7 @@ SENTIENT_BEET_SEEDS = "Sentient Beet Seeds";
 SAZE_RUNIC_BEET_SEEDS = "Saze-Runic Beet Seeds";
 
 EAT_BEETS = "Eat Some Beets";
+PLOW_FIELD = "Plow";
 
 RAZE = "Raze";
 RAZE_TIME = 1000;

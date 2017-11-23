@@ -18,6 +18,7 @@ TERRAMANCY = "Terramancy";
 HERBLORE = "Herblore";
 BEETSPEAK = "Beetspeak";
 PEST_CONTROL = "Pest Control";
+SOIL_QUALITY = "Soil Quality";
 
 BEET_MARKET = "Beet Market";
 
@@ -55,6 +56,11 @@ GOODNESS = "Goodness";
 //Settings
 SETTING_TYPE_NUM = "Number";
 SETTING_TYPE_SEL = "Picklist";
+
+SOIL_ALIGNMENT = "Soil Alignment"
+SOIL_ALIGNMENT_SELECTION = ["Lawful Good","Neutral Good","Chaotic Good",
+    "Lawful Neutral","Neutral","Chaotic Neutral",
+    "Lawful Evil","Neutral Evil","Chaotic Evil"];
 HARVEST_TECHNIQUE = "Harvest Technique";
 HARVEST_TECHNIQUE_SELECTION = ['Dig','Pick'];
 BREED_BEETS = "Beets for Breeding";

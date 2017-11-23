@@ -1,5 +1,6 @@
 let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player,
-						  save, unitUtil, upgradeUtil, settingUtil, beetFarmMinigame, constitutionTracker) {
+						  save, unitUtil, upgradeUtil, settingUtil, beetFarmMinigame, constitutionTracker,
+							logger) {
 	'use strict';
 	let self = {};
 
@@ -83,6 +84,10 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function updateAll() {
 		updateLevelBar();
 		player.gainXp();
+		if (player.currentLevel() >= skills[FARMING].levelCost()) {
+            skills[FARMING].levelUp();
+		}
+		logger.checkLog();
 		constitutionTracker.gainConstitution();
 
 		stats.updateTimePlayed();
@@ -210,4 +215,4 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		return unitUtil.getDiscoveredUnits();
 	}
 })(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager, UnitUtil,
-	UpgradeUtil, SettingUtil, BeetFarmMinigame, ConstitutionTracker);
+	UpgradeUtil, SettingUtil, BeetFarmMinigame, ConstitutionTracker, Logger);

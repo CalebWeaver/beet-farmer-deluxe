@@ -13,6 +13,9 @@ let SettingDescriber = (function(Setting, units, skills, upgrades, events, setti
             }
         );
 
+        createSetting(SOIL_ALIGNMENT, SOIL_ALIGNMENT_SELECTION, SOIL_ALIGNMENT_SELECTION[0], SETTING_TYPE_SEL,
+            () => skills[EDAPHOLOGY].level() >= 25);
+
         createSetting(BREED_BEETS, [0, 100], 0, SETTING_TYPE_NUM,
             function() {
                 return events[GAINING_KNOWLEDGE.title].chosenPath() == GAINING_KNOWLEDGE.paths[1];

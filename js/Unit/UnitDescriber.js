@@ -4,8 +4,9 @@
 	createUnit(BEETS,
 		function() {
 			let beets = createBeets();
-			let temperatureCoeff = .3 / distanceFromTemperature(75);
-			return beets * (1 + temperatureCoeff);
+			let temperatureMult = .3 / distanceFromTemperature(75);
+			let phMult = .3 / distanceFromPh(6);
+			return beets * (1 + temperatureMult + phMult);
 		},
 		function() {
 			return skills[FARMING].level() > 0;
@@ -24,8 +25,9 @@
 	createUnit(WHITE_BEETS,
 		function() {
 			let beets = createBeets();
-			let temperatureCoeff = .3 / distanceFromTemperature(55);
-			return beets * (1 + temperatureCoeff);
+			let temperatureMult = .3 / distanceFromTemperature(55);
+            let phMult = .3 / distanceFromPh(8);
+			return beets * (1 + temperatureMult + phMult);
 		},
 		function() {
 			return upgrades[WHITE_BEET_SEEDS].isObtained();
@@ -43,8 +45,9 @@
 	createUnit(DIRE_BEETS,
 		function() {
 			let beets = createBeets();
-			let temperatureCoeff = .3 / distanceFromTemperature(95);
-			return beets * (1 + temperatureCoeff);
+			let temperatureMult = .3 / distanceFromTemperature(95);
+            let phMult = .3 / distanceFromPh(3);
+			return beets * (1 + temperatureMult + phMult);
 		},
 		function() {
 			return upgrades[DIRE_BEET_SEEDS].isObtained();
@@ -62,8 +65,9 @@
 	createUnit(SENTIENT_BEETS,
 		function() {
 			let beets = createBeets();
-			let temperatureCoeff = .3 / distanceFromTemperature(99);
-			return beets * (1 + temperatureCoeff);
+			let temperatureMult = .3 / distanceFromTemperature(99);
+            let phMult = .3 / distanceFromPh(7);
+			return beets * (1 + temperatureMult + phMult);
 		},
 		function() {
 			return upgrades[SENTIENT_BEET_SEEDS].isObtained();
@@ -81,8 +85,9 @@
 	createUnit(SAZE_RUNIC_BEETS,
 		function() {
 			let beets = createBeets();
-			let temperatureCoeff = .3 / distanceFromTemperature(30);
-			return beets * (1 + temperatureCoeff);
+			let temperatureMult = .3 / distanceFromTemperature(30);
+            let phMult = .3 / distanceFromPh(12);
+			return beets * (1 + temperatureMult + phMult);
 		},
 		function() {
 			return upgrades[SAZE_RUNIC_BEET_SEEDS].isObtained();
@@ -109,6 +114,10 @@
 		return (Math.abs(temp - settings[GREENHOUSE_TEMPERATURE].setting()) + 1);
 	}
 
+	function distanceFromPh(ph) {
+        return (Math.abs(ph - settings[SOIL_PH].setting()) + 1);
+	}
+
 	createUnit(CORN,
 		function() {
 			let corn = 0;
@@ -127,16 +136,19 @@
 		let kFarmBonus = skills[K_FARMING].getUsableLevel() * .01;
 		let edaphologyBonus = skills[EDAPHOLOGY].getUsableLevel() * .1;
 		let tilledBonus = upgrades[TILLING].isObtained() ? .3 : 0;
+		let alignmentBonus = SOIL_ALIGNMENT_SELECTION.indexOf(settings[SOIL_ALIGNMENT].setting()) * .1;
+		let soilQualityBonus = Math.min(units[SOIL_QUALITY].amount(), 100) * .002;
 
 		let toolBonus = _.reduce(TOOL_TYPES, (sum, type) => {
 			return sum + _.reduce(TOOL_MATERIALS, (sum, material) => {
-				return sum + (UpgradeUtil.getToolByString(material, type).isObtained() ? .05 : 0);
+				return sum + (UpgradeUtil.getToolByString(material, type).isObtained() ? .01 : 0);
 			}, 0);
 		}, 0);
 
 		let plantedCrownBonus = events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.title ? .2 : 0;
 
-		let totalBonusMult = 1 + toolBonus + tilledBonus + plantedCrownBonus + kFarmBonus + edaphologyBonus;
+		let totalBonusMult = 1 + (toolBonus * skills[TOOLCRAFT].getLevel())+ tilledBonus + plantedCrownBonus
+			+ kFarmBonus + edaphologyBonus + alignmentBonus + soilQualityBonus;
 
 		let tillingPenalty = upgrades[TILLING].inProgress() ? 5 : 1;
 
@@ -146,6 +158,11 @@
 
 		return farmingTotal;
 	}
+
+	createUnit(SOIL_QUALITY,
+		() => {},
+		() => upgrades[PLOW_FIELD].isObtained(),
+		() => 1);
 
 	createUnit(WEEDS,
 		function() {
@@ -162,7 +179,7 @@
 	createUnit(FARM_CURSE,
 		function() {
 			if (units[FARM_CURSE].amount() < 100) {
-				let curseBase = 1 + (math.randomInt(3) * .1);
+				let curseBase = 1.1;
 				let corn = units[CORN].amount() * .01;
 				return curseBase * corn;
 			}
@@ -218,40 +235,6 @@
 
 		return beetGold * totalBonusMult;
 	}
-
-	createUnit(WOOD,
-		function() {
-			return skills[WOODCUTTING].getUsableLevel() / 3;
-		},
-		function() {
-			return skills[WOODCUTTING].isAvailable();
-		}
-	);
-
-	createUnit(STONE,
-		function() {
-			return skills[MINING].getUsableLevel() / 7;
-		},
-		function() {
-			return skills[MINING].isAvailable();
-		}
-	);
-
-	createUnit(FISH,
-		function() {
-			return skills[FISHING].getUsableLevel() / 10;
-		},
-		function() {
-			return skills[FISHING].isAvailable();
-		}
-	);
-
-    createUnit(PRESTIGE,
-        function() {},
-        function() {
-            return false;
-        }
-    );
 
     createUnit(GOODNESS,
         function() {

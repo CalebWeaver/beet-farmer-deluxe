@@ -36,7 +36,13 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 
         createSkill(EDAPHOLOGY,
             function() {
-                return skills[K_FARMING].level() >= 5;
+                return skills[K_FARMING].level() >= 20;
+            }
+        );
+
+        createSkill(HARVESTRY,
+            function() {
+                return skills[K_FARMING].level() >= 60;
             }
         );
 
@@ -45,60 +51,6 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
                 // return skills[FARMING].level() >= 10;
             }
         );
-
-        createSkill(HARVESTRY,
-            function() {
-                return skills[FARMING].level() >= 20;
-            }
-        );
-
-		createSkill(HUNTING,
-			function() {
-				return false;
-			}
-		);
-
-		createSkill(WOODCUTTING,
-			function() {
-				return false;
-			}
-		);
-
-		createSkill(MINING,
-			function() {
-				return false;
-			}
-		);
-
-		createSkill(FISHING,
-			function() {
-				return upgrades[FISHING_POLE].isObtained();
-			}
-		);
-
-		createSkill(CRAFTING,
-			function() {
-				let stoneMin = 100;
-				let woodMin = 100;
-				let intMin = 10;
-				return units[STONE].amount() >= stoneMin
-					&& units[WOOD].amount() >= woodMin
-					&& skills[INTELLIGENCE].level() >= intMin;
-			}
-		);
-
-		createSkill(CRAFTING_G,
-			function() {
-				let craftingMin = 10;
-				return skills[CRAFTING].level() >= craftingMin;
-			}
-		).setGroup(GUILD);
-
-        createSkill(GOVERN,
-			function() {
-				return false;
-			}
-        ).setGroup(GUILD);
 
 		createSkill(STRENGTH,
 			function() {

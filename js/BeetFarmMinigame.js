@@ -24,6 +24,8 @@ let BeetFarmMinigame = (function(skills, units, upgrades, generator, player, set
     let beetFarmMinigame = {};
     beetFarmMinigame.harvest = harvest;
     beetFarmMinigame.fillBeets = fillBeets;
+    beetFarmMinigame.perfectReward = perfectReward;
+    beetFarmMinigame.ripeReward = ripeReward;
     beetFarmMinigame.GRID_WIDTH = GRID_WIDTH;
     beetFarmMinigame.GRID_HEIGHT = GRID_HEIGHT;
 
@@ -68,15 +70,23 @@ let BeetFarmMinigame = (function(skills, units, upgrades, generator, player, set
     function harvest(beetElem) {
         let beet = getBeet(beetElem);
         if (beet.stage == STAGE_RIPE) {
-            units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 3);
-            player.gainXp(5);
+            ripeReward();
         }
         if (beet.stage == STAGE_PERFECT) {
-            units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 6);
-            player.gainXp(10);
+            perfectReward();
         }
 
         plantBeet(beetElem);
+    }
+
+    function ripeReward() {
+        units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 3);
+        player.gainXp(5);
+    }
+
+    function perfectReward() {
+        units[BEETS].add(generator[BEETS]() * stats.TICK_PER_SECOND * 6);
+        player.gainXp(10);
     }
 
     function fillBeets() {

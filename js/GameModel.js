@@ -159,32 +159,11 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	}
 
 	function isUpgradePurchasable(upgrade) {
-		transactions.isUpgradePurchasable(upgrade);
+		return transactions.isUpgradePurchasable(upgrade);
     }
 
     function buyUpgrade(upgrade) {
-		if (!upgrade.inProgress()) {
-            animateButton(upgrade);
-            let button = $(event.currentTarget);
-            upgrade.begin().then(() => {
-                if (upgrade.canBuyAgain) {
-                    removeProgress(button);
-                }
-            });
-            if (upgrade.costUnit && upgrade.cost()) {
-                units[upgrade.costUnit].remove(upgrade.cost());
-            }
-		}
-    }
-
-    function animateButton(upgrade) {
-        let button = $(event.currentTarget);
-        button.addClass("in-progress");
-        button.children().first().css({"transition-duration": (upgrade.time/1000)+"s", "width": "100%"});
-    }
-
-    function removeProgress(button) {
-        button.children().first().css({"transition-duration":"0s", "width": "0"});
+		transactions.buyUpgrade(upgrade);
     }
 
     function isBarUnlocked() {

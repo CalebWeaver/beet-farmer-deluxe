@@ -1,21 +1,29 @@
-let AiPlayers = (function(units, skills, upgrades, events, player, transactions) {
+let AiPlayers = (function(units, skills, upgrades, events, player, transactions, generator, stats, minigame) {
     "use strict";
 
     let self = {};
     self.activeFarmPlay = activeFarmPlay;
     self.passiveFarmPlay = passiveFarmPlay;
 
+    let farmed = false;
+
     return self;
 
     function activeFarmPlay() {
-        if (!events[HUNGER_SETS_IN.title].hasOccurred()) {
-            events[HUNGER_SETS_IN.title].occurs();
+        if (!upgrades[EAT_BEETS].isAvailable()) {
+            player.notEnoughLevels = true;
         }
         if (player.currentLevel() >= skills[FARMING].levelCost()) {
             skills[FARMING].levelUp();
         }
-        if (transactions.isUpgradePurchasable(upgrades[EAT_BEETS])) {
-            upgrades[EAT_BEETS].begin();
+        if (transactions.isUpgradePurchasable(upgrades[EAT_BEETS]) && !upgrades[EAT_BEETS].inProgress()) {
+            transactions.buyUpgrade(upgrades[EAT_BEETS]);
+        }
+        if (Math.floor(stats.totalTimePlayed()) % 7 == 0 && !farmed) {
+            minigame.perfectReward();
+            farmed = true;
+        } else if (Math.floor(stats.totalTimePlayed()) % 7 > 0 && farmed) {
+            farmed = false;
         }
         units[SOIL_QUALITY].amount(100);
     }
@@ -25,4 +33,4 @@ let AiPlayers = (function(units, skills, upgrades, events, player, transactions)
             skills[FARMING].levelUp();
         }
     }
-})(Units, Skills, Upgrades, Events, Player, TransactionManager);
+})(Units, Skills, Upgrades, Events, Player, TransactionManager, Generator, StatisticTracker, BeetFarmMinigame);

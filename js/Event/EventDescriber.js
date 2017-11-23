@@ -2,9 +2,7 @@
 	'use strict';
 
 	createEvent(LEARN_TO_FARM,
-		function() {
-			return skills[FARMING].level() >= 1;
-		}
+		() => skills[FARMING].level() >= 1
 	);
 
     createEvent(BEETS_BEGIN,
@@ -17,7 +15,9 @@
     });
 
     createEvent(HUNGER_SETS_IN,
-		() => upgrades[EAT_BEETS].isAvailable()
+		() => {
+    		return upgrades[EAT_BEETS].isAvailable();
+        }
     );
 
     createEvent(DAY_ON_FARM,

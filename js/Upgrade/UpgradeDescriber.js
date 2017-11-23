@@ -16,7 +16,7 @@
         .setCostUnit(BEETS)
         .setEffect(() => {
             player.gainXp(player.xpForLevel());
-            upgrades[EAT_BEETS].setCost(2*Math.pow(player.totalLevel(),1.2).toFixed(0));
+            upgrades[EAT_BEETS].setCost(2*(Math.pow(player.totalLevel(),1.2) || 1).toFixed(0));
         })
         .toggleCanBuyAgain();
 

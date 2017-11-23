@@ -1,6 +1,6 @@
 let GameModel = (function(skills, units, events, upgrades, settings, discoverer, generator, spender, stats, player,
 						  save, unitUtil, upgradeUtil, settingUtil, beetFarmMinigame, constitutionTracker,
-							logger) {
+							logger, transactions, aiPlayers) {
 	'use strict';
 	let self = {};
 
@@ -84,9 +84,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function updateAll() {
 		updateLevelBar();
 		player.gainXp();
-		if (player.currentLevel() >= skills[FARMING].levelCost()) {
-            skills[FARMING].levelUp();
-		}
+		aiPlayers.activeFarmPlay();
 		logger.checkLog();
 		constitutionTracker.gainConstitution();
 
@@ -161,13 +159,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	}
 
 	function isUpgradePurchasable(upgrade) {
-    	let isPurchasable = upgrade.isAvailable();
-
-    	if (upgrade.costUnit && upgrade.cost() && isPurchasable) {
-    	     isPurchasable = units[upgrade.costUnit].amount() >= upgrade.cost();
-		}
-
-		return isPurchasable;
+		transactions.isUpgradePurchasable(upgrade);
     }
 
     function buyUpgrade(upgrade) {
@@ -215,4 +207,4 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 		return unitUtil.getDiscoveredUnits();
 	}
 })(Skills, Units, Events, Upgrades, Settings, Discoverer, Generator, Spender, StatisticTracker, Player, SaveManager, UnitUtil,
-	UpgradeUtil, SettingUtil, BeetFarmMinigame, ConstitutionTracker, Logger);
+	UpgradeUtil, SettingUtil, BeetFarmMinigame, ConstitutionTracker, Logger, TransactionManager, AiPlayers);

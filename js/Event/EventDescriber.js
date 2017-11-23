@@ -17,16 +17,15 @@
     });
 
     createEvent(HUNGER_SETS_IN,
-        function() {
-            return upgrades[EAT_BEETS].isAvailable();
-        }
+		() => upgrades[EAT_BEETS].isAvailable()
     );
 
     createEvent(DAY_ON_FARM,
 		() => units[BEETS].amount() >= 20)
 		.addPath(DAY_ON_FARM.paths[0]);
 
-    createEvent( DAY_ON_FARM_REWARD, () => events[DAY_ON_FARM.title].chosenPath() === DAY_ON_FARM.paths[0])
+    createEvent( DAY_ON_FARM_REWARD,
+		() => events[DAY_ON_FARM.title].chosenPath() === DAY_ON_FARM.paths[0])
 		.setEffect(() => units[BEETS].add(10))
 		.setIsHidden(true);
 

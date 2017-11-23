@@ -14,7 +14,7 @@ let Logger = (function(stats, player, units) {
             (stats.totalTimePlayed() >= 3600 && logIndex == 4) ||
             (stats.totalTimePlayed() >= 7200 && logIndex == 5) ||
             (stats.totalTimePlayed() >= 21600 && logIndex == 6)) {
-            console.log('Time: '+stats.totalTimePlayed()+' Level: '+player.totalLevel()+' Beets: '+units[BEETS].amount()+' Bps: '+units[BEETS].amountPerSecond());
+            console.log('Time: '+stats.totalTimePlayed()+' Level: '+player.totalLevel()+' Beets: '+units[BEETS].generated+' Bps: '+units[BEETS].amountPerSecond());
             logIndex++;
         }
     }

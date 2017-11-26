@@ -47,8 +47,8 @@
         });
 
     createEvent(BAARDVARK_FARM,
-        () => units[BEETS].generated >= 200)
-        .addPath(BAARDVARK_FARM.paths[0], () => units[BEETS].amount() >= 30)
+        () => units[BEETS].generated >= 500)
+        .addPath(BAARDVARK_FARM.paths[0], () => units[BEETS].amount() >= 250)
         .addPath(BAARDVARK_FARM.paths[1]);
 
     createEvent(BAARDVARK_FARM_FEED,
@@ -57,22 +57,22 @@
         })
         .setEffect(() => {
             skills[INTELLIGENCE].add(1);
-            units[BEETS].add(-30);
+            units[BEETS].add(-250);
         });
 
     createEvent(BAARDVARK_FARM_WORK,
         () => events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[1])
         .setEffect(() => {
-			units[BEETS].add(60);
+			units[BEETS].add(100);
         });
 
     createEvent(FARM_REMAINS,
 		function() {
-    		return units[BEETS].generated >= 500;
+    		return units[BEETS].generated >= 1500;
 		}
 	).addPath(FARM_REMAINS.paths[0])
         .addPath(FARM_REMAINS.paths[1])
-        .addPath(FARM_REMAINS.paths[2], () => units[GOLD].amount() >= 30);
+        .addPath(FARM_REMAINS.paths[2], () => units[GOLD].amount() >= 50);
 
     createEvent(LEAVE_THE_BONES,
         () => events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[0])
@@ -89,14 +89,23 @@
     createEvent(FARM_MONUMENT,
 		() => events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[2])
 		.setEffect(() => {
-			units[GOLD].remove(30);
+			units[GOLD].remove(50);
             units[GOODNESS].add(1);
             skills[K_RELIGION].add(1);
         });
 
+    createEvent(FARM_CHEST,
+        () => units[BEETS].generated >= 3000)
+        .addPath(FARM_CHEST.paths[0]);
+
+    createEvent(FARM_CHEST_OPEN,
+        () => events[FARM_CHEST.title].chosenPath() == FARM_CHEST.paths[0])
+        .addPath(FARM_CHEST_OPEN.paths[0])
+        .addPath(FARM_CHEST_OPEN.paths[1]);
+
 	createEvent(CROWN_OF_ROOTS,
 		function() {
-			return upgradeUtil.getTool(3,2).isObtained() && stats.findChance(stats.SECOND_CHANCE / 10);
+			return upgradeUtil.getTool(4,0).isObtained() && stats.findChance(stats.SECOND_CHANCE / 60);
 		}
 	).addPath(CROWN_OF_ROOTS.paths[0])
 		.addPath(CROWN_OF_ROOTS.paths[1]);
@@ -143,17 +152,42 @@
 		}
 	);
 
+    createEvent(CURSE_TEN,
+        () => units[FARM_CURSE].amount() >= 10);
+
+    createEvent(CURSE_THIRTY,
+        () => units[FARM_CURSE].amount() >= 30);
+
+    createEvent(CURSE_SIXTY,
+        () => units[FARM_CURSE].amount() >= 60);
+
+    createEvent(CURSE_FINAL,
+        () => units[FARM_CURSE].amount() >= 100);
+
+    createEvent(CURSE_LIFTING,
+        () => {
+    		return (events[CURSE_TEN].isDiscovered() && units[FARM_CURSE].amount() < 10)
+			|| (events[CURSE_THIRTY].isDiscovered() && units[FARM_CURSE].amount() < 30)
+			|| (events[CURSE_SIXTY].isDiscovered() && units[FARM_CURSE].amount() < 60)
+			|| (events[CURSE_FINAL].isDiscovered() && units[FARM_CURSE].amount() < 100);
+		});
+
+	createEvent(WEEDS,
+		() => units[WEEDS].isDiscovered());
+
 	createEvent(CENTIPEDES,
 		function() {
-			let curseMin = 30;
-			return units[FARM_CURSE].amount() >= curseMin && stats.findChance(stats.SECOND_CHANCE / 3);
+			let curseMin = 40;
+			return units[FARM_CURSE].amount() >= curseMin && stats.findChance(stats.MINUTE_CHANCE / 10)
+				&& units[WEEDS].isAvailable();
 		}
 	);
 
 	createEvent(CROWS,
 		function() {
-			let curseMin = 60;
-			return units[FARM_CURSE].amount() >= curseMin && stats.findChance(stats.SECOND_CHANCE / 3);
+			let curseMin = 80;
+			return units[FARM_CURSE].amount() >= curseMin && stats.findChance(stats.MINUTE_CHANCE / 3)
+                && events[CENTIPEDES].hasOccurred();
 		}
 	);
 

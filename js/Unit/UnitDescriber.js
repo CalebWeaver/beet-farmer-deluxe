@@ -1,4 +1,4 @@
-(function(units, skills, upgrades, events, settings, generator, spender, discoverer, stats, save) {
+(function(units, skills, upgrades, events, settings, settingUtil, generator, spender, discoverer, stats, save) {
 	'use strict';
 
 	createUnit(BEETS,
@@ -104,10 +104,14 @@
 
 	function createBeets() {
 		let centipedes = 0;
-		if (events[CENTIPEDES.title].hasOccurred() && skills[PEST_CONTROL].getLevel() <= 5) {
+		if (events[CENTIPEDES.title].hasOccurred()) {
 			centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
 		}
-		return farmingBase() + centipedes;
+		let weeds = 0;
+		if (units[WEEDS].isDiscovered()) {
+			weeds = Math.pow(units[WEEDS].amount(), .5) * -1;
+		}
+		return farmingBase() + centipedes + weeds;
 	}
 
 	function distanceFromTemperature(temp) {
@@ -136,7 +140,7 @@
 		let kFarmBonus = skills[K_FARMING].getUsableLevel() * .01;
 		let edaphologyBonus = skills[EDAPHOLOGY].getUsableLevel() * .1;
 		let tilledBonus = upgrades[TILLING].isObtained() ? .3 : 0;
-		let alignmentBonus = SOIL_ALIGNMENT_SELECTION.indexOf(settings[SOIL_ALIGNMENT].setting()) * .1;
+		let alignmentBonus = settingUtil.getSettingIndex(SOIL_ALIGNMENT) * .1;
 		let soilQualityBonus = Math.min(units[SOIL_QUALITY].amount(), 100) * .002;
 
 		let toolBonus = _.reduce(TOOL_TYPES, (sum, type) => {
@@ -145,43 +149,58 @@
 			}, 0);
 		}, 0);
 
-		let plantedCrownBonus = events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.title ? .2 : 0;
+		let digUpSkullBonus = events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[1] ? .2 : 0;
 
-		let totalBonusMult = 1 + (toolBonus * skills[TOOLCRAFT].getLevel())+ tilledBonus + plantedCrownBonus
-			+ kFarmBonus + edaphologyBonus + alignmentBonus + soilQualityBonus;
+		let totalBonusMult = 1 + (toolBonus * skills[TOOLCRAFT].getLevel()) + tilledBonus
+			+ kFarmBonus + edaphologyBonus + alignmentBonus + soilQualityBonus + digUpSkullBonus;
 
 		let tillingPenalty = upgrades[TILLING].inProgress() ? 5 : 1;
 
 		let totalPenaltyMult = tillingPenalty;
 
-		let farmingTotal = farmingBase * totalBonusMult / totalPenaltyMult;
+		let farmingTotal = Math.pow(farmingBase * totalBonusMult / totalPenaltyMult, .8);
 
 		return farmingTotal;
 	}
 
 	createUnit(SOIL_QUALITY,
-		() => {},
-		() => upgrades[PLOW_FIELD].isObtained(),
-		() => 1);
+		() => 0,
+		() => upgrades[PLOW_FIELD].upgradeCount() > 0,
+		() => {
+			if (units[SOIL_QUALITY].amount() > 0) {
+				return 1;
+			} else {
+				return 0;
+			}
+        });
+
+	createUnit(SOIL_ALIGNMENT,
+		() => {
+			if (units[SOIL_ALIGNMENT].amount() < 1000
+			|| units[SOIL_ALIGNMENT].amount() > -1000) {
+                return (settingUtil.getSettingIndex(SOIL_ALIGNMENT) * -1) - 4;
+            }
+			return 0;
+        },
+		() => settings[SOIL_ALIGNMENT].isAvailable()
+	).setIsHidden(true);
 
 	createUnit(WEEDS,
 		function() {
 			let K_FARMING_RATE = .5;
-			let WEED_BASE = .1;
+			let WEED_BASE = 1;
 			let weeds = units[FARM_CURSE].amount() * WEED_BASE - (K_FARMING_RATE * skills[K_FARMING].getUsableLevel());
 			return weeds;
 		},
 		function() {
-			return skills[K_FARMING].isAvailable();
+			return stats.findChance((stats.MINUTE_CHANCE / 500) * units[FARM_CURSE].amount());
 		}
 	);
 
 	createUnit(FARM_CURSE,
 		function() {
 			if (units[FARM_CURSE].amount() < 100) {
-				let curseBase = 1.1;
-				let corn = units[CORN].amount() * .01;
-				return curseBase * corn;
+				return units[SOIL_ALIGNMENT].amount() / 100;
 			}
 			return 0;
 		},
@@ -265,4 +284,4 @@
 		discoverer[name] = discovery;
 		return units[name];
 	}
-})(Units, Skills, Upgrades, Events, Settings, Generator, Spender, Discoverer, StatisticTracker, SaveManager);
+})(Units, Skills, Upgrades, Events, Settings, SettingUtil, Generator, Spender, Discoverer, StatisticTracker, SaveManager);

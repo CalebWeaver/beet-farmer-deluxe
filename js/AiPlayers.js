@@ -13,6 +13,9 @@ let AiPlayers = (function(units, skills, upgrades, events, player, transactions,
         if (!upgrades[EAT_BEETS].isAvailable()) {
             player.notEnoughLevels = true;
         }
+        if (units[SOIL_QUALITY].amount() < 70) {
+            units[SOIL_QUALITY].amount(100);
+        }
         if (player.currentLevel() >= skills[FARMING].levelCost()) {
             skills[FARMING].levelUp();
         }

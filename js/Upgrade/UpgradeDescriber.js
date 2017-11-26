@@ -49,32 +49,33 @@
         }
     }
 
-    UpgradeUtil.createUpgrade(IMPROVE_SOIL, 1000,
-        // () => skills[FARMING].level() >= 3
-    )
-        .setCost(10)
+    UpgradeUtil.createUpgrade(PICK_WEEDS, 2000,
+        () => units[WEEDS].isDiscovered()
+    ).setCost(5)
         .setCostUnit(BEETS)
-        .setEffect(() => Upgrades[IMPROVE_SOIL].setCost(Upgrades[IMPROVE_SOIL].upgradeCount()));
+        .setEffect(() => {
+            units[WEEDS].remove(1);
+        });
 
     UpgradeUtil.createUpgrade(PAINT_STAND, 10000,
         function() {
-            return skills[BEET_MARKET].level() >= 5;
+            return skills[BEET_MARKET].level() >= 10;
         }
-    ).setCost(10)
+    ).setCost(20)
         .setCostUnit(GOLD);
 
     UpgradeUtil.createUpgrade(POSTERS, 20000,
         function() {
-            return skills[BEET_MARKET].level() >= 12;
+            return skills[BEET_MARKET].level() >= 20;
         }
-    ).setCost(30)
+    ).setCost(60)
         .setCostUnit(GOLD);
 
     UpgradeUtil.createUpgrade(BEET_CRIERS, 5000,
         function() {
-            return skills[BEET_MARKET].level() >= 20;
+            return skills[BEET_MARKET].level() >= 40;
         }
-    ).setCost(80)
+    ).setCost(200)
         .setCostUnit(GOLD);
 
     UpgradeUtil.createUpgrade(WHITE_BEET_SEEDS, 0,

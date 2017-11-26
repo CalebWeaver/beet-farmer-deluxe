@@ -27,7 +27,7 @@ let Event = (function() {
         return this;
     };
 
-    Event.wrapEventText = function(title, description, paths) {
+    Event.wrapText = function(title, description, paths) {
         "use strict";
         return {
             title: title,

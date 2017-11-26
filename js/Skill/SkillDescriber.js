@@ -30,7 +30,8 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 
         createSkill(TOOLCRAFT,
             function() {
-                return UpgradeUtil.getTool(2,0).isObtained();
+                return UpgradeUtil.getTool(2,0).isObtained()
+					&& skills[K_FARMING] >= 10;
             }
         );
 
@@ -48,7 +49,8 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
 
         createSkill(PEST_CONTROL,
             function() {
-                // return skills[FARMING].level() >= 10;
+                return skills[K_FARMING].level() >= 40
+					&& events[CENTIPEDES].hasOccurred();
             }
         );
 

@@ -104,9 +104,14 @@
 
 	function createBeets() {
 		let centipedes = 0;
-		if (events[CENTIPEDES.title].hasOccurred()) {
-			centipedes = (skills[PEST_CONTROL].getLevel() - 5) * .006;
-		}
+        if (events[CENTIPEDES.title].hasOccurred()
+            && skills[PEST_CONTROL].getLevel() < 20) {
+            centipedes = (skills[PEST_CONTROL].getLevel() - 20) * .1;
+        }
+        if (events[CROWS.title].hasOccurred()
+            && skills[PEST_CONTROL].getLevel() < 50) {
+            centipedes = (skills[PEST_CONTROL].getLevel() - 50) * .1;
+        }
 		let weeds = 0;
 		if (units[WEEDS].isDiscovered()) {
 			weeds = Math.pow(units[WEEDS].amount(), .5) * -1;
@@ -193,7 +198,7 @@
 			return weeds;
 		},
 		function() {
-			return stats.findChance((stats.MINUTE_CHANCE / 500) * units[FARM_CURSE].amount());
+			return events[WEEDS.title].hasOccurred();
 		}
 	);
 
@@ -207,7 +212,7 @@
 		function() {
 			return units[BEETS].isDiscovered();
 		}
-	).setIsHidden(true);
+	).setIsHidden(false);
 	//#PROD units[FARM_CURSE].isHidden = true;
 
 	createUnit(GOLD,

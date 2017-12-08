@@ -48,22 +48,22 @@
 
     createEvent(BAARDVARK_FARM,
         () => units[BEETS].generated >= 500)
-        .addPath(BAARDVARK_FARM.paths[0], () => units[BEETS].amount() >= 250)
-        .addPath(BAARDVARK_FARM.paths[1]);
+        .addPath(BAARDVARK_FARM.paths[0])
+        .addPath(BAARDVARK_FARM.paths[1], () => units[BEETS].amount() >= 250);
+
+    createEvent(BAARDVARK_FARM_WORK,
+        () => events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[0])
+        .setEffect(() => {
+            units[BEETS].add(100);
+        });
 
     createEvent(BAARDVARK_FARM_FEED,
         () => {
-			return events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[0]
+			return events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[1]
         })
         .setEffect(() => {
             skills[INTELLIGENCE].add(1);
             units[BEETS].add(-250);
-        });
-
-    createEvent(BAARDVARK_FARM_WORK,
-        () => events[BAARDVARK_FARM.title].chosenPath() === BAARDVARK_FARM.paths[1])
-        .setEffect(() => {
-			units[BEETS].add(100);
         });
 
     createEvent(FARM_REMAINS,
@@ -83,7 +83,8 @@
     createEvent(DIG_UP_BONES,
         () => events[FARM_REMAINS.title].chosenPath() === FARM_REMAINS.paths[1])
 		.setEffect(() => {
-    		units[FARM_CURSE].add(1);
+    		units[FARM_CURSE].add(10);
+    		skills[FARMING].levelUp();
 		});
 
     createEvent(FARM_MONUMENT,
@@ -110,16 +111,16 @@
 	).addPath(CROWN_OF_ROOTS.paths[0])
 		.addPath(CROWN_OF_ROOTS.paths[1]);
 
+    createEvent(FARM_SAVANT,
+        function() {
+            return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.paths[0];
+        });
+
 	createEvent(BEET_KING,
 		function() {
-			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.paths[0];
+			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.paths[1];
 		})
 		.setEffect(() => skills[INTELLIGENCE].levelUp());
-
-	createEvent(FARM_SAVANT,
-		function() {
-			return events[CROWN_OF_ROOTS.title].chosenPath() === CROWN_OF_ROOTS.paths[1];
-		});
 
 	createEvent(GAINING_KNOWLEDGE,
 		function() {
@@ -166,30 +167,41 @@
 
     createEvent(CURSE_LIFTING,
         () => {
-    		return (events[CURSE_TEN].isDiscovered() && units[FARM_CURSE].amount() < 10)
-			|| (events[CURSE_THIRTY].isDiscovered() && units[FARM_CURSE].amount() < 30)
-			|| (events[CURSE_SIXTY].isDiscovered() && units[FARM_CURSE].amount() < 60)
-			|| (events[CURSE_FINAL].isDiscovered() && units[FARM_CURSE].amount() < 100);
+    		return (events[CURSE_TEN.title].hasOccurred() && units[FARM_CURSE].amount() < 10)
+			|| (events[CURSE_THIRTY.title].hasOccurred() && units[FARM_CURSE].amount() < 30)
+			|| (events[CURSE_SIXTY.title].hasOccurred() && units[FARM_CURSE].amount() < 60)
+			|| (events[CURSE_FINAL.title].hasOccurred() && units[FARM_CURSE].amount() < 100);
 		});
 
 	createEvent(WEEDS,
-		() => units[WEEDS].isDiscovered());
+		() => {
+			let curseTenMin = 20;
+			return stats.findChance((stats.MINUTE_CHANCE / (curseTenMin * 10)) * units[FARM_CURSE].amount());
+        });
 
 	createEvent(CENTIPEDES,
 		function() {
-			let curseMin = 40;
-			return units[FARM_CURSE].amount() >= curseMin && stats.findChance(stats.MINUTE_CHANCE / 10)
+            let curseTenMin = 40;
+            return stats.findChance((stats.MINUTE_CHANCE / (curseTenMin * 10)) * units[FARM_CURSE].amount())
 				&& units[WEEDS].isAvailable();
 		}
 	);
 
-	createEvent(CROWS,
-		function() {
-			let curseMin = 80;
-			return units[FARM_CURSE].amount() >= curseMin && stats.findChance(stats.MINUTE_CHANCE / 3)
+    createEvent(CROWS,
+        function() {
+            let curseTenMin = 70;
+            return stats.findChance((stats.MINUTE_CHANCE / (curseTenMin * 10)) * units[FARM_CURSE].amount())
                 && events[CENTIPEDES].hasOccurred();
-		}
-	);
+        }
+    );
+
+    createEvent(POSSESSED_SCARECROW,
+        function() {
+            let curseTenMin = 100;
+            return stats.findChance((stats.MINUTE_CHANCE / (curseTenMin * 10)) * units[FARM_CURSE].amount())
+                && events[CROWS].hasOccurred();
+        }
+    );
 
 	loadEvents();
 

@@ -41,16 +41,16 @@ let SkillDescriber = (function(Skill, units, skills, upgrades, events, discovere
             }
         );
 
-        createSkill(HARVESTRY,
-            function() {
-                return skills[K_FARMING].level() >= 60;
-            }
-        );
-
         createSkill(PEST_CONTROL,
             function() {
                 return skills[K_FARMING].level() >= 40
-					&& events[CENTIPEDES].hasOccurred();
+                    && events[CENTIPEDES].hasOccurred();
+            }
+        );
+
+        createSkill(HARVESTRY,
+            function() {
+                return skills[K_FARMING].level() >= 60;
             }
         );
 

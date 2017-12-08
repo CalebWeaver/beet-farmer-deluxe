@@ -33,8 +33,8 @@ KNOWLEDGE_FARMING_DISCOVERY = Event.wrapText("Knowledge of Farming",
 CROWN_OF_ROOTS = Event.wrapText("Crown of Roots",
     "You find a cluster of small beetroots which seem to have shaped themselves into a ring." +
     " It seems to be roughly the size of your head.",
-    ["Don the wreath.",
-    "These beets belong in the ground."]);
+    ["These beets belong in the ground.",
+        "Don the wreath."]);
 
 BEET_KING = Event.wrapText("King of Beets",
     "You've become more understanding of your subjects.");
@@ -56,8 +56,8 @@ VEGETAL_EXPLORATION = Event.wrapText("Vegetal Exploration",
 BAARDVARK_FARM = Event.wrapText("A Curious Minstrel",
     "A fellow with a lute strapped to his back and a long snout-like nose wanders up to your farm. "+
     "He asks if you have some spare food in exchange for some song.",
-    ["Give him some beets and hear his song. - 250 Beets",
-        "Offer him some work."]);
+    ["Offer him some work.",
+        "Give him some beets and hear his song. - 250 Beets"]);
 
 BAARDVARK_FARM_FEED = Event.wrapText("A Happy Player",
     "The odd-looking bard thanks you for your generous hospitality and returns the favor with "+
@@ -112,7 +112,7 @@ WEEDS = Event.wrapText("Weeds",
     "You could be wrong, but those don't look like beets to you.");
 
 CENTIPEDES = Event.wrapText("Centipedes",
-    "Centipedes have overrun your farm and are now eating your beets. (Pest Control: 5)");
+    "Centipedes have overrun your farm and are now eating your beets. (Pest Control: 10)");
 
 CROWS = Event.wrapText("Crows",
     "A flock of crows has decided to roost in your fields. Seems they're trying to rook you of your beets.");

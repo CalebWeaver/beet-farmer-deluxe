@@ -37,21 +37,6 @@ EAT_BEETS = "Eat Some Beets";
 PLOW_FIELD = "Plow";
 PICK_WEEDS = "Pick some Weeds";
 
-RAZE = "Raze";
-RAZE_TIME = 1000;
-
-AXE = "Axe";
-AXE_TIME = 1000;
-AXE_COST = 1000;
-
-PICK = "Pickaxe";
-PICK_TIME = 1000;
-PICK_COST = 1000;
-
-FISHING_POLE = "Fishing Pole";
-FISHING_POLE_TIME = 1000;
-FISHING_POLE_COST = 1000;
-
 FARM_2_1 = "Expand Farm - 2x1";
 FARM_2_2 = "Expand Farm - 2x2";
 FARM_3_2 = "Expand Farm - 3x2";

@@ -44,7 +44,7 @@
                     return skills[BEET_MARKET].level() >= (materialIndex * 10) + typeIndex + 5
                         && (!previousTool || previousTool.isObtained());
                 })
-                .setCost(10 * (materialIndex + 1))
+                .setCost(10 * Math.pow((materialIndex + 1), 2))
                 .setCostUnit(GOLD);
         }
     }
@@ -56,6 +56,12 @@
         .setEffect(() => {
             units[WEEDS].remove(1);
         });
+
+    UpgradeUtil.createUpgrade(SCARECROW, 3000,
+        () => events[CROWS].hasOccurred()
+    ).setCost(3)
+        .setCostUnit(GOLD)
+        .toggleCanBuyAgain(true);
 
     UpgradeUtil.createUpgrade(PAINT_STAND, 10000,
         function() {
@@ -118,24 +124,6 @@
         }
     ).setCost(10)
         .setCostUnit(GOLD);
-
-    UpgradeUtil.createUpgrade(AXE, AXE_TIME,
-        function() {
-            return false;
-        }
-    );
-
-    UpgradeUtil.createUpgrade(PICK, PICK_TIME,
-        function() {
-            return false;
-        }
-    );
-
-    UpgradeUtil.createUpgrade(FISHING_POLE, FISHING_POLE_TIME,
-        function() {
-            return false;
-        }
-    );
 
     loadUpgrades();
 

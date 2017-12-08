@@ -84,7 +84,7 @@ let GameModel = (function(skills, units, events, upgrades, settings, discoverer,
 	function updateAll() {
 		updateLevelBar();
 		player.gainXp();
-		aiPlayers.activeFarmPlay();
+		// aiPlayers.activeFarmPlay();
 		logger.checkLog();
 		constitutionTracker.gainConstitution();
 
